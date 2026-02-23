@@ -1,0 +1,74 @@
+<style>
+    .bloque-living {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-living .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-bloque-living {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    @media (max-width: 991px) {
+        .grid-bloque-living {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-bloque-living {
+            grid-template-columns: 1fr;
+        }
+    }
+    .card-bloque-living img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 12px;
+    }
+    .card-bloque-living h3 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-bloque-living h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+</style>
+<section class="gh-outer bloque-living">
+    <div class="gh-inner">
+            <h2 class="gh-container-title">
+                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                    <a href="https://nexo.la/tag/bienes-raices/" style="text-decoration: none; color: inherit;">Bienes Raíces</a>
+                </span>
+            </h2>
+
+            <div class="grid-bloque-living">
+                {{#get "posts" filter="tag:bienes-raices" limit="4" include="authors"}}
+                    {{#foreach posts}}
+                        <article class="card-bloque-living">
+                            {{#if feature_image}}
+                                <a href="{{url}}">
+                                    <img src="{{feature_image}}" alt="{{title}}">
+                                </a>
+                            {{/if}}
+                            <h3>
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                        </article>
+                    {{/foreach}}
+                {{else}}
+                    <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>bienes-raices</strong>.</p>
+                {{/get}}
+            </div>
+            <div style="text-align: right; margin-top: 15px;">
+                <a href="https://nexo.la/tag/bienes-raices/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            </div>
+    </div>
+</section>

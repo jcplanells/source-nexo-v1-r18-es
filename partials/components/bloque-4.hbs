@@ -1,0 +1,72 @@
+<style>
+    .bloque-4 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-4 .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-bloque-4 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    @media (max-width: 991px) {
+        .grid-bloque-4 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-bloque-4 {
+            grid-template-columns: 1fr;
+        }
+    }
+    .card-bloque-4 img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 12px;
+    }
+    .card-bloque-4 h3 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-bloque-4 h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+</style>
+<section class="gh-outer bloque-4">
+    <div class="gh-inner">
+            <h2 class="gh-container-title">
+                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                    <a href="https://nexo.la/tag/logistica/" style="text-decoration: none; color: inherit;">Logística</a>
+                </span>
+            </h2>
+
+            <div class="grid-bloque-4">
+                {{#get "posts" filter="tag:logistica" limit="8" include="authors"}}
+                    {{#foreach posts from="5"}}
+                        <article class="card-bloque-4">
+                            {{#if feature_image}}
+                                <a href="{{url}}">
+                                    <img src="{{feature_image}}" alt="{{title}}">
+                                </a>
+                            {{/if}}
+                            <h3>
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                        </article>
+                    {{/foreach}}
+                {{/get}}
+            </div>
+            <div style="text-align: right; margin-top: 15px;">
+                <a href="https://nexo.la/tag/logistica/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            </div>
+    </div>
+</section>

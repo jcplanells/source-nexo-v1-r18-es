@@ -1,0 +1,22 @@
+{{!< default}}
+
+{{> "components/header" headerStyle=@custom.header_style}}
+
+{{#match @custom.header_style "!=" "Highlight"}}
+    {{!> "components/featured" showFeatured=@custom.show_featured_posts limit=4}}
+{{/match}}
+
+{{> "components/bloque-0"}}
+{{> "components/bloque-1"}}
+
+
+
+{{> "components/bloque-extra"}}
+{{> "components/bloque-2"}}
+{{> "components/bloque-3"}}
+{{> "components/bloque-4"}}
+{{> "components/bloque-5"}}
+{{> "components/bloque-widgets"}}
+{{> "components/bloque-living"}}
+{{> "components/bloque-deportes"}}
+{{> "components/post-list" feed="home" postFeedStyle=@custom.post_feed_style showTitle=true showSidebar=@custom.show_publication_info_sidebar}}

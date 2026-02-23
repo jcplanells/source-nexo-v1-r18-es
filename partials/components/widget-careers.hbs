@@ -1,0 +1,238 @@
+<style>
+  .widget-nexo-careers {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .widget-nexo-careers-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    padding: 20px; /* Aumentado para llenar mejor el espacio */
+    width: 100%;
+    max-width: 850px;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Título más compacto */
+  .widget-nexo-careers .titulo-principal { text-align: center; margin-bottom: 8px; }
+  .widget-nexo-careers .titulo-principal h1 { 
+    margin: 0; 
+    font-size: 1.6rem; /* Aumentado un poco */
+    color: #111827; 
+    font-weight: 700; 
+  }
+
+  .widget-nexo-careers .titulo-principal img {
+    height: 36px;
+    width: auto;
+    vertical-align: middle;
+    transition: opacity 0.2s ease;
+  }
+
+  .widget-nexo-careers .titulo-principal a:hover img {
+    opacity: 0.7;
+  }
+
+  .widget-nexo-careers .contenedor-empleos { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; /* Aumentado para distribuir mejor verticalmente */
+    justify-content: center; /* Centrar contenido verticalmente para evitar espacio vacío abajo */
+    flex-grow: 1; 
+  }
+
+  /* Items más delgados */
+  .widget-nexo-careers .job-item { 
+    display: flex; 
+    align-items: center; /* Centra contenido verticalmente */
+    gap: 12px; 
+    padding: 10px 12px; /* Reducido */
+    border: 1px solid #e5e7eb; 
+    border-radius: 12px; 
+    background: #f9fafb; 
+    transition: all 0.2s ease; 
+    position: relative; 
+    overflow: hidden; 
+  }
+
+  .widget-nexo-careers .job-item::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: linear-gradient(180deg, #16a34a 0%, #15803d 100%); }
+  
+  /* Hover effect kept from previous version to utilize transition */
+  .widget-nexo-careers .job-item:hover { 
+    background: #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    transform: translateY(-2px); 
+  }
+
+  .widget-nexo-careers .job-logo { 
+    width: 56px; /* Reducido de 72px */
+    height: 56px; 
+    flex: 0 0 56px; 
+    border-radius: 6px; 
+    object-fit: contain; 
+    background: #ffffff; 
+    border: 1px solid #e5e7eb; 
+    padding: 2px; 
+  }
+
+  .widget-nexo-careers .job-info { 
+    flex: 1; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 1px; /* Espacio mínimo entre líneas */
+  }
+
+  .widget-nexo-careers .job-company { 
+    margin: 0; 
+    color: #16a34a; 
+    font-weight: 700; 
+    font-size: 0.85rem; /* Texto un poco más grande */
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+  }
+
+  .widget-nexo-careers .job-title { 
+    margin: 0; 
+    font-size: 1.15rem; /* Texto un poco más grande */
+    font-weight: 600; 
+    line-height: 1.2; 
+    color: #111827; 
+  }
+
+  .widget-nexo-careers .job-title a { color: inherit; text-decoration: none; }
+  .widget-nexo-careers .job-title a:hover { color: #16a34a; }
+
+  /* Meta y Fecha en la misma línea */
+  .widget-nexo-careers .job-meta-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    margin-top: 2px;
+  }
+
+  .widget-nexo-careers .job-meta, 
+  .widget-nexo-careers .job-date { 
+    color: #64748b; 
+    font-size: 0.95rem; /* Texto un poco más grande */
+    margin: 0; 
+  }
+
+  .widget-nexo-careers .job-date { color: #94a3b8; font-style: italic; }
+
+  @media (max-width: 640px) {
+    .widget-nexo-careers .job-meta-wrapper { flex-direction: column; align-items: flex-start; gap: 0; }
+  }
+
+  .widget-nexo-careers .ver-mas {
+    text-align: center;
+    margin-top: 12px;
+  }
+  .widget-nexo-careers .ver-mas a {
+    color: inherit;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: #16a34a;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+  }
+</style>
+
+<div class="widget-nexo-careers">
+  <div class="widget-nexo-careers-card">
+    <div class="titulo-principal">
+      <h1>
+        <a href="https://opt.nexo.la/careers" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+          <img src="https://opt.nexo.la/assets/logos/nx_careers_logo.png" alt="Nexo Careers">
+        </a>
+      </h1>
+    </div>
+
+    <div id="contenedor-empleos" class="contenedor-empleos">
+      <!-- Los empleos se cargarán aquí dinámicamente -->
+    </div>
+
+    <div class="ver-mas">
+      <a href="https://opt.nexo.la/careers" target="_blank" rel="noopener noreferrer">ver más ofertas</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const widgetRoot = document.currentScript.previousElementSibling;
+
+    const FALLBACK_DATA = [
+      {"logo":"https://opt.nexo.la/assets/logos/copa_airlines_logo.jpg","empresa":"COPA","titulo":"Gerente Sr. de Planificación de Materiales","ciudad":"Panamá","fecha":"2026-01-28","link":"#"},
+      {"logo":"https://opt.nexo.la/assets/logos/philips_logo.jpg","empresa":"PHILIPS","titulo":"Operational Senior Buyer","ciudad":"Panamá","fecha":"2026-01-28","link":"#"},
+      {"logo":"https://opt.nexo.la/assets/logos/abb_logo.jpg","empresa":"ABB","titulo":"Quality Control Specialist","ciudad":"Arraijan","fecha":"2026-01-27","link":"#"}
+    ];
+
+    async function initWidget() {
+      const container = widgetRoot.querySelector("#contenedor-empleos");
+      const verMasLink = widgetRoot.querySelector(".ver-mas a");
+      if (!container) return;
+
+      let jobs = FALLBACK_DATA;
+      let totalPosiciones = 0;
+
+      try {
+        const resp = await fetch("https://opt.nexo.la/assets/json/careers.json?v=" + Date.now());
+        if (resp.ok) {
+          const data = await resp.json();
+          if (data.posiciones) {
+            jobs = data.posiciones;
+            totalPosiciones = data.total_posiciones;
+          } else {
+            jobs = data;
+          }
+        }
+      } catch (e) { console.warn("Error cargando JSON:", e.message); }
+
+      const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return isNaN(date) ? dateString : new Intl.DateTimeFormat('es-PA', { day: 'numeric', month: 'short' }).format(date);
+      };
+
+      const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (m) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+
+      container.innerHTML = '';
+      jobs.slice(0, 3).forEach((job) => {
+        container.innerHTML += `
+          <article class="job-item">
+            ${job.logo ? `<img class="job-logo" src="${esc(job.logo)}" alt="${esc(job.empresa)}" loading="lazy">` : '<div class="job-logo"></div>'}
+            <div class="job-info">
+              <p class="job-company">${esc(job.empresa)}</p>
+              <h2 class="job-title">
+                <a href="${esc(job.link)}" target="_blank" rel="noopener noreferrer">${esc(job.titulo)}</a>
+              </h2>
+              <div class="job-meta-wrapper">
+                <p class="job-meta">📍 ${esc(job.ciudad)}</p>
+                <p class="job-date">• ${formatDate(job.fecha)}</p>
+              </div>
+            </div>
+          </article>
+        `;
+      });
+
+      if (verMasLink && totalPosiciones > 0) {
+        verMasLink.textContent = `ver más (${totalPosiciones}) ofertas`;
+      }
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initWidget);
+    } else {
+        initWidget();
+    }
+  })();
+</script>

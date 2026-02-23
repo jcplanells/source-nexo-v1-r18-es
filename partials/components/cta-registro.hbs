@@ -1,0 +1,159 @@
+<style type="text/css">
+    /* Estilos específicos para el formulario de registro */
+    .cta-registro-root {
+      --form-primary-60: #ffffff;
+      --form-primary-70: color-mix(in hsl, var(--form-primary-60), black 10%);
+      --form-primary-80: color-mix(in hsl, var(--form-primary-60), black 20%);
+      --form-field: #ffffff;
+      --form-field-hover: #f7f7f7;
+      --form-font-family: Arial, Helvetica, sans-serif;
+      --form-border-subtle: #cccccc;
+      --form-border-strong: #8d8d8d;
+      --form-button-primary: #34cc03;
+      --form-button-primary-hover: #2ca302;
+      --form-button-primary-active: #1f7a02;
+      --form-text-primary: #000000;
+      --form-text-brand: #34cc03;
+      --form-text-placeholder: #666666;
+      --form-text-on-color: #ffffff;
+      --form-support-error: #ff3333;
+      --form-support-success: #34cc03;
+      --form-transition-all-productive: all 150ms cubic-bezier(0.2, 0, 0.38, 0.9);
+      --form-transition-all-expressive: all 300ms cubic-bezier(0.4, 0.14, 0.3, 1);
+    }
+
+    .mauticform_wrapper {
+      max-width: 600px;
+      margin: 40px auto; /* Ajustado margen vertical */
+      padding: 40px;
+      background-color: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      font-family: var(--form-font-family);
+      font-size: 14px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid var(--form-border-subtle);
+      box-sizing: border-box;
+    }
+
+    .mauticform-input,
+    .mauticform-textarea {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid var(--form-border-subtle);
+      border-radius: 8px;
+      background-color: var(--form-field);
+      color: var(--form-text-primary);
+      font-size: 16px;
+      box-sizing: border-box;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
+      transition: var(--form-transition-all-productive);
+      text-align: left;
+    }
+
+    .mauticform-input:focus,
+    .mauticform-textarea:focus {
+      border-color: #34cc03;
+      box-shadow: 0 0 5px rgba(52, 204, 3, 0.4);
+      outline: 2px solid #34cc03;
+      background-color: var(--form-field-hover);
+    }
+
+    .mauticform-label {
+      font-size: 14px;
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #000000;
+      text-align: left;
+    }
+
+    .mauticform-button-wrapper {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .mauticform-button {
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: 600;
+      text-align: center;
+      vertical-align: middle;
+      cursor: pointer;
+      background-image: none;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      padding: 10px 20px;
+      font-size: 13px;
+      line-height: 1.3856;
+      border-radius: 8px;
+      user-select: none;
+      background-color: var(--form-button-primary);
+      color: #ffffff;
+      transition: var(--form-transition-all-expressive);
+    }
+
+    .mauticform-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(52, 204, 3, 0.25);
+      background-color: var(--form-button-primary-hover);
+    }
+
+    .form-title { margin-bottom: 5px; text-align: center; }
+    .form-subtitle { font-size: 1.2em; color: #000000; margin-bottom: 20px; text-align: center; }
+    .mauticform-row { display: block; margin-bottom: 20px; }
+    .mauticform-field-hidden { display: none; }
+    .mauticform-errormsg { display: block; color: var(--form-support-error); margin-top: 2px; }
+    .mauticform-row.mauticform-required .mauticform-label:after { color: var(--form-support-error); content: "*"; display: inline; }
+
+    @media screen and (max-width: 768px) {
+      .mauticform_wrapper { padding: 20px; }
+    }
+</style>
+
+<div class="cta-registro-root">
+    <script type="text/javascript">
+        if (typeof MauticSDKLoaded == 'undefined') {
+        var MauticSDKLoaded = true;
+        var head            = document.getElementsByTagName('head')[0];
+        var script          = document.createElement('script');
+        script.type         = 'text/javascript';
+        script.src          = 'https://mautic.adulting.club/media/js/mautic-form.js?v819f826d';
+        script.onload       = function() { MauticSDK.onLoad(); };
+        head.appendChild(script);
+        var MauticDomain = 'https://mautic.adulting.club';
+        var MauticLang   = { 'submittingMessage': "Please wait..." };
+        } else if (typeof MauticSDK != 'undefined') {
+        MauticSDK.onLoad();
+        }
+    </script>
+
+    <div id="mauticform_wrapper_registronexo" class="mauticform_wrapper">
+        <div class="form-title">
+        <img src="https://opt.nexo.la/assets/logos/logo_nexo_verde_trans.png" alt="Logo Nexo" style="max-width:200px; height:auto; display: block; margin: 0 auto;">
+        </div>
+        <p class="form-subtitle">Regístrate aquí para recibir nuestro newsletter</p>
+
+        <form autocomplete="false" role="form" method="post" action="https://mautic.adulting.club/form/submit?formId=2" id="mauticform_registronexo" data-mautic-form="registronexo" enctype="multipart/form-data">
+        <div class="mauticform-error" id="mauticform_registronexo_error"></div>
+        <div class="mauticform-message" id="mauticform_registronexo_message"></div>
+        <div class="mauticform-innerform">
+            <div class="mauticform-page-wrapper mauticform-page-1" data-mautic-form-page="1">
+            <div id="mauticform_registronexo_correo" class="mauticform-row mauticform-email mauticform-field-2">
+                <label id="mauticform_label_registronexo_correo" for="mauticform_input_registronexo_correo" class="mauticform-label"></label>
+                <input type="email" name="mauticform[correo]" value="" id="mauticform_input_registronexo_correo" class="mauticform-input" placeholder="tucorreo@ejemplo.com">
+                <span class="mauticform-errormsg" style="display:none;"></span>
+            </div>
+            <div id="mauticform_registronexo_submit" class="mauticform-row mauticform-button-wrapper mauticform-field-3">
+                <button class="btn btn-ghost mauticform-button" name="mauticform[submit]" value="1" id="mauticform_input_registronexo_submit" type="submit">Suscribirme</button>
+            </div>
+            </div>
+        </div>
+        <input type="hidden" name="mauticform[formId]" id="mauticform_registronexo_id" value="2">
+        <input type="hidden" name="mauticform[return]" id="mauticform_registronexo_return" value="">
+        <input type="hidden" name="mauticform[formName]" id="mauticform_registronexo_name" value="registronexo">
+        </form>
+    </div>
+</div>

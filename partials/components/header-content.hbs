@@ -1,0 +1,105 @@
+<section class="gh-header is-{{#match headerStyle "Magazine"}}magazine{{else match headerStyle "Highlight"}}highlight{{else}}classic{{/match}}{{#if @custom.background_image}}{{#if @site.cover_image}} has-image{{/if}}{{/if}} gh-outer">
+
+    {{!-- Background image --}}
+    {{#if @custom.background_image}}
+        {{#match headerStyle "!=" "Magazine"}}
+        {{#match headerStyle "!=" "Highlight"}}
+            {{#if @site.cover_image}}
+                <img class="gh-header-image" src="{{@site.cover_image}}" alt="{{@site.title}}">
+            {{/if}}
+        {{/match}}
+        {{/match}}
+    {{/if}}
+
+    <div class="gh-header-inner gh-inner">
+
+        {{!-- ===========================================================
+             Highlight layout SOLO FEATURED
+        ============================================================ --}}
+        {{#match headerStyle "Highlight"}}
+            <div class="gh-header-left">
+                {{!-- Post principal con tag #top1 --}}
+                {{#get "posts" filter="tag:hash-top1" include="authors" limit="1" order="published_at desc"}}
+                    {{#foreach posts}}
+                        {{> "post-card" imageSizes="(max-width: 767px) calc(100vw - max(8vmin, 40px)), 640px"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+
+            <div class="gh-header-middle">
+                {{!-- Featured posts excluding top1 --}}
+                {{#get "posts" filter="featured:true+tag:-hash-top1" include="authors" limit="3" order="published_at desc"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+
+            <div class="gh-header-right">
+                <section class="gh-featured gh-outer">
+                    <div class="gh-featured-inner gh-inner">
+                        <h2 class="gh-featured-title"><span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 8px;">Las Últimas</span></h2>
+                        <div class="gh-featured-feed">
+                            {{#get "posts" filter="tag:-hash-top1" include="authors" limit="6" order="published_at desc"}}
+                                {{#foreach posts}}
+                                    {{> "post-card" imageSizes="80px" hideMeta=true}}
+                                {{/foreach}}
+                            {{/get}}
+                        </div>
+                    </div>
+                </section>
+            </div>
+        {{/match}}
+
+        {{!-- ===========================================================
+             Magazine layout SOLO FEATURED
+        ============================================================ --}}
+        {{#match headerStyle "Magazine"}}
+            {{#get "posts" filter="featured:true" include="authors" limit="7" order="published_at desc"}}
+                {{#foreach posts}}
+                    {{#if @first}}
+                        <div class="gh-header-left">
+                            {{> "post-card" imageSizes="640px"}}
+                        </div>
+                    {{else if @index "5"}}
+                        <div class="gh-header-right">
+                            {{> "post-card"}}
+                        </div>
+                    {{else}}
+                        {{> "post-card"}}
+                    {{/if}}
+                {{/foreach}}
+            {{/get}}
+        {{/match}}
+
+        {{!-- Landing layout --}}
+        {{#match headerStyle "Landing"}}
+            <h1 class="gh-header-title is-title">
+                {{#if @custom.header_text}}
+                    {{@custom.header_text}}
+                {{else}}
+                    {{@site.description}}
+                {{/if}}
+            </h1>
+            {{> "email-subscription" email_field_id="header-email"}}
+        {{/match}}
+
+        {{!-- Search layout --}}
+        {{#match headerStyle "Search"}}
+            <h1 class="gh-header-title is-title">
+                {{#if @custom.header_text}}
+                    {{@custom.header_text}}
+                {{else}}
+                    {{@site.description}}
+                {{/if}}
+            </h1>
+            <form class="gh-form">
+                {{> "icons/search"}}
+                <button class="gh-form-input" data-ghost-search>
+                    Search posts, tags and authors
+                </button>
+            </form>
+        {{/match}}
+
+    </div>
+</section>

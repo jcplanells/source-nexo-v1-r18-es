@@ -1,0 +1,139 @@
+{{!--
+    Parameters:
+    * feed (index, home, archive, recent)
+    * postFeedStyle (list, grid)
+    * showTitle (true, false)
+    * showSidebar (true, false)
+--}}
+
+<section class="gh-container is-{{#match postFeedStyle "List"}}list{{else}}grid{{/match}}{{#if showSidebar}} has-sidebar{{/if}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}} gh-outer">
+    <div class="gh-container-inner gh-inner">
+        
+        {{#if showTitle}}
+            <h2 class="gh-container-title">
+                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 8px;">{{#unless title}}Más Noticias{{else}}{{title}}{{/unless}}</span>
+            </h2>
+        {{/if}}
+
+        <main class="gh-main">
+            <div class="gh-feed">
+
+                {{!-- ===========================================================
+                    FEATURED SIEMPRE PRIMERO EN HOME / INDEX
+                ============================================================ --}}
+                {{#is "home, index"}}
+                    {{#match @custom.header_style "!=" "Highlight"}}
+                        {{#get "posts" filter=(concat "featured:true+tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag) include="authors" limit="1" order="published_at desc"}}
+                            {{#foreach posts}}
+                                {{> "post-card" lazyLoad=false}}
+                            {{/foreach}}
+                        {{/get}}
+                    {{/match}}
+                {{/is}}
+
+                {{!-- Homepage (usando parámetro feed) --}}
+                {{#match feed "home"}}
+                    {{#match @custom.header_style "Highlight"}}
+                        {{#if @custom.show_featured_posts}}
+                            {{#match posts.length ">=" 4}}
+                                {{#get "posts" include="authors" limit="16" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                                    {{#foreach posts from="5"}}
+                                        {{> "post-card" lazyLoad=true}}
+                                    {{/foreach}}
+                                {{/get}}
+                            {{/match}}
+                        {{else}}
+                            {{#match posts.length ">=" 10}}
+                                {{#get "posts" include="authors" limit="22" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                                    {{#foreach posts from="11"}}
+                                        {{> "post-card" lazyLoad=true}}
+                                    {{/foreach}}
+                                {{/get}}
+                            {{/match}}
+                        {{/if}}
+                    {{else match @custom.header_style "Magazine"}}
+                        {{#match posts.length ">=" 7}}
+                            {{#get "posts" include="authors" limit="19" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                                {{#foreach posts from="8"}}
+                                    {{> "post-card" lazyLoad=true}}
+                                {{/foreach}}
+                            {{/get}}
+                        {{/match}}
+                    {{else}}
+                        {{#get "posts" include="authors" limit="11" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                            {{#foreach posts}}
+                                {{> "post-card" lazyLoad=true}}
+                            {{/foreach}}
+                        {{/get}}
+                    {{/match}}
+                {{/match}}
+
+                {{!-- All posts (FEED: INDEX) --}}
+                {{#match feed "index"}}
+                    {{#foreach posts}}
+                        {{#unless (match primary_tag.slug (concat "tecnologia,logistica,graficas,herramientas,turismo,deportes," @custom.bloque_0_tag))}}
+                            {{> "post-card" lazyLoad=true}}
+                        {{/unless}}
+                    {{/foreach}}
+                {{/match}}
+
+                {{!-- Tag and author pages --}}
+                {{#match feed "archive"}}
+                    {{#foreach posts}}
+                        {{> "post-card" lazyLoad=true showDate=true}}
+                    {{/foreach}}
+                {{/match}}
+
+            </div>
+        </main>
+    </div>
+</section>
+
+<section class="gh-container gh-outer">
+    <div class="gh-container-inner gh-inner">
+        <main class="gh-main">
+            <div class="gh-feed">
+
+                {{#match pagination.pages ">" 1}}
+                    <div class="gh-more is-title">
+                        <a href="{{@site.url}}/page/2">See all {{> "icons/arrow"}}</a>
+                    </div>
+                {{/match}}
+            </div>
+        </main>
+
+        {{#if showSidebar}}
+            <aside class="gh-sidebar">
+                <div class="gh-sidebar-inner">
+                    <section class="gh-about">
+                        {{#if @site.icon}}
+                            <img class="gh-about-icon" src="{{@site.icon}}" alt="{{@site.title}}" loading="lazy">
+                        {{/if}}
+                        <h3 class="gh-about-title is-title">{{@site.title}}</h3>
+                        {{#if @site.description}}
+                            <p class="gh-about-description is-body">{{@site.description}}</p>
+                        {{/if}}
+                        {{#if @site.members_enabled}}
+                            {{#unless @member}}
+                                <button class="gh-button" data-portal="signup">Subscribe</button>
+                            {{else}}
+                                {{#if @site.paid_members_enabled}}
+                                    {{#unless @member.paid}}
+                                        <button class="gh-button" data-portal="upgrade">Upgrade</button>
+                                    {{/unless}}
+                                {{/if}}
+                            {{/unless}}
+                        {{/if}}
+                    </section>
+                    {{#if @site.recommendations_enabled}}
+                        <section class="gh-recommendations">
+                            <h4 class="gh-sidebar-title">Recommendations</h4>
+                            {{recommendations}}
+                            <button data-portal="recommendations">See all {{> "icons/arrow"}}</button>
+                        </section>
+                    {{/if}}
+                </div>
+            </aside>
+        {{/if}}
+    </div>
+</section>

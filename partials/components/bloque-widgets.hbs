@@ -1,0 +1,43 @@
+<style>
+    .bloque-widgets {
+        margin-top: 20px;
+    }
+    .bloque-widgets .gh-inner {
+        background-color: #f5f5ec;
+        padding: 24px;
+        border-radius: 24px;
+    }
+    .bloque-widgets .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .widgets-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+    }
+    /* Ajustes para que los widgets tengan la misma altura y alineación */
+    .widgets-grid .widget-niveles,
+    .widgets-grid .widget-pib,
+    .widgets-grid .widget-nexo-careers {
+        height: 100%;
+    }
+    
+    @media (max-width: 1200px) { .widgets-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 767px) { .widgets-grid { grid-template-columns: 1fr; } }
+</style>
+<section class="gh-outer bloque-widgets">
+    <div class="gh-inner">
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                Dashboards
+            </span>
+        </h2>
+        <div class="widgets-grid">
+            {{> "components/widget-niveles"}}
+            {{> "components/widget-pib"}}
+            {{> "components/widget-careers"}}
+        </div>
+    </div>
+</section>

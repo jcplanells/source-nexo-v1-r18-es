@@ -1,0 +1,35 @@
+<section class="graficas-block gh-cta" style="display: block;">
+    <div class="gh-cta-inner" style="background-color: #f5f5ec;">
+        <h2 class="gh-cta-title" style="text-align: left; margin-bottom: 15px; width: 100%;">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                <a href="{{@site.url}}/tag/turismo/" style="text-decoration: none; color: inherit;">Turismo</a>
+            </span>
+        </h2>
+        <div class="gh-posts-grid" style="margin-bottom: 10px;">
+            {{#get "posts" filter="tag:turismo" limit="4" include="tags,authors"}}
+                {{#foreach posts}}
+                    <article class="gh-post-card">
+                        <a class="gh-post-card-image" href="{{url}}">
+                            {{#if feature_image}}
+                                <img src="{{feature_image}}" alt="{{title}}" loading="lazy">
+                            {{/if}}
+                        </a>
+                        <div class="gh-post-card-content" style="margin-top: 12px;">
+                            <h3 class="gh-card-title" style="font-size: 1.8rem; margin-bottom: 6px;">
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                            <div class="gh-card-excerpt" style="font-size: 1.4rem; line-height: 1.4;">
+                                {{excerpt words="15"}}
+                            </div>
+                        </div>
+                    </article>
+                {{/foreach}}
+            {{else}}
+                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>turismo</strong>.</p>
+            {{/get}}
+        </div>
+        <div style="text-align: right; margin-top: 5px; width: 100%;">
+            <a href="{{@site.url}}/tag/turismo/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+        </div>
+    </div>
+</section>
