@@ -1,67 +1,57 @@
-{{#if @custom.bloque_0_tag}}
 <style>
-    .bloque-0 {
+    .bloque-internacionales {
         padding-top: 20px;
         padding-bottom: 20px;
         margin-top: 20px;
     }
-    .bloque-0 .gh-container-title {
+    .bloque-internacionales .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-0 {
+    .grid-bloque-internacionales {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 32px;
     }
-    {{#match @custom.bloque_0_cantidad "=" "3"}}
-    .grid-bloque-0 { grid-template-columns: repeat(3, 1fr); }
-    {{/match}}
-    {{#match @custom.bloque_0_cantidad "=" "5"}}
-    .grid-bloque-0 { grid-template-columns: repeat(5, 1fr); }
-    {{/match}}
-    {{#match @custom.bloque_0_cantidad "=" "6"}}
-    .grid-bloque-0 { grid-template-columns: repeat(3, 1fr); }
-    {{/match}}
     @media (max-width: 991px) {
-        .grid-bloque-0 {
+        .grid-bloque-internacionales {
             grid-template-columns: repeat(2, 1fr);
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-0 {
+        .grid-bloque-internacionales {
             grid-template-columns: 1fr;
         }
     }
-    .card-bloque-0 img {
+    .card-bloque-internacionales img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 12px;
     }
-    .card-bloque-0 h3 {
+    .card-bloque-internacionales h3 {
         font-size: 1.8rem;
         line-height: 1.2;
         margin: 0;
     }
-    .card-bloque-0 h3 a {
+    .card-bloque-internacionales h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
 </style>
-<section class="gh-outer bloque-0">
+<section class="gh-outer bloque-internacionales">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                <a href="{{@site.url}}/tag/{{#if @custom.bloque_0_tag}}{{@custom.bloque_0_tag}}{{else}}empresas{{/if}}/" style="text-decoration: none; color: inherit;">{{#if @custom.bloque_0_titulo}}{{@custom.bloque_0_titulo}}{{else}}Empresas{{/if}}</a>
+                <a href="{{@site.url}}/tag/internacionales/" style="text-decoration: none; color: inherit;">Internacionales</a>
             </span>
         </h2>
-        <div class="grid-bloque-0">
-            {{#get "posts" filter=(concat "tag:" @custom.bloque_0_tag) limit=@custom.bloque_0_cantidad include="tags,authors"}}
+        <div class="grid-bloque-internacionales">
+            {{#get "posts" filter="tag:internacionales" limit="4" include="tags,authors"}}
                 {{#foreach posts}}
-                    <article class="card-bloque-0">
+                    <article class="card-bloque-internacionales">
                         {{#if feature_image}}
                             <a href="{{url}}">
                                 <img src="{{feature_image}}" alt="{{title}}">
@@ -73,12 +63,11 @@
                     </article>
                 {{/foreach}}
             {{else}}
-                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts. Revisa que el tag <strong>{{@custom.bloque_0_tag}}</strong> sea correcto (slug en minúsculas).</p>
+                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>internacionales</strong>.</p>
             {{/get}}
         </div>
         <div style="text-align: right; margin-top: 15px;">
-            <a href="{{@site.url}}/tag/{{#if @custom.bloque_0_tag}}{{@custom.bloque_0_tag}}{{else}}empresas{{/if}}/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            <a href="{{@site.url}}/tag/internacionales/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
         </div>
     </div>
 </section>
-{{/if}}

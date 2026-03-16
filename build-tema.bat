@@ -33,7 +33,7 @@ echo.
 
 :: Paso 4: Asigna versión del tema
 echo Renombrando archivo zip
-copy dist\source-nexo-v1.zip dist\source-nexo-v1-r32-es.zip
+copy dist\source-nexo-v1.zip dist\source-nexo-v1-r33-es.zip
 echo.
 
 :: Fin

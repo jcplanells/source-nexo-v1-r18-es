@@ -23,7 +23,7 @@
                 ============================================================ --}}
                 {{#is "home, index"}}
                     {{#match @custom.header_style "!=" "Highlight"}}
-                        {{#get "posts" filter=(concat "featured:true+tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag) include="authors" limit="1" order="published_at desc"}}
+                        {{#get "posts" filter="featured:true" include="authors" limit="1" order="published_at desc"}}
                             {{#foreach posts}}
                                 {{> "post-card" lazyLoad=false}}
                             {{/foreach}}
@@ -36,7 +36,7 @@
                     {{#match @custom.header_style "Highlight"}}
                         {{#if @custom.show_featured_posts}}
                             {{#match posts.length ">=" 4}}
-                                {{#get "posts" include="authors" limit="16" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                                {{#get "posts" include="authors" limit="16"}}
                                     {{#foreach posts from="5"}}
                                         {{> "post-card" lazyLoad=true}}
                                     {{/foreach}}
@@ -44,7 +44,7 @@
                             {{/match}}
                         {{else}}
                             {{#match posts.length ">=" 10}}
-                                {{#get "posts" include="authors" limit="22" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                                {{#get "posts" include="authors" limit="22"}}
                                     {{#foreach posts from="11"}}
                                         {{> "post-card" lazyLoad=true}}
                                     {{/foreach}}
@@ -53,14 +53,14 @@
                         {{/if}}
                     {{else match @custom.header_style "Magazine"}}
                         {{#match posts.length ">=" 7}}
-                            {{#get "posts" include="authors" limit="19" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                            {{#get "posts" include="authors" limit="19"}}
                                 {{#foreach posts from="8"}}
                                     {{> "post-card" lazyLoad=true}}
                                 {{/foreach}}
                             {{/get}}
                         {{/match}}
                     {{else}}
-                        {{#get "posts" include="authors" limit="11" filter=(concat "tag:-tecnologia+tag:-logistica+tag:-graficas+tag:-herramientas+tag:-turismo+tag:-deportes" "+tag:-" @custom.bloque_0_tag)}}
+                        {{#get "posts" include="authors" limit="11"}}
                             {{#foreach posts}}
                                 {{> "post-card" lazyLoad=true}}
                             {{/foreach}}

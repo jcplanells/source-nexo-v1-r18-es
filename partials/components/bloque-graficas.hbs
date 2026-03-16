@@ -1,57 +1,56 @@
 <style>
-    .bloque-2 {
-        padding-top: 0;
-        padding-bottom: 10px;
-        margin-top: 0;
+    .bloque-graficas {
+        margin-top: 20px;
     }
-    .bloque-2 .gh-container-title {
+    .bloque-graficas .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-2 {
+    .grid-bloque-graficas {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 32px;
     }
     @media (max-width: 991px) {
-        .grid-bloque-2 {
+        .grid-bloque-graficas {
             grid-template-columns: repeat(2, 1fr);
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-2 {
+        .grid-bloque-graficas {
             grid-template-columns: 1fr;
         }
     }
-    .card-bloque-2 img {
+    .card-bloque-graficas img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 12px;
     }
-    .card-bloque-2 h3 {
+    .card-bloque-graficas h3 {
         font-size: 1.8rem;
         line-height: 1.2;
         margin: 0;
     }
-    .card-bloque-2 h3 a {
+    .card-bloque-graficas h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
 </style>
-<section class="gh-outer bloque-2">
+<section class="gh-outer bloque-graficas">
     <div class="gh-inner">
             <h2 class="gh-container-title">
                 <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                    <a href="https://nexo.la/tag/tecnologia/" style="text-decoration: none; color: inherit;">Tecnología</a>
+                    <a href="https://nexo.la/tag/graficas/" style="text-decoration: none; color: inherit;">Últimos datos de nexo</a>
                 </span>
             </h2>
-            <div class="grid-bloque-2">
-                {{#get "posts" filter="tag:tecnologia" limit="5" include="authors"}}
+
+            <div class="grid-bloque-graficas">
+                {{#get "posts" filter="tag:graficas" limit="4" include="authors"}}
                     {{#foreach posts}}
-                        <article class="card-bloque-2">
+                        <article class="card-bloque-graficas">
                             {{#if feature_image}}
                                 <a href="{{url}}">
                                     <img src="{{feature_image}}" alt="{{title}}">
@@ -65,7 +64,7 @@
                 {{/get}}
             </div>
             <div style="text-align: right; margin-top: 15px;">
-                <a href="https://nexo.la/tag/tecnologia/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+                <a href="https://nexo.la/tag/graficas/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
             </div>
     </div>
 </section>

@@ -1,0 +1,64 @@
+<style>
+    .bloque-gobierno {
+        margin-top: 20px;
+        margin-bottom: 40px;
+    }
+    .bloque-gobierno .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-bloque-gobierno {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    @media (max-width: 991px) {
+        .grid-bloque-gobierno {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-bloque-gobierno {
+            grid-template-columns: 1fr;
+        }
+    }
+    .card-bloque-gobierno img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 12px;
+    }
+    .card-bloque-gobierno h3 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-bloque-gobierno h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+</style>
+
+<section class="gh-outer bloque-gobierno">
+    <div class="gh-inner">
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                Gobierno
+            </span>
+        </h2>
+        <div class="grid-bloque-gobierno">
+            {{#get "posts" filter="tag:gobierno" limit="4" include="authors"}}
+                {{#foreach posts}}
+                    <article class="card-bloque-gobierno">
+                        {{#if feature_image}}
+                            <a href="{{url}}"><img src="{{feature_image}}" alt="{{title}}"></a>
+                        {{/if}}
+                        <h3><a href="{{url}}">{{title}}</a></h3>
+                    </article>
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>
