@@ -1,23 +1,26 @@
 {{!< default}}
 
-{{> "components/header" headerStyle=@custom.header_style}}
+{{#if @custom.preview_home}}
+    {{> "home-alt"}}
+{{else}}
+    {{> "components/header" headerStyle=@custom.header_style}}
 
-{{#match @custom.header_style "!=" "Highlight"}}
-    {{!> "components/featured" showFeatured=@custom.show_featured_posts limit=4}}
-{{/match}}
+    {{#match @custom.header_style "!=" "Highlight"}}
+        {{!> "components/featured" showFeatured=@custom.show_featured_posts limit=4}}
+    {{/match}}
 
-{{> "components/bloque-0"}}
-{{> "components/bloque-extra"}}
-{{> "components/bloque-graficas"}}
-{{> "components/bloque-empresas"}}
-{{> "components/bloque-logistica"}}
-{{> "components/bloque-tecnologia"}}
-{{> "components/bloque-living"}}
-{{> "components/bloque-emprendimiento"}}
-{{> "components/bloque-turismo"}}
-{{> "components/bloque-widgets"}}
-{{> "components/bloque-deportes"}}
-{{> "components/bloque-internacionales"}}
-{{> "components/bloque-gobierno"}}
+    {{> "components/bloque-0"}}
+    {{> "components/bloque-graficas"}}
+    {{> "components/bloque-empresas"}}
+    {{> "components/bloque-logistica"}}
+    {{> "components/bloque-tecnologia"}}
+    {{> "components/bloque-living"}}
+    {{> "components/bloque-emprendimiento"}}
+    {{> "components/bloque-turismo"}}
+    {{> "components/bloque-widgets"}}
+    {{> "components/bloque-deportes"}}
+    {{> "components/bloque-internacionales"}}
+    {{> "components/bloque-gobierno"}}
 
-{{!-- {{> "components/post-list" feed="home" postFeedStyle=@custom.post_feed_style showTitle=true showSidebar=@custom.show_publication_info_sidebar}} --}}
+    {{!-- {{> "components/post-list" feed="home" postFeedStyle=@custom.post_feed_style showTitle=true showSidebar=@custom.show_publication_info_sidebar}} --}}
+{{/if}}

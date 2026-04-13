@@ -1,0 +1,16 @@
+{{!-- Portada alterna para previsualización --}}
+
+{{> "components/header" headerStyle=@custom.header_style}}
+
+<div class="preview-banner" style="padding:16px;background:#fff6; text-align:center;">
+    <strong>Portada alterna (preview)</strong>
+</div>
+
+{{#match @custom.header_style "!=" "Highlight"}}
+    {{!-- Aquí puedes insertar un layout de featured distinto para pruebas --}}
+{{/match}}
+
+{{> "components/bloque-0"}}
+{{> "components/bloque-graficas"}}
+{{> "components/bloque-empresas"}}
+{{!-- Puedes personalizar/ordenar los bloques para la versión alterna --}}

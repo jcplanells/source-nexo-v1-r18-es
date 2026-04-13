@@ -171,6 +171,12 @@
         "group": "homepage",
         "visibility": "header_style:[Highlight, Magazine]"
       },
+      "preview_home": {
+        "type": "boolean",
+        "default": false,
+        "group": "homepage",
+        "description": "Si está activado, usa la plantilla alternativa `home-alt` para previsualizar cambios"
+      },
       "post_feed_style": {
         "type": "select",
         "options": [
