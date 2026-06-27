@@ -49,7 +49,7 @@
             </span>
         </h2>
         <div class="grid-bloque-deportes">
-            {{#get "posts" filter="tag:deportes" limit="4" include="tags,authors"}}
+            {{#get "posts" filter="primary_tag:deportes" limit="4" include="tags,authors"}}
                 {{#foreach posts}}
                     <article class="card-bloque-deportes">
                         {{#if feature_image}}

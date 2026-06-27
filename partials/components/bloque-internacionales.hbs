@@ -49,7 +49,7 @@
             </span>
         </h2>
         <div class="grid-bloque-internacionales">
-            {{#get "posts" filter="tag:internacionales" limit="4" include="tags,authors"}}
+            {{#get "posts" filter="primary_tag:internacionales" limit="4" include="tags,authors"}}
                 {{#foreach posts}}
                     <article class="card-bloque-internacionales">
                         {{#if feature_image}}

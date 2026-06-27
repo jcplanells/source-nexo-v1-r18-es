@@ -1,8 +1,8 @@
 <style>
     .bloque-living {
+        margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
-        margin-top: 20px;
     }
     .bloque-living .gh-container-title {
         margin-bottom: 30px;
@@ -11,64 +11,166 @@
     }
     .grid-bloque-living {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 2fr 1fr 1fr;
         gap: 32px;
+        align-items: start;
+    }
+    /* Col 1: noticia destacada grande */
+    .living-card-featured img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 14px;
+    }
+    .living-card-featured h3 {
+        font-size: clamp(2rem, 1.4vw + 1.4rem, 3.2rem);
+        font-weight: 700;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        margin: 0;
+    }
+    .living-card-featured h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+    .living-card-featured .living-excerpt {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        font-size: 1.5rem;
+        line-height: 1.6;
+        color: #555;
+        margin: 12px 0 8px;
+    }
+    .living-card-featured .living-meta {
+        font-size: 1.3rem;
+        color: #888;
+    }
+    /* Col 2: 2 notas medianas */
+    .living-posts-mid {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding-left: 32px;
+        border-left: 1px solid var(--color-border, #e5e7eb);
+    }
+    .living-card-mid img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+    .living-card-mid h3 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .living-card-mid h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+    /* Col 3: widget banner */
+    .living-sidebar {
+        padding-left: 32px;
+        border-left: 1px solid var(--color-border, #e5e7eb);
+        position: sticky;
+        top: 20px;
     }
     @media (max-width: 991px) {
         .grid-bloque-living {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr 1fr;
+        }
+        .living-sidebar {
+            display: none;
         }
     }
     @media (max-width: 767px) {
         .grid-bloque-living {
             grid-template-columns: 1fr;
         }
-    }
-    .card-bloque-living img {
-        width: 100%;
-        aspect-ratio: 16/9;
-        object-fit: cover;
-        border-radius: 3px;
-        margin-bottom: 12px;
-    }
-    .card-bloque-living h3 {
-        font-size: 1.8rem;
-        line-height: 1.2;
-        margin: 0;
-    }
-    .card-bloque-living h3 a {
-        color: var(--color-base, #000);
-        text-decoration: none;
+        .living-posts-mid {
+            padding-left: 0;
+            border-left: none;
+        }
+        .living-card-mid {
+            display: flex;
+            flex-direction: row;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .living-card-mid > a {
+            flex-shrink: 0;
+            width: 110px;
+        }
+        .living-card-mid img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            margin-bottom: 0;
+        }
+        .living-card-mid h3 {
+            flex: 1;
+        }
     }
 </style>
+
 <section class="gh-outer bloque-living">
     <div class="gh-inner">
-            <h2 class="gh-container-title">
-                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                    <a href="https://nexo.la/tag/bienes-raices/" style="text-decoration: none; color: inherit;">Bienes Raíces</a>
-                </span>
-            </h2>
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                <a href="{{@site.url}}/tag/bienes-raices/" style="text-decoration: none; color: inherit;">Bienes Raíces</a>
+            </span>
+        </h2>
 
-            <div class="grid-bloque-living">
-                {{#get "posts" filter="tag:bienes-raices" limit="4" include="authors"}}
-                    {{#foreach posts}}
-                        <article class="card-bloque-living">
+        <div class="grid-bloque-living">
+
+            {{#get "posts" filter="primary_tag:bienes-raices" limit="3" include="authors"}}
+                {{!-- Col 1: noticia grande --}}
+                {{#foreach posts}}
+                    {{#if @first}}
+                        <article class="living-card-featured">
                             {{#if feature_image}}
                                 <a href="{{url}}">
                                     <img src="{{feature_image}}" alt="{{title}}">
                                 </a>
                             {{/if}}
-                            <h3>
-                                <a href="{{url}}">{{title}}</a>
-                            </h3>
+                            <h3><a href="{{url}}">{{title}}</a></h3>
+                            <p class="living-excerpt">{{excerpt}}</p>
+                            <span class="living-meta">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
                         </article>
+                    {{/if}}
+                {{/foreach}}
+
+                {{!-- Col 2: notas 2 y 3 --}}
+                <div class="living-posts-mid">
+                    {{#foreach posts}}
+                        {{#unless @first}}
+                            <article class="living-card-mid">
+                                {{#if feature_image}}
+                                    <a href="{{url}}">
+                                        <img src="{{feature_image}}" alt="{{title}}">
+                                    </a>
+                                {{/if}}
+                                <h3><a href="{{url}}">{{title}}</a></h3>
+                            </article>
+                        {{/unless}}
                     {{/foreach}}
-                {{else}}
-                    <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>bienes-raices</strong>.</p>
-                {{/get}}
+                </div>
+            {{else}}
+                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>bienes-raices</strong>.</p>
+            {{/get}}
+
+            {{!-- Col 3: widget Nexo Living --}}
+            <div class="living-sidebar">
+                {{> "components/widget-living-banner"}}
             </div>
-            <div style="text-align: right; margin-top: 15px;">
-                <a href="https://nexo.la/tag/bienes-raices/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
-            </div>
+
+        </div>
+
+        <div style="text-align: right; margin-top: 15px;">
+            <a href="{{@site.url}}/tag/bienes-raices/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+        </div>
     </div>
 </section>

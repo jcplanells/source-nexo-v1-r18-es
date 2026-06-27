@@ -1,0 +1,104 @@
+<style>
+.cta-a {
+    border-left: 3px solid #34CC03;
+    background: #F1F2E9;
+    padding: 24px 28px;
+    margin: 32px 0;
+    border-radius: 0 12px 12px 0;
+}
+.cta-a-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #34CC03;
+    margin: 0 0 8px;
+}
+.cta-a-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #020202;
+    line-height: 1.25;
+    margin: 0 0 8px;
+}
+.cta-a-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #020202;
+    line-height: 1.5;
+    margin: 0 0 18px;
+}
+.cta-a-form {
+    display: flex;
+    gap: 8px;
+    max-width: 400px;
+}
+.cta-a-input {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    padding: 10px 18px;
+    border: 1.5px solid #122805;
+    border-radius: 100px;
+    background: #fff;
+    color: #020202;
+    outline: none;
+    min-width: 0;
+}
+.cta-a-input:focus {
+    border-color: #34CC03;
+    box-shadow: 0 0 0 3px rgba(52,204,3,0.2);
+}
+.cta-a-input::placeholder { color: #888; }
+.cta-a-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 10px 24px;
+    background: #34CC03;
+    color: #020202;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.cta-a-btn:hover { background: #9CF469; }
+.cta-a-msg { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; margin-top: 6px; color: #34CC03; }
+@media (max-width: 500px) {
+    .cta-a-form { flex-direction: column; }
+    .cta-a-btn { width: 100%; }
+}
+</style>
+
+<div id="cta-inline-wrap" class="cta-a" style="display:none">
+    <p class="cta-a-eyebrow">Newsletter gratuito</p>
+    <h3 class="cta-a-title">Lo más importante de Panamá, cada mañana.</h3>
+    <p class="cta-a-sub">Miles de panameños ya lo reciben. Sin spam, sin ruido.</p>
+    <div class="mauticform-error" id="mauticform_a_error"></div>
+    <div class="mauticform-message cta-a-msg" id="mauticform_a_message"></div>
+    <form autocomplete="false" role="form" method="post"
+          action="https://mautic.adulting.club/form/submit?formId=2"
+          id="mauticform_a"
+          data-mautic-form="registronexoa"
+          enctype="multipart/form-data">
+        <div class="cta-a-form">
+            <input type="email"
+                   name="mauticform[correo]"
+                   id="mauticform_input_a_correo"
+                   class="cta-a-input"
+                   placeholder="tucorreo@ejemplo.com"
+                   required>
+            <button type="submit"
+                    name="mauticform[submit]"
+                    value="1"
+                    class="cta-a-btn">Suscribirme</button>
+        </div>
+        <input type="hidden" name="mauticform[formId]" value="2">
+        <input type="hidden" name="mauticform[return]" value="">
+        <input type="hidden" name="mauticform[formName]" value="registronexo">
+    </form>
+</div>

@@ -1,0 +1,230 @@
+<style>
+.nexo-elec {
+    font-family: var(--font-sans, Arial, sans-serif);
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    overflow: hidden;
+    max-width: 860px;
+    margin: 32px auto;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+}
+.nexo-elec-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 800;
+    padding: 20px 16px 14px;
+    color: #111;
+    border-bottom: 1px solid #eee;
+    letter-spacing: -0.02em;
+}
+.nexo-elec-main {
+    display: flex;
+    align-items: stretch;
+    min-height: 110px;
+}
+.nexo-elec-photo {
+    width: 90px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.nexo-elec-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+}
+.nexo-elec-block {
+    flex: 1;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+.nexo-elec-block-a { text-align: left; }
+.nexo-elec-block-b { text-align: right; align-items: flex-end; }
+.nexo-elec-nombre {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.01em;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.nexo-elec-partido {
+    font-size: 1.0rem;
+    color: rgba(255,255,255,0.8);
+    margin-top: 2px;
+    line-height: 1.2;
+}
+.nexo-elec-pct {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #fff;
+    line-height: 1;
+    margin-top: 8px;
+    letter-spacing: -0.02em;
+}
+.nexo-elec-votos {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.85);
+    margin-top: 3px;
+}
+.nexo-elec-diff {
+    flex-shrink: 0;
+    width: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    position: relative;
+    z-index: 1;
+}
+.nexo-elec-diff-box {
+    text-align: center;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    padding: 6px 8px;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.nexo-elec-diff-pct {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #333;
+    line-height: 1;
+}
+.nexo-elec-diff-votos {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 2px;
+    line-height: 1.2;
+}
+.nexo-elec-stats {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 16px;
+    background: #f8f8f8;
+    border-top: 1px solid #eee;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.nexo-elec-stat {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+}
+.nexo-elec-stat strong {
+    color: #111;
+    font-weight: 700;
+}
+.nexo-elec-footer {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #999;
+    padding: 8px 16px;
+    background: #f8f8f8;
+    border-top: 1px solid #eee;
+}
+.nexo-elec-loading {
+    text-align: center;
+    padding: 32px;
+    color: #999;
+    font-size: 1.4rem;
+}
+
+@media (max-width: 600px) {
+    .nexo-elec-photo { width: 60px; }
+    .nexo-elec-pct { font-size: 2rem; }
+    .nexo-elec-nombre { font-size: 1.1rem; white-space: normal; }
+    .nexo-elec-partido { display: none; }
+    .nexo-elec-diff { width: 56px; }
+    .nexo-elec-diff-pct { font-size: 1rem; }
+    .nexo-elec-block { padding: 10px 10px; }
+    .nexo-elec-stat { font-size: 1.1rem; }
+    .nexo-elec-title { font-size: 1.7rem; }
+}
+</style>
+
+<div id="nexo-elec-widget" class="nexo-elec">
+    <div class="nexo-elec-loading">Cargando datos electorales…</div>
+</div>
+
+<script>
+(function () {
+    var JSON_URL = 'https://opt.nexo.la/assets/json/elecciones_peru.json';
+
+    function num(n) {
+        return n.toLocaleString('es-PE');
+    }
+    function pct(n) {
+        return n.toFixed(2).replace('.', ',') + '%';
+    }
+    function timeAgo(iso) {
+        var diff = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+        if (diff < 1) return 'hace un momento';
+        if (diff < 60) return 'hace ' + diff + (diff === 1 ? ' minuto' : ' minutos');
+        var h = Math.floor(diff / 60);
+        return 'hace ' + h + (h === 1 ? ' hora' : ' horas');
+    }
+
+    function render(d) {
+        var a = d.candidato_a;
+        var b = d.candidato_b;
+        var s = d.estadisticas;
+        var diffPct = Math.abs(a.porcentaje - b.porcentaje).toFixed(2).replace('.', ',') + '%';
+        var diffVotos = num(Math.abs(a.votos - b.votos)) + ' votos';
+
+        var html =
+            '<div class="nexo-elec-title">' + d.titulo + '</div>' +
+            '<div class="nexo-elec-main">' +
+                '<div class="nexo-elec-photo">' +
+                    (a.foto ? '<img src="' + a.foto + '" alt="' + a.nombre + '">' : '') +
+                '</div>' +
+                '<div class="nexo-elec-block nexo-elec-block-a" style="background:' + a.color + ';flex:' + a.porcentaje + '">' +
+                    '<div class="nexo-elec-nombre">' + a.nombre + '</div>' +
+                    '<div class="nexo-elec-partido">' + a.partido + '</div>' +
+                    '<div class="nexo-elec-pct">' + pct(a.porcentaje) + '</div>' +
+                    '<div class="nexo-elec-votos">' + num(a.votos) + ' votos</div>' +
+                '</div>' +
+                '<div class="nexo-elec-diff">' +
+                    '<div class="nexo-elec-diff-box">' +
+                        '<div class="nexo-elec-diff-pct">' + diffPct + '</div>' +
+                        '<div class="nexo-elec-diff-votos">' + diffVotos + '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="nexo-elec-block nexo-elec-block-b" style="background:' + b.color + ';flex:' + b.porcentaje + '">' +
+                    '<div class="nexo-elec-nombre">' + b.nombre + '</div>' +
+                    '<div class="nexo-elec-partido">' + b.partido + '</div>' +
+                    '<div class="nexo-elec-pct">' + pct(b.porcentaje) + '</div>' +
+                    '<div class="nexo-elec-votos">' + num(b.votos) + ' votos</div>' +
+                '</div>' +
+                '<div class="nexo-elec-photo">' +
+                    (b.foto ? '<img src="' + b.foto + '" alt="' + b.nombre + '">' : '') +
+                '</div>' +
+            '</div>' +
+            '<div class="nexo-elec-stats">' +
+                '<span class="nexo-elec-stat">Actas procesadas <strong>' + pct(s.actas_procesadas) + '</strong></span>' +
+                '<span class="nexo-elec-stat">Votos en blanco <strong>' + pct(s.votos_en_blanco_pct) + '</strong></span>' +
+                '<span class="nexo-elec-stat">Votos nulos <strong>' + num(s.votos_nulos) + '</strong></span>' +
+                '<span class="nexo-elec-stat">Votos válidos <strong>' + num(s.votos_validos) + '</strong></span>' +
+            '</div>' +
+            '<div class="nexo-elec-footer">Última actualización ' + timeAgo(d.actualizado) + '</div>';
+
+        document.getElementById('nexo-elec-widget').innerHTML = html;
+        document.getElementById('nexo-elec-widget').classList.remove('nexo-elec-loading');
+    }
+
+    fetch(JSON_URL + '?t=' + Date.now())
+        .then(function (r) { return r.json(); })
+        .then(render)
+        .catch(function () {
+            document.getElementById('nexo-elec-widget').innerHTML =
+                '<div class="nexo-elec-loading">No se pudo cargar la información electoral.</div>';
+        });
+}());
+</script>

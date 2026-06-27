@@ -1,0 +1,127 @@
+<style>
+    .bloque-economia {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-economia .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-bloque-economia {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    @media (max-width: 991px) {
+        .grid-bloque-economia {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-bloque-economia {
+            grid-template-columns: 1fr;
+        }
+    }
+    .card-bloque-economia img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 12px;
+    }
+    .card-bloque-economia h3 {
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-bloque-economia h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+    .bloque-economia-reading {
+        margin: 6px 0 0;
+        font-size: 1.2rem;
+        color: var(--color-secondary-text, #757575);
+    }
+</style>
+<section class="gh-outer bloque-economia">
+    <div class="gh-inner">
+            <h2 class="gh-container-title">
+                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                    <a href="https://nexo.la/tag/economia/" style="text-decoration: none; color: inherit;">Economía y Finanzas</a>
+                </span>
+            </h2>
+
+            <div class="grid-bloque-economia" id="grid-bloque-economia">
+                {{#get "posts" filter="primary_tag:economia,primary_tag:finanzas" limit="10" include="authors"}}
+                    {{#foreach posts}}
+                        <article class="card-bloque-economia">
+                            {{#if feature_image}}
+                                <a href="{{url}}">
+                                    <img src="{{feature_image}}" alt="{{title}}">
+                                </a>
+                            {{/if}}
+                            <h3>
+                                <a href="{{url}}">{{title}}</a>
+                            </h3>
+                            <p class="bloque-economia-reading">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</p>
+                        </article>
+                    {{/foreach}}
+                {{/get}}
+            </div>
+            <script>
+            (function () {
+                function normalizeUrl(url) {
+                    return url.split('?')[0].replace(/\/$/, '').toLowerCase();
+                }
+
+                function filterEconomia() {
+                    var headerUrls = new Set();
+
+                    // Recoger URLs de las zonas destacadas del header (top1, top2, top3) y la fila inferior
+                    // Excluimos #featured-feed (Las Últimas) para no bloquear posts recientes
+                    var featuredZones = document.querySelectorAll('.gh-portada-grid, #bloque-top-extra-grid');
+                    featuredZones.forEach(function (zone) {
+                        zone.querySelectorAll('a[href]').forEach(function (a) {
+                            var n = normalizeUrl(a.href);
+                            if (n && n.indexOf('/tag/') === -1 && n.indexOf('/author/') === -1) {
+                                headerUrls.add(n);
+                            }
+                        });
+                    });
+
+                    var cards = Array.from(document.querySelectorAll('#grid-bloque-economia .card-bloque-economia'));
+                    var shown = 0;
+                    var toRemove = [];
+
+                    cards.forEach(function (card) {
+                        if (shown >= 4) {
+                            toRemove.push(card);
+                            return;
+                        }
+                        var link = card.querySelector('a[href]');
+                        var url = link ? normalizeUrl(link.href) : '';
+                        if (url && headerUrls.has(url)) {
+                            toRemove.push(card);
+                        } else {
+                            shown++;
+                        }
+                    });
+
+                    toRemove.forEach(function (card) { card.remove(); });
+                }
+
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', filterEconomia);
+                } else {
+                    filterEconomia();
+                }
+            }());
+            </script>
+            <div style="text-align: right; margin-top: 15px;">
+                <a href="https://nexo.la/tag/economia/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            </div>
+    </div>
+</section>

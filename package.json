@@ -84,6 +84,33 @@
     },
     "card_assets": true,
     "custom": {
+      "show_alert_bar": {
+        "type": "boolean",
+        "default": false,
+        "group": "homepage",
+        "description": "Activa el banner de alerta/evento especial en la portada"
+      },
+      "alert_bar_badge": {
+        "type": "text",
+        "default": "🗳️ Especial",
+        "group": "homepage",
+        "description": "Etiqueta del banner (ej: 🔴 Urgente, 📊 Datos)",
+        "visibility": "show_alert_bar:true"
+      },
+      "alert_bar_text": {
+        "type": "text",
+        "default": "",
+        "group": "homepage",
+        "description": "Texto del banner (máx. ~240 caracteres)",
+        "visibility": "show_alert_bar:true"
+      },
+      "alert_bar_link": {
+        "type": "text",
+        "default": "",
+        "group": "homepage",
+        "description": "URL del enlace al final del banner (opcional)",
+        "visibility": "show_alert_bar:true"
+      },
       "bloque_0_titulo": {
         "type": "text",
         "default": "Empresas",
@@ -149,33 +176,14 @@
           "Off"
         ],
         "description": "Landing is recommended for all sites, Highlight & Magazine for those with more content",
-        "default": "Landing",
+        "default": "Highlight",
         "group": "homepage"
-      },
-      "header_text": {
-        "type": "text",
-        "group": "homepage",
-        "description": "Defaults to site description when empty",
-        "visibility": "header_style:[Landing, Search]"
-      },
-      "background_image": {
-        "type": "boolean",
-        "default": true,
-        "description": "Use the publication cover set on the Brand tab as your background",
-        "group": "homepage",
-        "visibility": "header_style:[Landing, Search]"
       },
       "show_featured_posts": {
         "type": "boolean",
         "default": false,
         "group": "homepage",
         "visibility": "header_style:[Highlight, Magazine]"
-      },
-      "preview_home": {
-        "type": "boolean",
-        "default": false,
-        "group": "homepage",
-        "description": "Si está activado, usa la plantilla alternativa `home-alt` para previsualizar cambios"
       },
       "post_feed_style": {
         "type": "select",
@@ -196,16 +204,6 @@
         "type": "boolean",
         "default": false,
         "group": "homepage"
-      },
-      "show_post_metadata": {
-        "type": "boolean",
-        "default": true,
-        "group": "post"
-      },
-      "enable_drop_caps_on_posts": {
-        "type": "boolean",
-        "default": false,
-        "group": "post"
       },
       "show_related_articles": {
         "type": "boolean",

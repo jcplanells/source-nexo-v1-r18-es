@@ -1,6 +1,6 @@
 <style>
     .bloque-extra {
-        margin-top: 20px;
+        margin-top: 40px;
         margin-bottom: 40px;
     }
     .bloque-extra .gh-container-title {
@@ -10,7 +10,7 @@
     }
     .grid-bloque-extra {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 32px;
     }
     @media (max-width: 991px) {
@@ -42,16 +42,11 @@
 </style>
 <section class="gh-outer bloque-extra">
     <div class="gh-inner">
-            <h2 class="gh-container-title">
-                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                    Destacados
-                </span>
-            </h2>
             <div class="grid-bloque-extra">
                 {{!-- Se revisa si el tag del bloque 0 existe para no crear un filtro inválido --}}
                 {{#if @custom.bloque_0_tag}}
-                    {{#get "posts" filter=(concat "featured:true+tag:-[" @custom.bloque_0_tag ",empresas,graficas,tecnologia,emprendimiento,logistica,turismo,gobierno]") limit="8" include="authors"}}
-                        {{#foreach posts from="5"}}
+                    {{#get "posts" filter=(concat "featured:true+tag:-[" @custom.bloque_0_tag ",empresas,graficas]") limit="6" include="authors"}}
+                        {{#foreach posts from="4"}}
                             <article class="card-bloque-extra">
                                 {{#if feature_image}}
                                     <a href="{{url}}"><img src="{{feature_image}}" alt="{{title}}"></a>
@@ -63,8 +58,8 @@
                         {{/foreach}}
                     {{/get}}
                 {{else}}
-                    {{#get "posts" filter="featured:true+tag:-[empresas,graficas,tecnologia,emprendimiento,logistica,turismo,gobierno]" limit="8" include="authors"}}
-                        {{#foreach posts from="5"}}
+                    {{#get "posts" filter="featured:true+tag:-[empresas,graficas]" limit="6" include="authors"}}
+                        {{#foreach posts from="4"}}
                             <article class="card-bloque-extra">
                                 {{#if feature_image}}
                                     <a href="{{url}}"><img src="{{feature_image}}" alt="{{title}}"></a>

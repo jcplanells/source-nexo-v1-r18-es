@@ -1,47 +1,41 @@
 <style>
-    .bloque-graficas {
+    .bloque-graficas-preview {
         margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
     }
-    .bloque-graficas .gh-container-title {
+    .bloque-graficas-preview .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-graficas {
+    .grid-bloque-graficas-preview {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         gap: 32px;
         align-items: start;
     }
     /* Col 1: noticia destacada grande */
-    .graficas-card-featured img {
+    .bgp-card-featured img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 14px;
     }
-    .graficas-card-featured h3 {
+    .bgp-card-featured h3 {
         font-size: clamp(2rem, 1.4vw + 1.4rem, 3.2rem);
         font-weight: 700;
         line-height: 1.15;
         letter-spacing: -0.02em;
         margin: 0;
     }
-    .graficas-card-featured h3 a {
+    .bgp-card-featured h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
-    .graficas-card-featured .graficas-featured-excerpt {
-        margin: 10px 0 0;
-        font-size: 1.5rem;
-        line-height: 1.5;
-        color: var(--color-secondary-text, #555);
-    }
     /* Col 2: 2 notas medianas */
-    .graficas-posts-mid {
+    .bgp-posts-mid {
         display: flex;
         flex-direction: column;
         gap: 24px;
@@ -49,35 +43,35 @@
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
-    .graficas-card-mid img {
+    .bgp-card-mid img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 10px;
     }
-    .graficas-card-mid h3 {
+    .bgp-card-mid h3 {
         font-size: 1.8rem;
         line-height: 1.2;
         margin: 0;
     }
-    .graficas-card-mid h3 a {
+    .bgp-card-mid h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
     /* Col 3: sidebar últimas / más leídas */
-    .graficas-sidebar {
+    .bgp-sidebar {
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
-    .graficas-tabs {
+    .bgp-tabs {
         display: flex;
         gap: 16px;
         margin-bottom: 16px;
         border-bottom: 1px solid var(--color-border, #e5e7eb);
         padding-bottom: 12px;
     }
-    .graficas-tab {
+    .bgp-tab {
         background: none;
         border: none;
         cursor: pointer;
@@ -89,16 +83,16 @@
         border-bottom: 2px solid transparent;
         transition: color 0.2s, border-color 0.2s;
     }
-    .graficas-tab.is-active {
+    .bgp-tab.is-active {
         color: var(--color-base, #000);
         border-bottom-color: var(--ghost-accent-color);
     }
-    .graficas-feed {
+    .bgp-feed {
         display: flex;
         flex-direction: column;
         gap: 0;
     }
-    .graficas-feed .gh-card-link {
+    .bgp-feed .gh-card-link {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -108,93 +102,75 @@
         text-decoration: none;
         color: inherit;
     }
-    .graficas-feed .gh-card-image {
+    .bgp-feed .gh-card-image {
         flex-shrink: 0;
         width: 72px;
         height: 54px;
         object-fit: cover;
         border-radius: 3px;
     }
-    .graficas-feed .gh-card-title {
+    .bgp-feed .gh-card-title {
         font-size: 1.4rem;
         line-height: 1.3;
         font-weight: 600;
         margin: 0;
         color: var(--color-base, #000);
     }
-    .graficas-feed .gh-leidas-num {
+    .bgp-feed .gh-leidas-num {
         color: var(--ghost-accent-color);
         font-weight: 700;
         margin-right: 4px;
     }
-    .graficas-feed-loading {
+    .bgp-feed-loading {
         font-size: 1.4rem;
         color: #888;
         padding: 12px 0;
     }
     /* Mostrar hora en "Las Últimas" del sidebar */
-    .graficas-sidebar .post-time {
+    .bgp-sidebar .post-time {
         display: inline !important;
         font-weight: 600;
     }
     @media (max-width: 991px) {
-        .grid-bloque-graficas {
+        .grid-bloque-graficas-preview {
             grid-template-columns: 1fr 1fr;
         }
-        .graficas-sidebar {
+        .bgp-sidebar {
             grid-column: 1 / -1;
             padding-left: 0;
             border-left: none;
             border-top: 1px solid var(--color-border, #e5e7eb);
             padding-top: 24px;
         }
-        .graficas-feed {
+        .bgp-feed {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 16px;
         }
-        .graficas-feed .gh-card-link {
+        .bgp-feed .gh-card-link {
             flex: 1 1 calc(50% - 8px);
             border-bottom: none;
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-graficas {
+        .grid-bloque-graficas-preview {
             grid-template-columns: 1fr;
         }
-        .graficas-posts-mid {
+        .bgp-posts-mid {
             padding-left: 0;
             border-left: none;
         }
-        .graficas-card-mid {
-            display: flex;
-            flex-direction: row;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .graficas-card-mid > a {
-            flex-shrink: 0;
-            width: 110px;
-        }
-        .graficas-card-mid img {
-            width: 100%;
-            aspect-ratio: 16/9;
-            margin-bottom: 0;
-        }
-        .graficas-card-mid h3 {
-            flex: 1;
-        }
-        .graficas-feed {
+        .bgp-feed {
             flex-direction: column;
         }
-        .graficas-feed .gh-card-link {
+        .bgp-feed .gh-card-link {
             flex: none;
             border-bottom: 1px solid var(--color-border, #e5e7eb);
         }
     }
 </style>
 
-<section class="gh-outer bloque-graficas">
+<section class="gh-outer bloque-graficas-preview">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
@@ -202,35 +178,28 @@
             </span>
         </h2>
 
-        <div class="grid-bloque-graficas">
+        <div class="grid-bloque-graficas-preview">
 
             {{#get "posts" filter="tag:graficas" limit="3" include="authors"}}
                 {{!-- Col 1: noticia grande --}}
                 {{#foreach posts}}
                     {{#if @first}}
-                        <article class="graficas-card-featured">
+                        <article class="bgp-card-featured">
                             {{#if feature_image}}
                                 <a href="{{url}}">
                                     <img src="{{feature_image}}" alt="{{title}}">
                                 </a>
                             {{/if}}
                             <h3><a href="{{url}}">{{title}}</a></h3>
-                            {{#if custom_excerpt}}
-                                <p class="graficas-featured-excerpt">{{custom_excerpt}}</p>
-                            {{else}}
-                                {{#if excerpt}}
-                                    <p class="graficas-featured-excerpt">{{excerpt}}</p>
-                                {{/if}}
-                            {{/if}}
                         </article>
                     {{/if}}
                 {{/foreach}}
 
                 {{!-- Col 2: notas 2 y 3 --}}
-                <div class="graficas-posts-mid">
+                <div class="bgp-posts-mid">
                     {{#foreach posts}}
                         {{#unless @first}}
-                            <article class="graficas-card-mid">
+                            <article class="bgp-card-mid">
                                 {{#if feature_image}}
                                     <a href="{{url}}">
                                         <img src="{{feature_image}}" alt="{{title}}">
@@ -244,15 +213,15 @@
             {{/get}}
 
             {{!-- Col 3: Las Últimas / Más leídas --}}
-            <div class="graficas-sidebar">
-                <div class="graficas-tabs">
-                    <button class="graficas-tab is-active" data-graficas-tab="ultimas">Las Últimas</button>
-                    <button class="graficas-tab" data-graficas-tab="leidas">Más leídas</button>
+            <div class="bgp-sidebar">
+                <div class="bgp-tabs">
+                    <button class="bgp-tab is-active" data-bgp-tab="ultimas">Las Últimas</button>
+                    <button class="bgp-tab" data-bgp-tab="leidas">Más leídas</button>
                 </div>
-                <div class="graficas-feed" id="graficas-feed">
+                <div class="bgp-feed" id="bgp-feed">
                     {{#get "posts" filter="tag:-[hash-top1,hash-top2]" include="authors" limit="6" order="published_at desc"}}
                         {{#foreach posts}}
-                            <a class="gh-card-link" href="{{url}}?utm_source=nexo&utm_medium=home&utm_campaign=las_ultimas">
+                            <a class="gh-card-link" href="{{url}}?utm_source=nexo&utm_medium=home&utm_campaign=las_ultimas&utm_content=graficas_preview">
                                 <div class="gh-card-wrapper">
                                     <h3 class="gh-card-title"><span class="post-time">{{date published_at format="h:mm a"}}</span> — {{title}}</h3>
                                 </div>
@@ -277,8 +246,8 @@
 (function () {
     var GHOST_URL = 'https://nexo-la.ghost.io';
     var GHOST_KEY = '4814aa41c8315fc5648524c04c';
-    var feed = document.getElementById('graficas-feed');
-    var tabs = document.querySelectorAll('.graficas-tab');
+    var feed = document.getElementById('bgp-feed');
+    var tabs = document.querySelectorAll('.bgp-tab');
     var ultimasHTML = feed ? feed.innerHTML : '';
     var leidasHTML = null;
 
@@ -288,14 +257,14 @@
             tabs.forEach(function (t) { t.classList.remove('is-active'); });
             tab.classList.add('is-active');
 
-            if (tab.dataset.graficasTab === 'ultimas') {
+            if (tab.dataset.bgpTab === 'ultimas') {
                 feed.innerHTML = ultimasHTML;
                 return;
             }
 
             if (leidasHTML) { feed.innerHTML = leidasHTML; return; }
 
-            feed.innerHTML = '<p class="graficas-feed-loading">Cargando...</p>';
+            feed.innerHTML = '<p class="bgp-feed-loading">Cargando...</p>';
 
             fetch('https://opt.nexo.la/assets/json/mas_leidas.json')
                 .then(function (r) { return r.json(); })
@@ -338,7 +307,7 @@
                 })
                 .catch(function () {
                     tabs.forEach(function (t) { t.classList.remove('is-active'); });
-                    document.querySelector('.graficas-tab[data-graficas-tab="ultimas"]').classList.add('is-active');
+                    document.querySelector('.bgp-tab[data-bgp-tab="ultimas"]').classList.add('is-active');
                     feed.innerHTML = ultimasHTML;
                 });
         });

@@ -1,73 +1,85 @@
 <style>
-    .bloque-emprendimiento {
+    .bloque-economia-preview {
         margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
     }
-    .bloque-emprendimiento .gh-container-title {
+    .bloque-economia-preview .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-emprendimiento {
+    .grid-bloque-economia-preview {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         gap: 32px;
         align-items: start;
     }
     /* Col 1: noticia destacada grande */
-    .emprendimiento-card-featured img {
+    .economia-preview-card-featured img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 14px;
     }
-    .emprendimiento-card-featured h3 {
+    .economia-preview-card-featured h3 {
         font-size: clamp(2rem, 1.4vw + 1.4rem, 3.2rem);
         font-weight: 700;
         line-height: 1.15;
         letter-spacing: -0.02em;
         margin: 0;
     }
-    .emprendimiento-card-featured h3 a {
+    .economia-preview-card-featured h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
+    .economia-preview-card-featured .card-excerpt {
+        margin: 10px 0 0;
+        font-size: 1.5rem;
+        line-height: 1.5;
+        color: var(--color-secondary-text, #555);
+    }
+    .economia-preview-card-featured .card-reading,
+    .economia-preview-card-mid .card-reading {
+        margin: 6px 0 0;
+        font-size: 1.2rem;
+        color: var(--color-secondary-text, #757575);
+    }
     /* Col 2: 2 notas medianas */
-    .emprendimiento-posts-mid {
+    .economia-preview-posts-mid {
         display: flex;
         flex-direction: column;
         gap: 24px;
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
-    .emprendimiento-card-mid img {
+    .economia-preview-card-mid img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 10px;
     }
-    .emprendimiento-card-mid h3 {
+    .economia-preview-card-mid h3 {
         font-size: 1.8rem;
         line-height: 1.2;
         margin: 0;
     }
-    .emprendimiento-card-mid h3 a {
+    .economia-preview-card-mid h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
-    /* Col 3: widget careers */
-    .emprendimiento-sidebar {
+    /* Col 3: widget IDC */
+    .economia-preview-sidebar {
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
     @media (max-width: 991px) {
-        .grid-bloque-emprendimiento {
+        .grid-bloque-economia-preview {
             grid-template-columns: 1fr 1fr;
         }
-        .emprendimiento-sidebar {
+        .economia-preview-sidebar {
             grid-column: 1 / -1;
             padding-left: 0;
             border-left: none;
@@ -76,85 +88,95 @@
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-emprendimiento {
+        .grid-bloque-economia-preview {
             grid-template-columns: 1fr;
         }
-        .emprendimiento-posts-mid {
+        .economia-preview-posts-mid {
             padding-left: 0;
             border-left: none;
         }
-        .emprendimiento-card-mid {
+        .economia-preview-card-mid {
             display: flex;
             flex-direction: row;
             gap: 12px;
             align-items: flex-start;
         }
-        .emprendimiento-card-mid > a {
+        .economia-preview-card-mid > a {
             flex-shrink: 0;
             width: 110px;
         }
-        .emprendimiento-card-mid img {
+        .economia-preview-card-mid img {
             width: 100%;
             aspect-ratio: 16/9;
             margin-bottom: 0;
         }
-        .emprendimiento-card-mid h3 {
+        .economia-preview-card-mid .economia-mid-text {
             flex: 1;
+            min-width: 0;
         }
     }
 </style>
 
-<section class="gh-outer bloque-emprendimiento">
+<section class="gh-outer bloque-economia-preview">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                <a href="{{@site.url}}/empleos-emprendimiento/" style="text-decoration: none; color: inherit;">Emprendimiento y Empleo</a>
+                <a href="https://nexo.la/tag/economia/" style="text-decoration: none; color: inherit;">Economía y Finanzas</a>
             </span>
         </h2>
 
-        <div class="grid-bloque-emprendimiento">
+        <div class="grid-bloque-economia-preview">
 
-            {{#get "posts" filter="primary_tag:[emprendimiento,empleos]" limit="3" include="authors"}}
+            {{#get "posts" filter="primary_tag:[economia,finanzas]" limit="3" include="authors"}}
                 {{!-- Col 1: noticia grande --}}
                 {{#foreach posts}}
                     {{#if @first}}
-                        <article class="emprendimiento-card-featured">
+                        <article class="economia-preview-card-featured">
                             {{#if feature_image}}
                                 <a href="{{url}}">
                                     <img src="{{feature_image}}" alt="{{title}}">
                                 </a>
                             {{/if}}
                             <h3><a href="{{url}}">{{title}}</a></h3>
+                            {{#if custom_excerpt}}
+                                <p class="card-excerpt">{{custom_excerpt}}</p>
+                            {{else}}
+                                {{#if excerpt}}<p class="card-excerpt">{{excerpt}}</p>{{/if}}
+                            {{/if}}
+                            <p class="card-reading">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</p>
                         </article>
                     {{/if}}
                 {{/foreach}}
 
                 {{!-- Col 2: notas 2 y 3 --}}
-                <div class="emprendimiento-posts-mid">
+                <div class="economia-preview-posts-mid">
                     {{#foreach posts}}
                         {{#unless @first}}
-                            <article class="emprendimiento-card-mid">
+                            <article class="economia-preview-card-mid">
                                 {{#if feature_image}}
                                     <a href="{{url}}">
                                         <img src="{{feature_image}}" alt="{{title}}">
                                     </a>
                                 {{/if}}
-                                <h3><a href="{{url}}">{{title}}</a></h3>
+                                <div class="economia-mid-text">
+                                    <h3><a href="{{url}}">{{title}}</a></h3>
+                                    <p class="card-reading">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</p>
+                                </div>
                             </article>
                         {{/unless}}
                     {{/foreach}}
                 </div>
             {{/get}}
 
-            {{!-- Col 3: Nexo Careers widget --}}
-            <div class="emprendimiento-sidebar">
-                {{> "components/widget-careers"}}
+            {{!-- Col 3: widget IDC (Predictor del PIB) --}}
+            <div class="economia-preview-sidebar">
+                {{> "components/widget-pib-preview"}}
             </div>
 
         </div>
 
         <div style="text-align: right; margin-top: 15px;">
-            <a href="{{@site.url}}/empleos-emprendimiento/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            <a href="https://nexo.la/tag/economia/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
         </div>
     </div>
 </section>

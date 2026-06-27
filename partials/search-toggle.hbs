@@ -1,3 +1,109 @@
-<button class="gh-search gh-icon-button" aria-label="Search this site" data-ghost-search>
+<button class="gh-search gh-icon-button" aria-label="Buscar en el sitio" onclick="nexoSearchToggle(event)">
     {{> "icons/search"}}
 </button>
+
+<div id="nexo-search-overlay">
+    <form id="nexo-search-form">
+        <input type="text" id="nexo-search-input" placeholder="Buscar en nexo.la..." autocomplete="off">
+        <button type="submit">Buscar</button>
+        <button type="button" id="nexo-search-close" aria-label="Cerrar">&#x2715;</button>
+    </form>
+</div>
+
+<style>
+#nexo-search-overlay {
+    display: none;
+    position: fixed;
+    top: 0; /* se ajusta dinámicamente con JS */
+    left: 0;
+    width: 100%;
+    background: #fff;
+    z-index: 9999;
+    padding: 14px 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+#nexo-search-form {
+    display: flex;
+    align-items: center;
+    max-width: 680px;
+    margin: 0 auto;
+    gap: 8px;
+}
+#nexo-search-input {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 1.6rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+#nexo-search-input:focus {
+    border-color: var(--ghost-accent-color, #000);
+}
+#nexo-search-form button[type="submit"] {
+    padding: 10px 18px;
+    background: var(--ghost-accent-color, #000);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+#nexo-search-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #666;
+    padding: 4px 8px;
+    line-height: 1;
+}
+</style>
+
+<script>
+(function () {
+    var overlay = document.getElementById('nexo-search-overlay');
+    var input = document.getElementById('nexo-search-input');
+    var form = document.getElementById('nexo-search-form');
+    var closeBtn = document.getElementById('nexo-search-close');
+
+    function getNavBottom() {
+        var nav = document.getElementById('gh-navigation');
+        if (nav) {
+            var rect = nav.getBoundingClientRect();
+            return rect.bottom;
+        }
+        return 0;
+    }
+
+    window.nexoSearchToggle = function (e) {
+        e.preventDefault();
+        overlay.style.top = getNavBottom() + 'px';
+        overlay.style.display = 'block';
+        input.focus();
+    };
+
+    closeBtn.addEventListener('click', function () {
+        overlay.style.display = 'none';
+        input.value = '';
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            overlay.style.display = 'none';
+            input.value = '';
+        }
+    });
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var q = input.value.trim();
+        if (q) {
+            window.open('https://www.google.com/search?q=site:nexo.la+' + encodeURIComponent(q), '_blank');
+            overlay.style.display = 'none';
+            input.value = '';
+        }
+    });
+}());
+</script>

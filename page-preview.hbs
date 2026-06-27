@@ -1,8 +1,20 @@
 {{!< default}}
+{{!--
+  PREVIEW / SANDBOX HOMEPAGE
+  Portada de pruebas — aquí se prueban cambios antes de producción.
+
+  Cómo usar:
+  1. En Ghost Admin, crear una Página con slug: preview
+  2. Acceder en: tu-sitio.com/preview/
+
+  Producción: /
+  Pruebas:    /preview/
+--}}
 
 <style>
     :root, body { --background-color: #f1f2e9 !important; }
     body { background-color: var(--background-color) !important; }
+
     .gh-header-right .post-time {
         display: inline !important;
         visibility: visible !important;
@@ -14,21 +26,21 @@
     {{> "components/banner-alerta"}}
 {{/if}}
 
-{{> "components/header" headerStyle=@custom.header_style}}
+<div style="background:red;color:white;text-align:center;padding:10px;font-weight:bold;font-size:18px;">🔴 TEMPLATE page-preview.hbs ACTIVO — prueba funcionando</div>
 
-{{> "components/bloque-top-extra"}}
+{{> "components/header-content-preview"}}
 
-{{> "components/bloque-economia-preview"}}
-{{> "components/bloque-videos"}}
-{{> "components/bloque-0"}}
+{{> "components/bloque-0-preview"}}
+{{> "components/bloque-economia"}}
 {{> "components/bloque-graficas"}}
 {{> "components/bloque-logistica"}}
 {{> "components/bloque-living"}}
 {{> "components/bloque-internacionales"}}
 {{> "components/bloque-empresas"}}
 {{> "components/bloque-widgets"}}
+{{> "components/cta-home"}}
 {{> "components/bloque-deportes"}}
-{{> "components/bloque-emprendimiento"}}
 {{> "components/bloque-turismo"}}
 {{> "components/bloque-tecnologia"}}
+{{> "components/bloque-emprendimiento"}}
 {{> "components/bloque-gobierno"}}

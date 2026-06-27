@@ -1,58 +1,58 @@
-{{!-- Portada: header 5 notas — 1 grande izquierda + 2 centro + 2 derecha --}}
+{{!-- Preview: header 5 notas — 1 grande izquierda + 2 centro + 2 derecha --}}
 
 <style>
-    .gh-portada-header {
+    .gh-preview-header {
         padding-top: var(--grid-gap, 24px);
         padding-bottom: var(--grid-gap, 24px);
     }
-    .gh-portada-grid {
+    .gh-preview-5grid {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         grid-template-rows: auto auto;
         gap: var(--grid-gap, 24px);
     }
-    .gh-portada-grid > * {
+    .gh-preview-5grid > * {
         min-width: 0;
     }
-    .gh-portada-grid .gh-card:nth-child(1) {
+    .gh-preview-5grid .gh-card:nth-child(1) {
         grid-row: span 2;
     }
-    .gh-portada-grid .gh-card:nth-child(1) .gh-card-image {
-        aspect-ratio: 16/9;
+    .gh-preview-5grid .gh-card:nth-child(1) .gh-card-image {
+        aspect-ratio: 4/3;
     }
-    .gh-portada-grid .gh-card:nth-child(1) .gh-card-title {
+    .gh-preview-5grid .gh-card:nth-child(1) .gh-card-title {
         font-size: clamp(2.8rem, 1.36vw + 2.25rem, 4rem);
         font-weight: 700;
     }
-    .gh-portada-grid .gh-card:nth-child(n+2) .post-time {
+    .gh-preview-5grid .gh-card:nth-child(n+2) .post-time {
         display: none !important;
     }
-    .gh-portada-grid .gh-card:nth-child(n+2) .gh-card-excerpt {
+    .gh-preview-5grid .gh-card:nth-child(n+2) .gh-card-excerpt {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
     @media (max-width: 991px) {
-        .gh-portada-grid {
+        .gh-preview-5grid {
             grid-template-columns: 1fr 1fr;
             grid-template-rows: auto;
         }
-        .gh-portada-grid .gh-card:nth-child(1) {
+        .gh-preview-5grid .gh-card:nth-child(1) {
             grid-column: span 2;
             grid-row: span 1;
         }
     }
     @media (max-width: 767px) {
-        .gh-portada-grid {
+        .gh-preview-5grid {
             grid-template-columns: 1fr;
         }
-        .gh-portada-grid .gh-card:nth-child(1) {
+        .gh-preview-5grid .gh-card:nth-child(1) {
             grid-column: span 1;
         }
     }
     /* Ante-título: tag primario en mayúsculas */
-    .gh-portada-header .gh-card-tag {
+    .gh-preview-header .gh-card-tag {
         display: block !important;
         text-transform: uppercase;
         font-size: 1.1rem;
@@ -63,24 +63,24 @@
     }
 </style>
 
-<section class="gh-portada-header gh-outer">
+<section class="gh-preview-header gh-outer">
     <div class="gh-inner">
-        <div class="gh-portada-grid">
+        <div class="gh-preview-5grid">
             {{! Posición 1 (grande izquierda): tag #top1 }}
             {{#get "posts" filter="tag:hash-top1" limit="1" include="authors,tags" order="published_at desc"}}
-                {{#foreach posts}}{{> "post-card" imageSizes="(min-width: 992px) calc(50vw - 3rem), 100vw" separator="__"}}{{/foreach}}
+                {{#foreach posts}}{{> "post-card"}}{{/foreach}}
             {{/get}}
             {{! Posición 2 (centro arriba): tag #top2 }}
             {{#get "posts" filter="tag:hash-top2" limit="1" include="authors,tags" order="published_at desc"}}
-                {{#foreach posts}}{{> "post-card" separator="__"}}{{/foreach}}
+                {{#foreach posts}}{{> "post-card"}}{{/foreach}}
             {{/get}}
             {{! Posición 3 (centro abajo): tag #top3 }}
             {{#get "posts" filter="tag:hash-top3" limit="1" include="authors,tags" order="published_at desc"}}
-                {{#foreach posts}}{{> "post-card" separator="__"}}{{/foreach}}
+                {{#foreach posts}}{{> "post-card"}}{{/foreach}}
             {{/get}}
             {{! Posiciones 4 y 5 (derecha): siguientes 2 featured, sin top1/2/3 }}
             {{#get "posts" filter="featured:true+tag:-[hash-top1,hash-top2,hash-top3]" limit="2" include="authors,tags" order="published_at desc"}}
-                {{#foreach posts}}{{> "post-card" separator="__"}}{{/foreach}}
+                {{#foreach posts}}{{> "post-card"}}{{/foreach}}
             {{/get}}
         </div>
     </div>

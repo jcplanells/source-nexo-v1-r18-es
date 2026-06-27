@@ -1,15 +1,15 @@
 <style>
-    .bloque-logistica {
+    .bloque-logistica-preview {
         padding-top: 20px;
         padding-bottom: 20px;
         margin-top: 20px;
     }
-    .bloque-logistica .gh-container-title {
+    .bloque-logistica-preview .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-logistica {
+    .grid-bloque-logistica-preview {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 32px;
@@ -111,7 +111,7 @@
         width: 8px !important;
     }
     @media (max-width: 991px) {
-        .grid-bloque-logistica {
+        .grid-bloque-logistica-preview {
             grid-template-columns: repeat(2, 1fr);
         }
         .card-logistica-featured {
@@ -119,7 +119,7 @@
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-logistica {
+        .grid-bloque-logistica-preview {
             grid-template-columns: 1fr;
         }
         .card-logistica-featured {
@@ -149,7 +149,7 @@
     }
 </style>
 
-<section class="gh-outer bloque-logistica">
+<section class="gh-outer bloque-logistica-preview">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
@@ -157,7 +157,7 @@
             </span>
         </h2>
 
-        <div class="grid-bloque-logistica">
+        <div class="grid-bloque-logistica-preview">
             {{#get "posts" filter="primary_tag:logistica" limit="5" include="authors"}}
                 {{!-- Noticia destacada: primera entrada, ocupa columnas 1-2 --}}
                 {{#foreach posts}}

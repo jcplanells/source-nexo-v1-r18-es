@@ -1,11 +1,10 @@
-{{!-- Portada alterna para previsualización --}}
+{{!< default}}
+{{!-- Página de previsualización de portada. Crear en Ghost Admin una página con slug "preview-home" --}}
 
 <style>
-    /* Forzar fondo oliva y activar la hora SOLO en el bloque vertical (derecha del cabezal) */
     :root, body { --background-color: #f1f2e9 !important; }
     body { background-color: var(--background-color) !important; }
-    
-    .gh-header-right .post-time { 
+    .gh-header-right .post-time {
         display: inline !important;
         visibility: visible !important;
         font-size: 0.9em !important;
@@ -15,21 +14,20 @@
 {{#if @custom.show_alert_bar}}
     {{> "components/banner-alerta"}}
 {{/if}}
+
 {{> "components/header" headerStyle=@custom.header_style}}
 
-{{#match @custom.header_style "!=" "Highlight"}}
-    {{!-- Aquí puedes insertar un layout de featured distinto para pruebas --}}
-{{/match}}
-
 {{> "components/bloque-0"}}
+{{> "components/bloque-economia"}}
 {{> "components/bloque-graficas"}}
-{{> "components/bloque-empresas"}}
 {{> "components/bloque-logistica"}}
-{{> "components/bloque-tecnologia"}}
 {{> "components/bloque-living"}}
-{{> "components/bloque-emprendimiento"}}
-{{> "components/bloque-turismo"}}
-{{> "components/bloque-widgets"}}
-{{> "components/bloque-deportes"}}
 {{> "components/bloque-internacionales"}}
+{{> "components/bloque-empresas"}}
+{{> "components/bloque-widgets"}}
+{{> "components/cta-home"}}
+{{> "components/bloque-deportes"}}
+{{> "components/bloque-turismo"}}
+{{> "components/bloque-tecnologia"}}
+{{> "components/bloque-emprendimiento"}}
 {{> "components/bloque-gobierno"}}

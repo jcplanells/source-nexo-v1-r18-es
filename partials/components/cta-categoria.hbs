@@ -1,0 +1,123 @@
+{{#unless @member}}
+<style>
+.cta-c {
+    border-left: 3px solid #34CC03;
+    background: #F1F2E9;
+    padding: 24px 28px;
+    border-radius: 0 12px 12px 0;
+    margin: 0 auto;
+    max-width: 640px;
+}
+.cta-c-icon {
+    font-size: 2.4rem;
+    line-height: 1;
+    margin-bottom: 10px;
+    display: block;
+}
+.cta-c-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #020202;
+    line-height: 1.25;
+    margin: 0 0 8px;
+}
+.cta-c-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #020202;
+    line-height: 1.5;
+    margin: 0 0 18px;
+}
+.cta-c-form {
+    display: flex;
+    gap: 8px;
+    max-width: 400px;
+}
+.cta-c-input {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    padding: 10px 18px;
+    border: 1.5px solid #122805;
+    border-radius: 100px;
+    background: #fff;
+    color: #020202;
+    outline: none;
+    min-width: 0;
+}
+.cta-c-input:focus {
+    border-color: #34CC03;
+    box-shadow: 0 0 0 3px rgba(52,204,3,0.2);
+}
+.cta-c-input::placeholder { color: #888; }
+.cta-c-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 10px 24px;
+    background: #34CC03;
+    color: #020202;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+.cta-c-btn:hover { background: #9CF469; }
+.cta-c-msg { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; margin-top: 6px; color: #34CC03; }
+@media (max-width: 500px) {
+    .cta-c-form { flex-direction: column; }
+    .cta-c-btn { width: 100%; }
+}
+</style>
+
+<div class="cta-c">
+    {{#has tag="empresas"}}
+        <span class="cta-c-icon">📊</span>
+        <h3 class="cta-c-title">¿Sigues el pulso de la economía panameña?</h3>
+        <p class="cta-c-sub">Lo más relevante de empresas y negocios, cada mañana.</p>
+    {{else has tag="tecnologia"}}
+        <span class="cta-c-icon">💻</span>
+        <h3 class="cta-c-title">Tech en Panamá, sin filtros.</h3>
+        <p class="cta-c-sub">Startups, apps y transformación digital, en tu correo.</p>
+    {{else has tag="logistica"}}
+        <span class="cta-c-icon">🚢</span>
+        <h3 class="cta-c-title">El Canal y el comercio, explicados.</h3>
+        <p class="cta-c-sub">Transporte, logística y comercio exterior de Panamá.</p>
+    {{else has tag="gobierno"}}
+        <span class="cta-c-icon">🏛️</span>
+        <h3 class="cta-c-title">Política y regulación, sin rodeos.</h3>
+        <p class="cta-c-sub">Lo que decide el gobierno y cómo te afecta.</p>
+    {{else}}
+        <span class="cta-c-icon">⚡</span>
+        <h3 class="cta-c-title">Panamá, explicada. Cada mañana en tu correo.</h3>
+        <p class="cta-c-sub">El resumen diario de lo que realmente importa: economía, empresas, política y más.</p>
+    {{/has}}
+
+    <div class="mauticform-error" id="mauticform_c_error"></div>
+    <div class="mauticform-message cta-c-msg" id="mauticform_c_message"></div>
+    <form autocomplete="false" role="form" method="post"
+          action="https://mautic.adulting.club/form/submit?formId=2"
+          id="mauticform_c"
+          data-mautic-form="registronexoc"
+          enctype="multipart/form-data">
+        <div class="cta-c-form">
+            <input type="email"
+                   name="mauticform[correo]"
+                   id="mauticform_input_c_correo"
+                   class="cta-c-input"
+                   placeholder="tucorreo@ejemplo.com"
+                   required>
+            <button type="submit"
+                    name="mauticform[submit]"
+                    value="1"
+                    class="cta-c-btn">Suscribirme</button>
+        </div>
+        <input type="hidden" name="mauticform[formId]" value="2">
+        <input type="hidden" name="mauticform[return]" value="">
+        <input type="hidden" name="mauticform[formName]" value="registronexo">
+    </form>
+</div>
+{{/unless}}

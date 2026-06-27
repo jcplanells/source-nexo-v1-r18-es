@@ -1,4 +1,11 @@
-<section class="graficas-block gh-cta" style="display: block;">
+<style>
+    .bloque-turismo.gh-cta {
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+        margin-top: 20px !important;
+    }
+</style>
+<section class="graficas-block bloque-turismo gh-cta" style="display: block;">
     <div class="gh-cta-inner" style="background-color: #f5f5ec;">
         <h2 class="gh-cta-title" style="text-align: left; margin-bottom: 15px; width: 100%;">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
@@ -6,7 +13,7 @@
             </span>
         </h2>
         <div class="gh-posts-grid" style="margin-bottom: 10px;">
-            {{#get "posts" filter="tag:turismo" limit="4" include="tags,authors"}}
+            {{#get "posts" filter="primary_tag:turismo" limit="4" include="tags,authors"}}
                 {{#foreach posts}}
                     <article class="gh-post-card">
                         <a class="gh-post-card-image" href="{{url}}">

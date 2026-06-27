@@ -1,0 +1,181 @@
+{{#unless @member}}
+<style>
+.cta-d {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 320px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.22);
+    z-index: 9999;
+    overflow: hidden;
+    transform: translateY(120%);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+    pointer-events: none;
+}
+.cta-d.is-visible {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+.cta-d-header {
+    background: #122805;
+    padding: 18px 20px 16px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.cta-d-logo {
+    display: block;
+    height: 28px;
+    width: auto;
+}
+.cta-d-close {
+    background: none;
+    border: none;
+    color: #F1F2E9;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 0 0 12px;
+    opacity: 0.8;
+    transition: opacity 0.15s;
+}
+.cta-d-close:hover { opacity: 1; }
+.cta-d-body {
+    padding: 20px 20px 22px;
+}
+.cta-d-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #020202;
+    line-height: 1.25;
+    margin: 0 0 8px;
+}
+.cta-d-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #122805;
+    line-height: 1.45;
+    margin: 0 0 16px;
+}
+.cta-d-input {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    padding: 10px 16px;
+    border: 1.5px solid #122805;
+    border-radius: 100px;
+    background: #F1F2E9;
+    color: #020202;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+.cta-d-input:focus {
+    border-color: #34CC03;
+    box-shadow: 0 0 0 3px rgba(52,204,3,0.2);
+}
+.cta-d-input::placeholder { color: #888; }
+.cta-d-btn {
+    width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    padding: 11px 0;
+    background: #34CC03;
+    color: #020202;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.cta-d-btn:hover { background: #9CF469; }
+.cta-d-legal {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    color: rgba(2,2,2,0.4);
+    margin: 8px 0 0;
+    text-align: center;
+}
+.cta-d-msg { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; color: #34CC03; margin-top: 6px; }
+@media (max-width: 400px) {
+    .cta-d { width: calc(100vw - 32px); right: 16px; bottom: 16px; }
+}
+</style>
+
+<div id="cta-popup" class="cta-d" role="dialog" aria-modal="true" aria-label="Suscríbete al newsletter">
+    <div class="cta-d-header">
+        <img class="cta-d-logo" src="https://opt.nexo.la/assets/logos/logo_nexo_verde_trans.png" alt="nexo">
+        <button class="cta-d-close" id="cta-popup-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="cta-d-body">
+        <h3 class="cta-d-title">¿Te gustó este artículo?</h3>
+        <p class="cta-d-sub">Recíbelos así cada mañana, directo en tu correo.</p>
+        <div class="mauticform-error" id="mauticform_d_error"></div>
+        <div class="mauticform-message cta-d-msg" id="mauticform_d_message"></div>
+        <form autocomplete="false" role="form" method="post"
+              action="https://mautic.adulting.club/form/submit?formId=2"
+              id="mauticform_d"
+              data-mautic-form="registronexod"
+              enctype="multipart/form-data">
+            <input type="email"
+                   name="mauticform[correo]"
+                   id="mauticform_input_d_correo"
+                   class="cta-d-input"
+                   placeholder="tucorreo@ejemplo.com"
+                   required>
+            <button type="submit"
+                    name="mauticform[submit]"
+                    value="1"
+                    class="cta-d-btn">Quiero recibirlo</button>
+            <input type="hidden" name="mauticform[formId]" value="2">
+            <input type="hidden" name="mauticform[return]" value="">
+            <input type="hidden" name="mauticform[formName]" value="registronexo">
+        </form>
+        <p class="cta-d-legal">Al suscribirte aceptas recibir el newsletter de nexo.la</p>
+    </div>
+</div>
+
+<script>
+(function () {
+    if (window._nexoIsMember) return;
+    var popup = document.getElementById('cta-popup');
+    var closeBtn = document.getElementById('cta-popup-close');
+    if (!popup) return;
+
+    var STORAGE_KEY = 'nexo_popup_seen';
+    if (localStorage.getItem(STORAGE_KEY)) return;
+
+    function showPopup() {
+        localStorage.setItem(STORAGE_KEY, '1');
+        popup.classList.add('is-visible');
+    }
+
+    function hidePopup() {
+        popup.classList.remove('is-visible');
+    }
+
+    closeBtn.addEventListener('click', hidePopup);
+
+    var triggered = false;
+    function onScroll() {
+        if (triggered) return;
+        var scrolled = window.scrollY + window.innerHeight;
+        var total = document.documentElement.scrollHeight;
+        if (scrolled / total >= 0.6) {
+            triggered = true;
+            showPopup();
+            window.removeEventListener('scroll', onScroll);
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+}());
+</script>
+{{/unless}}

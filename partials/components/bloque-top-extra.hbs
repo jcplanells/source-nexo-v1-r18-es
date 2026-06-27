@@ -1,0 +1,71 @@
+<style>
+    .bloque-top-extra {
+        border-top: 1px solid var(--color-border, #e0e0e0);
+        padding-top: 24px;
+        padding-bottom: 8px;
+    }
+    .bloque-top-extra-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--grid-gap, 24px);
+    }
+    .bloque-top-extra .post-time {
+        display: none !important;
+    }
+    .bloque-top-extra .gh-card .gh-card-excerpt {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    @media (max-width: 767px) {
+        .bloque-top-extra-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    /* Ante-título: tag primario en mayúsculas */
+    .bloque-top-extra .gh-card-tag {
+        display: block !important;
+        text-transform: uppercase;
+        font-size: 1.1rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: var(--ghost-accent-color);
+        margin-bottom: 6px;
+    }
+</style>
+
+<section class="gh-outer bloque-top-extra">
+    <div class="gh-inner">
+        <div class="bloque-top-extra-grid" id="bloque-top-extra-grid">
+            {{#get "posts" filter="featured:true" limit="8" include="authors,tags" order="published_at desc"}}
+                {{#foreach posts}}
+                    {{> "post-card" separator="__"}}
+                {{/foreach}}
+            {{/get}}
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    var header = document.querySelector('.gh-portada-grid');
+    if (!header) return;
+    var shown = new Set();
+    header.querySelectorAll('a.gh-card-link[href]').forEach(function (a) {
+        shown.add(a.pathname.replace(/\/$/, ''));
+    });
+    var grid = document.getElementById('bloque-top-extra-grid');
+    if (!grid) return;
+    var kept = 0;
+    grid.querySelectorAll('.gh-card').forEach(function (card) {
+        var a = card.querySelector('a.gh-card-link[href]');
+        var path = a ? a.pathname.replace(/\/$/, '') : '';
+        if (shown.has(path) || kept >= 3) {
+            card.remove();
+        } else {
+            kept++;
+        }
+    });
+}());
+</script>

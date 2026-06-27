@@ -1,0 +1,306 @@
+<style>
+    .widget-pib-prev {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        color: #111827;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .widget-pib-prev .gauge-card {
+        background: #ffffff;
+        border-radius: 24px;
+        border: 1px solid #e5e7eb;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        padding: 24px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* ── CABECERA ── */
+    .widget-pib-prev .gauge-main-title {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.2;
+        margin-bottom: 6px;
+        text-align: center;
+    }
+
+    .widget-pib-prev .gauge-badge {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        padding: 3px 10px;
+        border-radius: 999px;
+        border: 1px solid #d1d5db;
+        color: #6b7280;
+        margin-bottom: 8px;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .widget-pib-prev .gauge-badge-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #22c55e;
+        flex-shrink: 0;
+    }
+
+    .widget-pib-prev .gauge-subtitle {
+        font-size: 12px;
+        color: #6b7280;
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        margin-bottom: 2px;
+        text-align: center;
+    }
+
+    .widget-pib-prev .gauge-name {
+        font-size: 17px;
+        font-weight: 600;
+        white-space: nowrap;
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    /* ── GAUGE ── */
+    .widget-pib-prev .gauge-arc-container {
+        position: relative;
+        width: 160px;
+        height: 80px;
+        margin: 50px auto 10px;
+    }
+
+    .widget-pib-prev .gauge-arc {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 160px;
+        height: 160px;
+        transform: translateX(-50%);
+        border-radius: 50%;
+        background: conic-gradient(
+            from -90deg,
+            #F26E5F 0deg 60deg,
+            #ffc864 60deg 120deg,
+            #34cc03 120deg 180deg
+        );
+        clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+        z-index: 1;
+    }
+
+    .widget-pib-prev .gauge-ticks {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        z-index: 2;
+    }
+
+    .widget-pib-prev .gauge-tick {
+        position: absolute;
+        width: 2px;
+        background: #111827;
+        bottom: 0;
+        left: 0;
+        transform-origin: center bottom;
+    }
+
+    .widget-pib-prev .gauge-tick-label {
+        position: absolute;
+        font-size: 9px;
+        font-weight: 700;
+        color: #111827;
+        text-align: center;
+        width: 24px;
+        transform: translate(-50%, -50%);
+    }
+
+    .widget-pib-prev .gauge-needle {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 4px;
+        height: 76px;
+        transform-origin: bottom center;
+        transform: translateX(-50%) rotate(-90deg);
+        transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 10;
+    }
+
+    .widget-pib-prev .gauge-needle-line {
+        width: 100%;
+        height: 100%;
+        background: #000;
+        border-radius: 4px;
+    }
+
+    .widget-pib-prev .gauge-needle-center {
+        position: absolute;
+        bottom: -8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 3px solid #000000;
+    }
+
+    /* ── SCORE ── */
+    .widget-pib-prev .gauge-score-row {
+        text-align: center;
+        margin-top: 16px;
+    }
+
+    .widget-pib-prev .gauge-score-value {
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    /* ── PIE ── */
+    .widget-pib-prev .gauge-footer {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #f3f4f6;
+    }
+
+    .widget-pib-prev .gauge-center-row {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .widget-pib-prev .gauge-score-zone {
+        font-size: 12px;
+        color: #4b5563;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .widget-pib-prev .gauge-source {
+        font-size: 10px;
+        color: #9ca3af;
+        text-align: left;
+    }
+
+    .widget-pib-prev .verde { color: #34cc03; }
+</style>
+
+<div class="widget-pib-prev">
+    <div class="gauge-card">
+
+        {{!-- Cabecera --}}
+        <div class="gauge-main-title">IDC de <span class="verde">nexo.la</span></div>
+        <div class="gauge-badge">
+            <span class="gauge-badge-dot"></span>
+            <span id="gauge-prev-date">Cargando...</span>
+        </div>
+        <div class="gauge-subtitle">índice de crecimiento</div>
+        <div class="gauge-name">Predictor del PIB</div>
+
+        {{!-- Gauge --}}
+        <div class="gauge-arc-container">
+            <div class="gauge-arc"></div>
+            <div class="gauge-ticks" id="gauge-prev-ticks"></div>
+            <div class="gauge-needle" id="gauge-prev-needle">
+                <div class="gauge-needle-line"></div>
+                <div class="gauge-needle-center"></div>
+            </div>
+        </div>
+
+        {{!-- Score --}}
+        <div class="gauge-score-row">
+            <div class="gauge-score-value" id="gauge-prev-score">--</div>
+        </div>
+
+        {{!-- Pie --}}
+        <div class="gauge-footer">
+            <div class="gauge-center-row">
+                <span class="gauge-score-zone" id="gauge-prev-zone">--</span>
+                <a id="gauge-prev-url" target="_blank" href="#"
+                   style="display:inline-flex;align-items:center;background-color:#34cc03;color:#fff;font-size:10px;text-decoration:none;padding:5px 10px;border-radius:6px;font-weight:600;">
+                    <strong>+</strong>&nbsp;DETALLES
+                </a>
+            </div>
+            <div class="gauge-source">fuente: datos INEC</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+(function () {
+    var DATA_URL = "https://opt.nexo.la/assets/json/ilc.json";
+    var RADIUS = 80;
+
+    function getZone(score) {
+        if (score < 95)  return "enfriamiento";
+        if (score < 105) return "crecimiento";
+        if (score < 120) return "expansión";
+        return "extremo";
+    }
+
+    function drawTicks() {
+        var ticksEl = document.getElementById("gauge-prev-ticks");
+        if (!ticksEl) return;
+        ticksEl.innerHTML = "";
+        for (var value = 80; value <= 120; value += 10) {
+            var deg = 180 - ((value - 80) / 40) * 180;
+            var rad = deg * (Math.PI / 180);
+
+            var tick = document.createElement("div");
+            tick.className = "gauge-tick";
+            tick.style.height = "8px";
+            tick.style.left  = (RADIUS * Math.cos(rad)) + "px";
+            tick.style.bottom = (RADIUS * Math.sin(rad)) + "px";
+            tick.style.transform = "translate(-50%, 0) rotate(" + (90 - deg) + "deg)";
+            ticksEl.appendChild(tick);
+
+            var lbl = document.createElement("div");
+            lbl.className = "gauge-tick-label";
+            lbl.style.left   = (RADIUS * 1.28 * Math.cos(rad)) + "px";
+            lbl.style.bottom = (RADIUS * 1.28 * Math.sin(rad)) + "px";
+            lbl.textContent  = value;
+            ticksEl.appendChild(lbl);
+        }
+    }
+
+    function renderGauge(data) {
+        var total = Math.max(80, Math.min(120, Number(data.total) || 80));
+        var angle = ((total - 80) / 40) * 180 - 90;
+
+        var needle = document.getElementById("gauge-prev-needle");
+        if (needle) needle.style.transform = "translateX(-50%) rotate(" + angle + "deg)";
+
+        var scoreEl = document.getElementById("gauge-prev-score");
+        if (scoreEl) scoreEl.textContent = total;
+
+        var zoneEl = document.getElementById("gauge-prev-zone");
+        if (zoneEl) zoneEl.textContent = getZone(total);
+
+        var dateEl = document.getElementById("gauge-prev-date");
+        if (dateEl && data.periodo) dateEl.textContent = "Período " + data.periodo;
+
+        var urlEl = document.getElementById("gauge-prev-url");
+        if (urlEl && data.link) urlEl.href = data.link;
+    }
+
+    drawTicks();
+
+    fetch(DATA_URL + "?v=" + Date.now())
+        .then(function (r) { return r.json(); })
+        .then(renderGauge)
+        .catch(function () {
+            var z = document.getElementById("gauge-prev-zone");
+            if (z) z.textContent = "Error de red";
+        });
+}());
+</script>

@@ -1,36 +1,36 @@
 <style>
-    .bloque-widgets {
+    .bloque-widgets-preview {
         margin-top: 20px;
     }
-    .bloque-widgets .gh-inner {
+    .bloque-widgets-preview .gh-inner {
         background-color: #f5f5ec;
         padding: 24px;
         border-radius: 24px;
     }
-    .bloque-widgets .gh-container-title {
+    .bloque-widgets-preview .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .widgets-grid {
+    .widgets-grid-preview {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 32px;
     }
-    .widgets-grid .widget-pib,
-    .widgets-grid .widget-nexo-careers {
+    .widgets-grid-preview .widget-pib,
+    .widgets-grid-preview .widget-nexo-careers {
         height: 100%;
     }
-    @media (max-width: 767px) { .widgets-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 767px) { .widgets-grid-preview { grid-template-columns: 1fr; } }
 </style>
-<section class="gh-outer bloque-widgets">
+<section class="gh-outer bloque-widgets-preview">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
                 Dashboards
             </span>
         </h2>
-        <div class="widgets-grid">
+        <div class="widgets-grid-preview">
             {{> "components/widget-pib"}}
             {{> "components/widget-careers"}}
         </div>

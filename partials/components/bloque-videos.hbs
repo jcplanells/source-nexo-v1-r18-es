@@ -1,0 +1,273 @@
+<style>
+    .bloque-videos {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-videos .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-bloque-videos {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+    }
+    @media (max-width: 991px) {
+        .grid-bloque-videos {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-bloque-videos {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+    .card-bloque-video {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+    .card-bloque-video-thumb {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 9/16;
+        overflow: hidden;
+        border-radius: 3px;
+        margin-bottom: 12px;
+        background: #000;
+    }
+    .card-bloque-video-thumb img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+    .card-bloque-video-play {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.2);
+        transition: background 0.2s;
+        z-index: 1;
+    }
+    .card-bloque-video:hover .card-bloque-video-play {
+        background: rgba(0, 0, 0, 0.4);
+    }
+    .card-bloque-video-play svg {
+        width: 44px;
+        height: 44px;
+        fill: #fff;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+    }
+    .card-bloque-video-thumb iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 2;
+    }
+    .card-bloque-video-unmute {
+        position: absolute;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #020202;
+        color: #fff;
+        border: none;
+        border-radius: 24px;
+        padding: 8px 18px;
+        font-family: Inter, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        display: none;
+        align-items: center;
+        gap: 6px;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+        white-space: nowrap;
+    }
+    .card-bloque-video-tag {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--ghost-accent-color, #e63946);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin: 0 0 6px 0;
+    }
+    .card-bloque-video h3 {
+        font-size: 1.8rem;
+        line-height: 1.25;
+        margin: 0;
+        color: var(--color-base, #000);
+    }
+    #bloque-videos-error {
+        display: none;
+        color: #999;
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 20px 0;
+    }
+</style>
+
+<section class="gh-outer bloque-videos">
+    <div class="gh-inner">
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                Videos
+            </span>
+        </h2>
+        <div class="grid-bloque-videos" id="bloque-videos-grid"></div>
+        <p id="bloque-videos-error">No se pudieron cargar los videos.</p>
+    </div>
+</section>
+
+<script>
+(function () {
+    var JSON_URL = 'https://opt.nexo.la/assets/json/shorts.json';
+    var HOVER_DELAY = 400;
+    var activeIframe = null;
+    var firstIframe = null;
+
+    function esc(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+
+    function embedSrc(id) {
+        return 'https://www.youtube.com/embed/' + id +
+            '?feature=oembed&autoplay=1&mute=1&controls=1&loop=1&playlist=' + id + '&rel=0&enablejsapi=1';
+    }
+
+    function pauseActive() {
+        if (activeIframe) {
+            activeIframe.contentWindow.postMessage(
+                JSON.stringify({event:'command', func:'pauseVideo', args:[]}), '*'
+            );
+        }
+    }
+
+    function resumeFirst() {
+        if (firstIframe && activeIframe !== firstIframe) {
+            firstIframe.contentWindow.postMessage(
+                JSON.stringify({event:'command', func:'playVideo', args:[]}), '*'
+            );
+            activeIframe = firstIframe;
+        }
+    }
+
+    function makeIframe(id) {
+        var iframe = document.createElement('iframe');
+        iframe.src = embedSrc(id);
+        iframe.setAttribute('frameborder', '0');
+        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+        iframe.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
+        iframe.setAttribute('allowfullscreen', '');
+        return iframe;
+    }
+
+    function makeUnmuteBtn(iframe) {
+        var btn = document.createElement('button');
+        btn.className = 'card-bloque-video-unmute';
+        btn.innerHTML =
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>' +
+            ' Activar sonido';
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            iframe.contentWindow.postMessage(JSON.stringify({event:'command', func:'unMute', args:[]}), '*');
+            iframe.contentWindow.postMessage(JSON.stringify({event:'command', func:'setVolume', args:[100]}), '*');
+            btn.style.display = 'none';
+        });
+        return btn;
+    }
+
+    function renderVideos(data) {
+        var grid = document.getElementById('bloque-videos-grid');
+        if (!grid || !data.shorts || !data.shorts.length) return;
+
+        ['https://www.youtube.com', 'https://i.ytimg.com'].forEach(function (origin) {
+            var link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = origin;
+            document.head.appendChild(link);
+        });
+
+        data.shorts.forEach(function (v, index) {
+            var a = document.createElement('a');
+            a.href = v.url;
+            a.className = 'card-bloque-video';
+            a.target = '_blank';
+            a.rel = 'noopener noreferrer';
+
+            var thumbHTML =
+                '<img src="' + esc(v.thumbnail) + '" alt="' + esc(v.title) + '" loading="lazy">' +
+                '<div class="card-bloque-video-play">' +
+                    '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z"/></svg>' +
+                '</div>';
+
+            a.innerHTML =
+                '<div class="card-bloque-video-thumb">' + thumbHTML + '</div>' +
+                '<p class="card-bloque-video-tag">' + esc(v.playlist_title) + '</p>' +
+                '<h3>' + esc(v.title) + '</h3>';
+
+            grid.appendChild(a);
+
+            var thumb = a.querySelector('.card-bloque-video-thumb');
+
+            if (index === 0) {
+                var iframe = makeIframe(v.id);
+                var btn = makeUnmuteBtn(iframe);
+                btn.style.display = 'none';
+                iframe.addEventListener('load', function () {
+                    iframe.style.opacity = '1';
+                    btn.style.display = 'flex';
+                    activeIframe = iframe;
+                    firstIframe = iframe;
+                });
+                thumb.appendChild(iframe);
+                thumb.appendChild(btn);
+            } else {
+                var timer = null;
+                thumb.addEventListener('mouseenter', function () {
+                    timer = setTimeout(function () {
+                        pauseActive();
+                        var iframe = makeIframe(v.id);
+                        var btn = makeUnmuteBtn(iframe);
+                        btn.style.display = 'none';
+                        iframe.addEventListener('load', function () {
+                            iframe.style.opacity = '1';
+                            btn.style.display = 'flex';
+                            activeIframe = iframe;
+                        });
+                        thumb.appendChild(iframe);
+                        thumb.appendChild(btn);
+                    }, HOVER_DELAY);
+                });
+                thumb.addEventListener('mouseleave', function () {
+                    clearTimeout(timer);
+                    thumb.innerHTML = thumbHTML;
+                    resumeFirst();
+                });
+            }
+        });
+    }
+
+    fetch(JSON_URL)
+        .then(function (r) { return r.json(); })
+        .then(renderVideos)
+        .catch(function () {
+            var el = document.getElementById('bloque-videos-error');
+            if (el) el.style.display = 'block';
+        });
+}());
+</script>

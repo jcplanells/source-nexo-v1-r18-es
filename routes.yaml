@@ -1,0 +1,12 @@
+routes:
+  /preview/:
+    template: home-preview
+
+collections:
+  /:
+    permalink: /{slug}/
+    template: index
+
+taxonomies:
+  tag: /tag/{slug}/
+  author: /author/{slug}/

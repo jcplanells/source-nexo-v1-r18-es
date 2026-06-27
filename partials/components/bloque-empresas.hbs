@@ -24,6 +24,7 @@
             grid-template-columns: 1fr;
         }
     }
+
     .card-bloque-empresas img {
         width: 100%;
         aspect-ratio: 16/9;
@@ -49,7 +50,7 @@
             </span>
         </h2>
         <div class="grid-bloque-empresas">
-            {{#get "posts" filter="tag:empresas" limit="3" include="tags,authors"}}
+            {{#get "posts" filter="primary_tag:empresas" limit="3" include="tags,authors"}}
                 {{#foreach posts}}
                     <article class="card-bloque-empresas">
                         {{#if feature_image}}

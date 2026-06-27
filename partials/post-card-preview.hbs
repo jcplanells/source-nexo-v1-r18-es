@@ -1,5 +1,5 @@
 <article class="gh-card {{post_class}}{{#unless @custom.show_images_in_feed}} no-image{{/unless}}">
-    <a class="gh-card-link" href="{{url}}{{#if utmSuffix}}{{utmSuffix}}{{/if}}">
+    <a class="gh-card-link" href="{{url}}">
         {{#if feature_image}}
             <figure class="gh-card-image">
                 <img
@@ -20,7 +20,9 @@
             {{#if primary_tag}}
                 <p class="gh-card-tag">{{primary_tag.name}}</p>
             {{/if}}
-            <h3 class="gh-card-title is-title"><span class="post-time">{{date published_at format="h:mm a"}}</span> {{#if separator}}<strong class="post-title-sep">{{separator}}</strong>{{else}}—{{/if}} {{title}}</h3>
+            <h3 class="gh-card-title is-title">
+                <span style="font-size: 0.85rem; color: #888; font-weight: 600; margin-right: 8px;">{{date published_at format="h:mm a"}}</span> - {{title}}
+            </h3>
             {{#if custom_excerpt}}
                 <p class="gh-card-excerpt is-body">{{custom_excerpt}}</p>
             {{/if}}

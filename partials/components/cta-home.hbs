@@ -1,0 +1,130 @@
+{{#unless @member}}
+<style>
+.cta-home {
+    padding: 20px 0;
+    margin-top: 0;
+}
+.cta-home-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    background: #122805;
+    padding: 28px 40px;
+    border-radius: 16px;
+}
+.cta-home-text {
+    flex-shrink: 0;
+}
+.cta-home-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #34CC03;
+    margin: 0 0 6px;
+}
+.cta-home-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #F1F2E9;
+    line-height: 1.2;
+    margin: 0;
+    white-space: nowrap;
+}
+.cta-home-form {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    max-width: 480px;
+}
+.cta-home-input {
+    flex: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    padding: 11px 20px;
+    border: 1.5px solid rgba(241,242,233,0.3);
+    border-radius: 100px;
+    background: rgba(241,242,233,0.1);
+    color: #F1F2E9;
+    outline: none;
+    min-width: 0;
+    transition: border-color 0.2s, background 0.2s;
+}
+.cta-home-input:focus {
+    border-color: #34CC03;
+    background: rgba(241,242,233,0.15);
+    box-shadow: 0 0 0 3px rgba(52,204,3,0.2);
+}
+.cta-home-input::placeholder { color: rgba(241,242,233,0.45); }
+.cta-home-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 11px 28px;
+    background: #34CC03;
+    color: #020202;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.cta-home-btn:hover { background: #9CF469; }
+.cta-home-msg {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.2rem;
+    color: #34CC03;
+    margin-top: 8px;
+}
+@media (max-width: 900px) {
+    .cta-home-title { white-space: normal; font-size: 1.8rem; }
+}
+@media (max-width: 767px) {
+    .cta-home-inner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .cta-home-form { max-width: 100%; width: 100%; }
+}
+@media (max-width: 500px) {
+    .cta-home-form { flex-direction: column; }
+    .cta-home-btn { width: 100%; text-align: center; }
+}
+</style>
+
+<section class="gh-outer cta-home">
+    <div class="gh-inner cta-home-inner">
+        <div class="cta-home-text">
+            <p class="cta-home-eyebrow">Newsletter gratuito</p>
+            <h2 class="cta-home-title">Panamá, explicada. Cada mañana.</h2>
+        </div>
+        <div class="mauticform-error" id="mauticform_home_error" style="color:#ff6b6b;font-size:1.2rem"></div>
+        <div class="mauticform-message cta-home-msg" id="mauticform_home_message"></div>
+        <form autocomplete="false" role="form" method="post"
+              action="https://mautic.adulting.club/form/submit?formId=2"
+              id="mauticform_home"
+              data-mautic-form="registronexohome"
+              enctype="multipart/form-data"
+              class="cta-home-form">
+            <input type="email"
+                   name="mauticform[correo]"
+                   id="mauticform_input_home_correo"
+                   class="cta-home-input"
+                   placeholder="tucorreo@ejemplo.com"
+                   required>
+            <button type="submit"
+                    name="mauticform[submit]"
+                    value="1"
+                    class="cta-home-btn">Suscribirme gratis</button>
+            <input type="hidden" name="mauticform[formId]" value="2">
+            <input type="hidden" name="mauticform[return]" value="">
+            <input type="hidden" name="mauticform[formName]" value="registronexo">
+        </form>
+    </div>
+</section>
+{{/unless}}

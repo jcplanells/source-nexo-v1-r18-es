@@ -1,0 +1,57 @@
+<style>
+.banner-alerta {
+    background: #122805;
+    padding: 12px 0;
+    margin-bottom: 0;
+}
+.banner-alerta-inner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.banner-alerta-badge {
+    flex-shrink: 0;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #122805;
+    background: #34CC03;
+    padding: 3px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+.banner-alerta-texto {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #F1F2E9;
+    line-height: 1.4;
+    flex: 1;
+    margin: 0;
+}
+.banner-alerta-texto a {
+    color: #34CC03;
+    font-weight: 600;
+    text-decoration: none;
+}
+.banner-alerta-texto a:hover {
+    text-decoration: underline;
+}
+@media (max-width: 767px) {
+    .banner-alerta-badge { font-size: 1rem; }
+    .banner-alerta-texto { font-size: 1.3rem; }
+}
+</style>
+
+<div class="gh-outer banner-alerta">
+    <div class="gh-inner banner-alerta-inner">
+        <span class="banner-alerta-badge">{{#if @custom.alert_bar_badge}}{{@custom.alert_bar_badge}}{{else}}⚡ Especial{{/if}}</span>
+        <p class="banner-alerta-texto">
+            {{#if @custom.alert_bar_text}}{{@custom.alert_bar_text}}{{else}}Activa el banner y escribe el texto desde Ghost Admin → Design.{{/if}}
+            {{#if @custom.alert_bar_link}}<a href="{{@custom.alert_bar_link}}" target="_blank" rel="noopener">Ver más</a>{{/if}}
+        </p>
+    </div>
+</div>

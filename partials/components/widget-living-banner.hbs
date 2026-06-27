@@ -1,0 +1,202 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@900&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    .nx-banner {
+        background: #020202;
+        width: 100%;
+        height: 600px;
+        border-radius: 10px;
+        padding: 28px 22px 24px;
+        position: relative;
+        overflow: hidden;
+        font-family: 'Space Grotesk', sans-serif;
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+    }
+    .nx-glow-top {
+        position: absolute;
+        top: -60px; right: -60px;
+        width: 220px; height: 220px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(52,204,3,0.13) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .nx-glow-bot {
+        position: absolute;
+        bottom: -40px; left: -40px;
+        width: 160px; height: 160px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(52,204,3,0.07) 0%, transparent 70%);
+        pointer-events: none;
+    }
+    .nx-logo {
+        font-family: 'Barlow', sans-serif;
+        font-weight: 900;
+        font-size: 12px;
+        color: rgba(255,255,255,0.2);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: 14px;
+    }
+    .nx-logo span { color: #34CC03; }
+    .nx-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(52,204,3,0.12);
+        border: 1px solid rgba(52,204,3,0.3);
+        color: #34CC03;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        padding: 4px 10px;
+        border-radius: 100px;
+        margin-bottom: 16px;
+        width: fit-content;
+    }
+    .nx-dot { width: 5px; height: 5px; border-radius: 50%; background: #34CC03; flex-shrink: 0; }
+    .nx-title {
+        font-family: 'Barlow', sans-serif;
+        font-weight: 900;
+        font-size: 24px;
+        line-height: 1.1;
+        color: #fff;
+        margin: 0 0 8px;
+        letter-spacing: -0.02em;
+    }
+    .nx-title span { color: #34CC03; }
+    .nx-sub {
+        font-size: 12px;
+        color: rgba(255,255,255,0.5);
+        line-height: 1.6;
+        margin: 0 0 20px;
+    }
+    .nx-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 16px; }
+    .nx-cards { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+    .nx-card {
+        background: rgba(52,204,3,0.06);
+        border: 1px solid rgba(52,204,3,0.15);
+        border-radius: 8px;
+        padding: 12px 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    .nx-icon {
+        width: 28px; height: 28px;
+        border-radius: 6px;
+        background: rgba(52,204,3,0.12);
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .nx-icon svg { width: 14px; height: 14px; }
+    .nx-ct { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 1px; }
+    .nx-cs { font-size: 10px; color: rgba(255,255,255,0.4); }
+    .nx-stats { display: flex; margin-bottom: 20px; }
+    .nx-stat { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .nx-stat:first-child { padding-right: 14px; border-right: 1px solid rgba(255,255,255,0.08); margin-right: 14px; }
+    .nx-sv { font-family: 'Barlow', sans-serif; font-weight: 900; font-size: 17px; color: #34CC03; letter-spacing: -0.02em; }
+    .nx-sl { font-size: 10px; color: rgba(255,255,255,0.4); line-height: 1.3; }
+    .nx-spacer { flex: 1; }
+    .nx-btn-p {
+        background: #34CC03;
+        color: #020202;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        padding: 11px 16px;
+        border-radius: 7px;
+        border: none;
+        cursor: pointer;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        margin-bottom: 8px;
+    }
+    .nx-btn-s {
+        color: rgba(255,255,255,0.45);
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 11px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        text-decoration: none;
+    }
+</style>
+
+<div class="nx-banner">
+    <div class="nx-glow-top"></div>
+    <div class="nx-glow-bot"></div>
+
+    <div class="nx-logo">nexo<span>.</span>la</div>
+
+    <div class="nx-label">
+        <span class="nx-dot"></span>
+        Nexo Living
+    </div>
+
+    <h3 class="nx-title">Datos reales del mercado <span>inmobiliario</span> en Panamá</h3>
+
+    <p class="nx-sub">Consulta transacciones de compraventa 2025–2026 en mapa interactivo.</p>
+
+    <div class="nx-divider"></div>
+
+    <div class="nx-cards">
+        <div class="nx-card">
+            <div class="nx-icon">
+                <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5l3.5-.5L8 2z" stroke="#34CC03" stroke-width="1.2" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <div>
+                <div class="nx-ct">Precio promedio por zona</div>
+                <div class="nx-cs">Compara áreas y segmentos</div>
+            </div>
+        </div>
+        <div class="nx-card">
+            <div class="nx-icon">
+                <svg viewBox="0 0 16 16" fill="none">
+                    <rect x="2" y="8" width="3" height="6" rx="1" stroke="#34CC03" stroke-width="1.2"/>
+                    <rect x="6.5" y="5" width="3" height="9" rx="1" stroke="#34CC03" stroke-width="1.2"/>
+                    <rect x="11" y="2" width="3" height="12" rx="1" stroke="#34CC03" stroke-width="1.2"/>
+                </svg>
+            </div>
+            <div>
+                <div class="nx-ct">Precio/m² por PH</div>
+                <div class="nx-cs">Penthouse · Apartamentos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nx-stats">
+        <div class="nx-stat">
+            <span class="nx-sv">+16,000</span>
+            <span class="nx-sl">transacciones indexadas</span>
+        </div>
+        <div class="nx-stat">
+            <span class="nx-sv">2025–2026</span>
+            <span class="nx-sl">datos disponibles</span>
+        </div>
+    </div>
+
+    <div class="nx-spacer"></div>
+
+    <a href="https://nexo.la/oferta" class="nx-btn-p">
+        Explorar planes
+        <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+            <path d="M3 7h8M8 4l3 3-3 3" stroke="#020202" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+    <a href="https://nexo.la/nexoliving" class="nx-btn-s">
+        Ver mapa gratis
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none">
+            <path d="M2.5 6h7M7 3.5L9.5 6 7 8.5" stroke="rgba(255,255,255,0.45)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </a>
+</div>

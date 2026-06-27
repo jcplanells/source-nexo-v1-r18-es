@@ -35,9 +35,9 @@
                 {{#match feed "home"}}
                     {{#match @custom.header_style "Highlight"}}
                         {{#if @custom.show_featured_posts}}
-                            {{#match posts.length ">=" 4}}
+                            {{#match posts.length ">=" 3}}
                                 {{#get "posts" include="authors" limit="16"}}
-                                    {{#foreach posts from="5"}}
+                                    {{#foreach posts from="4"}}
                                         {{> "post-card" lazyLoad=true}}
                                     {{/foreach}}
                                 {{/get}}

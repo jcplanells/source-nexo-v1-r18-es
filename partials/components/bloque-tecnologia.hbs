@@ -11,7 +11,7 @@
     }
     .grid-bloque-tecnologia {
         display: grid;
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 32px;
     }
     @media (max-width: 991px) {
@@ -49,7 +49,7 @@
                 </span>
             </h2>
             <div class="grid-bloque-tecnologia">
-                {{#get "posts" filter="tag:tecnologia" limit="5" include="authors"}}
+                {{#get "posts" filter="primary_tag:tecnologia" limit="4" include="authors"}}
                     {{#foreach posts}}
                         <article class="card-bloque-tecnologia">
                             {{#if feature_image}}

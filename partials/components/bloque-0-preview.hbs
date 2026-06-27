@@ -1,0 +1,131 @@
+{{#if @custom.bloque_0_tag}}
+<style>
+    .bloque-featured-preview {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-featured-preview .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+    .grid-featured-preview {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 24px;
+    }
+    .card-featured-main {
+        grid-row: span 2;
+    }
+    .card-featured-main img {
+        width: 100%;
+        aspect-ratio: 4/3;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 14px;
+    }
+    .card-featured-main h3 {
+        font-size: 2.4rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-featured-secondary img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 3px;
+        margin-bottom: 10px;
+    }
+    .card-featured-secondary h3 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        margin: 0;
+    }
+    .card-featured-main h3 a,
+    .card-featured-secondary h3 a {
+        color: var(--color-base, #000);
+        text-decoration: none;
+    }
+    .card-featured-main h3 a:hover,
+    .card-featured-secondary h3 a:hover {
+        text-decoration: underline;
+    }
+    .bloque-featured-preview .post-time {
+        font-size: 0.85rem;
+        color: #888;
+        margin-right: 6px;
+        font-weight: 600;
+    }
+    @media (max-width: 991px) {
+        .grid-featured-preview {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto;
+        }
+        .card-featured-main {
+            grid-column: span 2;
+            grid-row: span 1;
+        }
+        .card-featured-main img {
+            aspect-ratio: 16/9;
+        }
+    }
+    @media (max-width: 767px) {
+        .grid-featured-preview {
+            grid-template-columns: 1fr;
+            grid-template-rows: auto;
+        }
+        .card-featured-main {
+            grid-column: span 1;
+        }
+    }
+</style>
+<section class="gh-outer bloque-featured-preview">
+    <div class="gh-inner">
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                <a href="{{@site.url}}/tag/{{@custom.bloque_0_tag}}/" style="text-decoration: none; color: inherit;">{{#if @custom.bloque_0_titulo}}{{@custom.bloque_0_titulo}}{{else}}Principales{{/if}}</a>
+            </span>
+        </h2>
+        <div class="grid-featured-preview">
+            {{#get "posts" filter=(concat "tag:" @custom.bloque_0_tag) limit="5" include="tags,authors"}}
+                {{#foreach posts}}
+                    {{#if @first}}
+                    <article class="card-featured-main">
+                        {{#if feature_image}}
+                            <a href="{{url}}">
+                                <img src="{{feature_image}}" alt="{{title}}">
+                            </a>
+                        {{/if}}
+                        <h3>
+                            <a href="{{url}}">
+                                <span class="post-time">{{date published_at format="h:mm a"}}</span> - {{title}}
+                            </a>
+                        </h3>
+                    </article>
+                    {{else}}
+                    <article class="card-featured-secondary">
+                        {{#if feature_image}}
+                            <a href="{{url}}">
+                                <img src="{{feature_image}}" alt="{{title}}">
+                            </a>
+                        {{/if}}
+                        <h3>
+                            <a href="{{url}}">
+                                <span class="post-time">{{date published_at format="h:mm a"}}</span> - {{title}}
+                            </a>
+                        </h3>
+                    </article>
+                    {{/if}}
+                {{/foreach}}
+            {{else}}
+                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts. Revisa que el tag <strong>{{@custom.bloque_0_tag}}</strong> sea correcto (slug en minúsculas).</p>
+            {{/get}}
+        </div>
+        <div style="text-align: right; margin-top: 15px;">
+            <a href="{{@site.url}}/tag/{{@custom.bloque_0_tag}}/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+        </div>
+    </div>
+</section>
+{{/if}}
