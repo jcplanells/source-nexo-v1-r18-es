@@ -3731,3 +3731,11 @@ body[class*=" gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-hea
     letter-spacing: -2px;
     color: var(--ghost-accent-color);
 }
+
+.post-title-sep-blue {
+    color: #3366FF;
+}
+
+.post-title-sep-green {
+    color: var(--ghost-accent-color);
+}

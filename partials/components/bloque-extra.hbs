@@ -45,7 +45,7 @@
             <div class="grid-bloque-extra">
                 {{!-- Se revisa si el tag del bloque 0 existe para no crear un filtro inválido --}}
                 {{#if @custom.bloque_0_tag}}
-                    {{#get "posts" filter=(concat "featured:true+tag:-[" @custom.bloque_0_tag ",empresas,graficas]") limit="6" include="authors"}}
+                    {{#get "posts" filter=(concat "featured:true+tag:-[" @custom.bloque_0_tag ",empresas,datos]") limit="6" include="authors"}}
                         {{#foreach posts from="4"}}
                             <article class="card-bloque-extra">
                                 {{#if feature_image}}
@@ -58,7 +58,7 @@
                         {{/foreach}}
                     {{/get}}
                 {{else}}
-                    {{#get "posts" filter="featured:true+tag:-[empresas,graficas]" limit="6" include="authors"}}
+                    {{#get "posts" filter="featured:true+tag:-[empresas,datos]" limit="6" include="authors"}}
                         {{#foreach posts from="4"}}
                             <article class="card-bloque-extra">
                                 {{#if feature_image}}

@@ -1,0 +1,90 @@
+{{!-- Leaderboard 728x90 (desktop) / 320x50-320x100 (móvil) en el artículo,
+      entre el logo y el menú de secciones --}}
+<style>
+    .banner-nav-top {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 12px 0;
+        min-height: 90px;
+        overflow: hidden;
+    }
+    /* Caja fija 728x90 en desktop: recorta cualquier creativo mayor para que no empuje el layout */
+    .banner-nav-top #div-gpt-ad-1788281892417-0 {
+        width: 728px;
+        max-width: 100%;
+        height: 90px;
+        overflow: hidden;
+        flex: 0 0 auto;
+    }
+    .banner-nav-top #div-gpt-ad-1788281892417-0 iframe {
+        display: block;
+        margin: 0 auto;
+    }
+    /* Layout apilado: el banner ocupa su propia fila entre el logo (fila 1) y el menú */
+    #gh-navigation.is-stacked .banner-nav-top {
+        grid-row-start: 2;
+    }
+    #gh-navigation.is-stacked .gh-navigation-menu {
+        grid-row-start: 3;
+    }
+    /* Reanclar las líneas divisorias del menú apilado a su propia caja */
+    @media (min-width: 992px) {
+        #gh-navigation.is-stacked .gh-navigation-menu {
+            position: relative;
+        }
+        #gh-navigation.is-stacked .gh-navigation-menu::before {
+            top: 0;
+        }
+        #gh-navigation.is-stacked .gh-navigation-menu::after {
+            top: auto;
+            bottom: 0;
+        }
+    }
+    /* En móvil el creativo es 320x50 / 320x100: caja flexible, sin ancho fijo */
+    @media (max-width: 767px) {
+        .banner-nav-top {
+            padding: 2px 0 4px;
+            min-height: 0;
+        }
+        .banner-nav-top #div-gpt-ad-1788281892417-0 {
+            width: auto;
+            height: auto;
+            min-height: 50px;
+        }
+        /* La barra móvil tiene alto fijo (64px) y el menú va en position:fixed;
+           sin esto el banner se sale de la barra y se monta sobre la
+           ilustración de la nota. Dejamos que la barra crezca y colocamos
+           el banner en su propia fila, justo bajo el logo. */
+        #gh-navigation:not(.is-open) {
+            height: auto;
+        }
+        #gh-navigation:not(.is-open) .gh-navigation-inner {
+            height: auto;
+            row-gap: 0;
+        }
+        #gh-navigation.is-stacked:not(.is-open) .banner-nav-top {
+            grid-row-start: auto;
+            grid-column: 1;
+            border-top: 1px solid var(--color-border);
+        }
+        /* Con el banner presente, los ~84px que el tema deja entre la barra y
+           la imagen destacada sobran en móvil: se recorta a ~28px. */
+        .gh-article-header {
+            margin-top: 16px;
+        }
+        .gh-article-image {
+            margin-top: 8px;
+        }
+    }
+</style>
+
+<div class="banner-nav-top">
+    <!-- /23361752465/13 -->
+    <div id='div-gpt-ad-1788281892417-0' style='min-height: 50px;'>
+        <script>
+            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1788281892417-0'); });
+        </script>
+    </div>
+</div>

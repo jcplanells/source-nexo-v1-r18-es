@@ -1,0 +1,417 @@
+<style>
+    .bloque-canal-cola {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-top: 20px;
+    }
+    .bloque-canal-cola .gh-container-title {
+        margin-bottom: 30px;
+        color: var(--color-base, #000);
+        border-bottom: none;
+    }
+
+    .canal-cola-widget {
+        --cc-green: var(--ghost-accent-color, #34cc03);
+        --cc-blue: #4f8ef7;
+        --cc-amber: #e8c988;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+        max-width: 1040px;
+        margin: 0 auto;
+        background: #0a0a0a;
+        color: #fff;
+        border-radius: 24px;
+        padding: 24px;
+        box-sizing: border-box;
+    }
+    .canal-cola-loading, .canal-cola-error {
+        text-align: center;
+        padding: 40px 16px;
+        color: rgba(255,255,255,0.6);
+        font-size: 1.4rem;
+    }
+    .canal-cola-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+    .canal-cola-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--cc-green);
+    }
+    .canal-cola-live-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--cc-green);
+        animation: canal-cola-pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes canal-cola-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+    .canal-cola-updated {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.5);
+    }
+
+    .canal-cola-grid {
+        display: grid;
+        grid-template-columns: minmax(240px, 1fr) minmax(320px, 1.6fr);
+        gap: 20px;
+        align-items: start;
+    }
+
+    .canal-cola-total-card {
+        background: #151515;
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+    .canal-cola-total-value {
+        font-size: 3.6rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+    .canal-cola-total-label {
+        font-size: 1.3rem;
+        color: rgba(255,255,255,0.6);
+        margin-top: 4px;
+    }
+    .canal-cola-progress {
+        display: flex;
+        height: 22px;
+        border-radius: 6px;
+        overflow: hidden;
+        margin-top: 16px;
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+    .canal-cola-progress span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #0a0a0a;
+    }
+    .canal-cola-progress .con-reserva { background: var(--cc-green); }
+    .canal-cola-progress .sin-reserva { background: var(--cc-amber); }
+    .canal-cola-legend {
+        display: flex;
+        gap: 16px;
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.75);
+    }
+    .canal-cola-legend-dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        margin-right: 5px;
+    }
+
+    .canal-cola-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    .canal-cola-stat-card {
+        background: #151515;
+        border-radius: 16px;
+        padding: 14px 16px;
+    }
+    .canal-cola-stat-label {
+        font-size: 1rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.5);
+        font-weight: 700;
+    }
+    .canal-cola-stat-value {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-top: 4px;
+    }
+    .canal-cola-stat-sub {
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.5);
+        margin-top: 2px;
+    }
+
+    .canal-cola-charts {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+    .canal-cola-chart-card {
+        background: #151515;
+        border-radius: 16px;
+        padding: 16px 18px;
+    }
+    .canal-cola-chart-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+    .canal-cola-chart-sub {
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.5);
+        margin-top: 2px;
+        margin-bottom: 8px;
+    }
+    .canal-cola-chart-card svg { display: block; width: 100%; height: auto; }
+    .canal-cola-chart-legend {
+        display: flex;
+        gap: 16px;
+        margin-top: 6px;
+        font-size: 1.05rem;
+        color: rgba(255,255,255,0.7);
+    }
+
+    .canal-cola-footer {
+        margin-top: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 1rem;
+        color: rgba(255,255,255,0.4);
+    }
+    .canal-cola-footer a { color: rgba(255,255,255,0.4); }
+
+    @media (max-width: 767px) {
+        .canal-cola-grid { grid-template-columns: 1fr; }
+        .canal-cola-stats { grid-template-columns: 1fr 1fr; }
+        .canal-cola-total-value { font-size: 3rem; }
+    }
+</style>
+
+<section class="gh-outer bloque-canal-cola">
+    <div class="gh-inner">
+        <h2 class="gh-container-title">
+            <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
+                Canal de Panamá
+            </span>
+        </h2>
+
+        <div class="canal-cola-widget" id="canal-cola-widget">
+            <div class="canal-cola-loading">Cargando datos del Canal…</div>
+        </div>
+    </div>
+</section>
+
+<script>
+(function () {
+    var DATA_URL = 'https://opt.nexo.la/assets/json/canal-cola.json';
+    var root = document.getElementById('canal-cola-widget');
+    var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+    var MESES_LARGO = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+    function shortDate(iso) {
+        var d = new Date(iso + 'T00:00:00');
+        return d.getDate() + ' ' + MESES[d.getMonth()];
+    }
+    function longDate(iso) {
+        var d = new Date(iso + 'T00:00:00');
+        return d.getDate() + ' de ' + MESES_LARGO[d.getMonth()];
+    }
+    function pct(part, total) {
+        if (!total) return 0;
+        return Math.round((part / total) * 100);
+    }
+    function pickIndexes(n, count) {
+        var idx = [];
+        for (var k = 0; k < count; k++) {
+            idx.push(Math.round((k / (count - 1)) * (n - 1)));
+        }
+        return idx;
+    }
+
+    function lineChartSvg(serie) {
+        var w = 600, h = 220, left = 34, right = 30, top = 14, bottom = 26;
+        var plotW = w - left - right, plotH = h - top - bottom;
+        var n = serie.length;
+        var maxVal = 0;
+        serie.forEach(function (d) { maxVal = Math.max(maxVal, d.norte, d.sur); });
+        var yMax = Math.max(5, Math.ceil((maxVal || 5) / 5) * 5);
+
+        function x(i) { return left + (n === 1 ? 0 : (i / (n - 1)) * plotW); }
+        function y(v) { return top + (1 - v / yMax) * plotH; }
+
+        var grid = '', ticks = yMax / 5;
+        for (var t = 0; t <= ticks; t++) {
+            var val = t * 5;
+            var gy = y(val);
+            grid += '<line x1="' + left + '" y1="' + gy + '" x2="' + (w - right) + '" y2="' + gy + '" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>';
+            grid += '<text x="' + (left - 8) + '" y="' + (gy + 4) + '" font-size="11" fill="rgba(255,255,255,0.4)" text-anchor="end">' + val + '</text>';
+        }
+
+        function pathFor(key) {
+            var d = '';
+            serie.forEach(function (pt, i) {
+                d += (i === 0 ? 'M' : 'L') + x(i) + ',' + y(pt[key]) + ' ';
+            });
+            return d;
+        }
+
+        var labelCount = Math.min(5, n);
+        var xLabels = '';
+        pickIndexes(n, labelCount).forEach(function (i) {
+            xLabels += '<text x="' + x(i) + '" y="' + (h - 6) + '" font-size="11" fill="rgba(255,255,255,0.4)" text-anchor="middle">' + shortDate(serie[i].fecha) + '</text>';
+        });
+
+        var last = serie[n - 1];
+        var yNorte = y(last.norte), ySur = y(last.sur);
+        var minGap = 12;
+        if (Math.abs(yNorte - ySur) < minGap) {
+            var mid = (yNorte + ySur) / 2;
+            if (yNorte <= ySur) {
+                yNorte = mid - minGap / 2;
+                ySur = mid + minGap / 2;
+            } else {
+                yNorte = mid + minGap / 2;
+                ySur = mid - minGap / 2;
+            }
+        }
+        var endLabels =
+            '<text x="' + (x(n - 1) + 6) + '" y="' + (yNorte + 4) + '" font-size="12" font-weight="700" fill="var(--cc-green)">' + last.norte.toFixed(1) + '</text>' +
+            '<text x="' + (x(n - 1) + 6) + '" y="' + (ySur + 4) + '" font-size="12" font-weight="700" fill="var(--cc-blue)">' + last.sur.toFixed(1) + '</text>';
+
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' +
+            grid + xLabels +
+            '<path d="' + pathFor('norte') + '" fill="none" stroke="var(--cc-green)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>' +
+            '<path d="' + pathFor('sur') + '" fill="none" stroke="var(--cc-blue)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>' +
+            endLabels +
+            '</svg>';
+    }
+
+    function barChartSvg(dias) {
+        var w = 600, h = 190, left = 8, right = 8, top = 10, bottom = 24;
+        var plotW = w - left - right, plotH = h - top - bottom;
+        var n = dias.length;
+        var gap = 4;
+        var barW = Math.max(2, plotW / n - gap);
+        var rows = dias.map(function (d) {
+            var tomados = d.neopanamax.tomados + d.panamax.tomados;
+            var libres = d.neopanamax.libres + d.panamax.libres;
+            return { fecha: d.fecha, tomados: tomados, libres: libres, total: tomados + libres };
+        });
+        var maxTotal = Math.max.apply(null, rows.map(function (r) { return r.total; })) || 1;
+        var baseline = top + plotH;
+
+        var bars = '';
+        rows.forEach(function (r, i) {
+            var bx = left + i * (barW + gap);
+            var ht = (r.tomados / maxTotal) * plotH;
+            var hl = (r.libres / maxTotal) * plotH;
+            bars += '<rect x="' + bx + '" y="' + (baseline - ht) + '" width="' + barW + '" height="' + ht + '" fill="var(--cc-green)" rx="1.5"/>';
+            if (hl > 0) {
+                bars += '<rect x="' + bx + '" y="' + (baseline - ht - hl) + '" width="' + barW + '" height="' + hl + '" fill="var(--cc-amber)" rx="1.5"/>';
+            }
+        });
+
+        var labelCount = Math.min(5, n);
+        var xLabels = '';
+        pickIndexes(n, labelCount).forEach(function (i) {
+            var bx = left + i * (barW + gap) + barW / 2;
+            xLabels += '<text x="' + bx + '" y="' + (h - 6) + '" font-size="11" fill="rgba(255,255,255,0.4)" text-anchor="middle">' + shortDate(rows[i].fecha) + '</text>';
+        });
+
+        return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none">' + bars + xLabels + '</svg>';
+    }
+
+    function render(d) {
+        var e = d.en_espera;
+        var esc = d.por_esclusa;
+        var espera = d.espera_dias_sin_reserva;
+        var conPct = pct(e.con_reserva, e.total);
+        var sinPct = 100 - conPct;
+
+        var html =
+            '<div class="canal-cola-header">' +
+                '<span class="canal-cola-live"><span class="canal-cola-live-dot"></span> En vivo</span>' +
+                '<span class="canal-cola-updated">Dato al ' + d.actualizado_texto + '</span>' +
+            '</div>' +
+            '<div class="canal-cola-grid">' +
+                '<div>' +
+                    '<div class="canal-cola-total-card">' +
+                        '<div class="canal-cola-total-value">' + e.total + '</div>' +
+                        '<div class="canal-cola-total-label">buques esperando turno</div>' +
+                        '<div class="canal-cola-progress">' +
+                            '<span class="con-reserva" style="flex:' + conPct + '">' + conPct + '%</span>' +
+                            '<span class="sin-reserva" style="flex:' + sinPct + '">' + sinPct + '%</span>' +
+                        '</div>' +
+                        '<div class="canal-cola-legend">' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-green)"></span>' + e.con_reserva + ' con reserva</span>' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-amber)"></span>' + e.sin_reserva + ' sin reserva</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="canal-cola-stats">' +
+                        '<div class="canal-cola-stat-card">' +
+                            '<div class="canal-cola-stat-label">Esclusas Neopanamax</div>' +
+                            '<div class="canal-cola-stat-value">' + esc.neopanamax.total + '</div>' +
+                            '<div class="canal-cola-stat-sub">' + esc.neopanamax.con_reserva + ' con reserva · ' + esc.neopanamax.sin_reserva + ' sin reserva</div>' +
+                        '</div>' +
+                        '<div class="canal-cola-stat-card">' +
+                            '<div class="canal-cola-stat-label">Esclusas Panamax</div>' +
+                            '<div class="canal-cola-stat-value">' + esc.panamax.total + '</div>' +
+                            '<div class="canal-cola-stat-sub">' + esc.panamax.con_reserva + ' con reserva · ' + esc.panamax.sin_reserva + ' sin reserva</div>' +
+                        '</div>' +
+                        '<div class="canal-cola-stat-card">' +
+                            '<div class="canal-cola-stat-label">Espera rumbo norte</div>' +
+                            '<div class="canal-cola-stat-value">' + espera.norte.toFixed(1) + ' días</div>' +
+                            '<div class="canal-cola-stat-sub">Salen al Atlántico, sin reserva</div>' +
+                        '</div>' +
+                        '<div class="canal-cola-stat-card">' +
+                            '<div class="canal-cola-stat-label">Espera rumbo sur</div>' +
+                            '<div class="canal-cola-stat-value">' + espera.sur.toFixed(1) + ' días</div>' +
+                            '<div class="canal-cola-stat-sub">Salen al Pacífico, sin reserva</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="canal-cola-charts">' +
+                    '<div class="canal-cola-chart-card">' +
+                        '<div class="canal-cola-chart-title">Cuánto espera un buque sin reserva</div>' +
+                        '<div class="canal-cola-chart-sub">Promedio diario de los últimos ' + d.serie_espera.length + ' días, en días</div>' +
+                        lineChartSvg(d.serie_espera) +
+                        '<div class="canal-cola-chart-legend">' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-green)"></span>rumbo norte</span>' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-blue)"></span>rumbo sur</span>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="canal-cola-chart-card">' +
+                        '<div class="canal-cola-chart-title">Cupos de reserva</div>' +
+                        '<div class="canal-cola-chart-sub">Los cupos están tomados hasta el ' + longDate(d.cupos.lleno_hasta) + '.</div>' +
+                        barChartSvg(d.cupos.dias) +
+                        '<div class="canal-cola-chart-legend">' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-green)"></span>tomados</span>' +
+                            '<span><span class="canal-cola-legend-dot" style="background:var(--cc-amber)"></span>libres</span>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>' +
+            '<div class="canal-cola-footer">' +
+                '<span>Fuente: ' + d.fuente + '</span>' +
+                '<span>nexo.la</span>' +
+            '</div>';
+
+        root.innerHTML = html;
+    }
+
+    fetch(DATA_URL + '?v=' + Date.now())
+        .then(function (r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.json();
+        })
+        .then(render)
+        .catch(function () {
+            root.innerHTML = '<div class="canal-cola-error">No se pudo cargar la información del Canal.</div>';
+        });
+}());
+</script>

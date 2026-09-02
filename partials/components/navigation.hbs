@@ -33,6 +33,13 @@
             </button>
         </div>
 
+        {{#is "home"}}
+            {{> "components/banner-nav-top"}}
+        {{/is}}
+        {{#is "post"}}
+            {{> "components/banner-nav-top-post"}}
+        {{/is}}
+
         <nav class="gh-navigation-menu">
             {{navigation}}
             {{#unless @site.members_enabled}}

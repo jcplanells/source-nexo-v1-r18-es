@@ -1,0 +1,30 @@
+<style>
+.banner-post-interior {
+    display: flex;
+    justify-content: center;
+    margin: 32px 0;
+}
+.banner-post-interior #div-gpt-ad-post-interior-0 {
+    min-width: 300px;
+    min-height: 250px;
+}
+</style>
+
+<div id="banner-post-interior-wrap" class="banner-post-interior" style="display:none">
+    <!-- /23361752465/banner_post_interior -->
+    <div id="div-gpt-ad-post-interior-0">
+        <script>
+            googletag.cmd.push(function() { googletag.display('div-gpt-ad-post-interior-0'); });
+        </script>
+    </div>
+</div>
+<script>
+googletag.cmd.push(function() {
+    googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+        if (event.slot.getSlotElementId() === 'div-gpt-ad-post-interior-0' && event.isEmpty) {
+            var wrap = document.getElementById('banner-post-interior-wrap');
+            if (wrap) wrap.style.display = 'none';
+        }
+    });
+});
+</script>

@@ -1,0 +1,33 @@
+<style>
+    .banner-archive {
+        grid-column: 1 / -1;
+        padding: 24px max(4vmin, 20px);
+        display: flex;
+        justify-content: center;
+        min-height: 250px;
+    }
+    .banner-archive .gh-ad-archive {
+        min-width: 300px;
+        min-height: 250px;
+    }
+    @media (min-width: 768px) {
+        .banner-archive {
+            min-height: 90px;
+        }
+        .banner-archive .gh-ad-archive {
+            min-width: 728px;
+            min-height: 90px;
+        }
+    }
+</style>
+
+{{!--
+    Sin id fijo ni script propio: cada vez que este bloque aparece en el DOM
+    (carga inicial o clonado por el scroll infinito tras cada tanda de posts),
+    el script en default.hbs le asigna un id único y crea/mustra su propio
+    ad slot de GPT. Así el mismo adunit puede repetirse indefinidamente.
+--}}
+<div class="banner-archive">
+    <!-- /23361752465/10 -->
+    <div class="gh-ad-archive" data-ad-path="/23361752465/10" data-ad-sizes="300x250,728x90"></div>
+</div>

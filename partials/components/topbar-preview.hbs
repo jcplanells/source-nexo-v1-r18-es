@@ -1,0 +1,120 @@
+<style>
+    /* order:-1 la saca antes del <header> dentro de .gh-viewport (flex-column), sin tocar el layout compartido */
+    .topbar-preview {
+        order: -1;
+        background: var(--background-color, #fff);
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+    }
+    .topbar-preview-inner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px max(4vmin, 20px);
+    }
+    .topbar-preview-links {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+    }
+    .topbar-preview-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 1.2rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--color-base, #000);
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    .topbar-preview-link:hover {
+        color: var(--ghost-accent-color);
+    }
+    .topbar-preview-divider {
+        width: 1px;
+        height: 14px;
+        background: var(--color-border, #d1d5db);
+        flex-shrink: 0;
+    }
+
+    /* Variante de prueba: barra verde con etiqueta a la izquierda (solo /preview/) */
+    .topbar-preview.topbar-preview-green {
+        background: var(--ghost-accent-color, #34cc03);
+        border-bottom: none;
+    }
+    .topbar-preview-green .topbar-preview-inner {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 12px;
+        padding: 10px max(4vmin, 20px);
+    }
+    .topbar-preview-green .topbar-preview-label {
+        grid-column: 1;
+        justify-self: start;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    .topbar-preview-green .topbar-preview-links {
+        grid-column: 2;
+    }
+    .topbar-preview-green .topbar-preview-link {
+        color: #fff;
+    }
+    .topbar-preview-green .topbar-preview-link:hover {
+        color: rgba(255, 255, 255, 0.8);
+    }
+    .topbar-preview-green .topbar-preview-divider {
+        background: #fff;
+    }
+    @media (max-width: 767px) {
+        .topbar-preview-green .topbar-preview-inner {
+            grid-template-columns: 1fr;
+            justify-items: center;
+            gap: 6px;
+        }
+        .topbar-preview-green .topbar-preview-label {
+            display: none;
+        }
+        .topbar-preview-green .topbar-preview-links {
+            grid-column: 1;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        .topbar-preview-green .topbar-preview-link {
+            font-size: 1rem;
+            letter-spacing: 0.01em;
+        }
+        .topbar-preview-green .topbar-preview-divider {
+            height: 12px;
+        }
+    }
+    @media (max-width: 380px) {
+        .topbar-preview-green .topbar-preview-links {
+            gap: 6px;
+        }
+        .topbar-preview-green .topbar-preview-link {
+            font-size: 0.85rem;
+        }
+    }
+</style>
+
+<div class="gh-outer topbar-preview{{#if variant}} topbar-preview-{{variant}}{{/if}}">
+    <div class="topbar-preview-inner">
+        {{#if variant}}
+            <span class="topbar-preview-label">Descubre nuestras apps:</span>
+        {{/if}}
+        <div class="topbar-preview-links">
+            <a class="topbar-preview-link" href="https://nexo.la/careers/">Nx Careers</a>
+            <span class="topbar-preview-divider"></span>
+            <a class="topbar-preview-link" href="https://nexo.la/nexoliving">Nexo Living</a>
+            <span class="topbar-preview-divider"></span>
+            <a class="topbar-preview-link" href="https://sports.nexo.la">Nexo Sports</a>
+            <span class="topbar-preview-divider"></span>
+            <a class="topbar-preview-link" href="https://trade.nexo.la">Nexo Trade</a>
+        </div>
+    </div>
+</div>

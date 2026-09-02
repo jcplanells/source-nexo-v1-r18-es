@@ -1,20 +1,23 @@
 {{!< default}}
 {{#post}}
+{{> "components/topbar-preview" variant="green"}}
 <script>window._nexoIsMember = {{#if @member}}true{{else}}false{{/if}};</script>
 <style>
     .post-with-sidebar-wrap {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 260px;
-        max-width: 1200px;
+        grid-template-columns: minmax(0, 1fr) 340px;
+        max-width: 1280px;
         margin: 0 auto;
     }
     .post-sidebar {
         padding-top: 48px;
         padding-right: max(4vmin, 20px);
     }
-    .post-sidebar-inner {
+    .post-sidebar-sticky {
         position: sticky;
         top: 24px;
+    }
+    .post-sidebar-inner {
         padding-top: 24px;
         border-top: 1px solid var(--color-border, #e0e0e0);
     }
@@ -85,18 +88,35 @@
             {{content}}
         </section>
 
-        {{!-- Variante A: CTA inline, JS lo mueve después del 3er párrafo --}}
+        {{!-- Variante A: CTA inline tras el 3er párrafo, y Banner Ad Manager tras el 5to.
+             Los párrafos se capturan una sola vez, antes de insertar nada: el CTA trae
+             sus propios <p> internos, y si se recalculara después de insertarlo esos
+             párrafos se colarían en el conteo y el banner podría terminar dentro del CTA. --}}
         {{> "components/cta-inline"}}
+        {{> "components/banner-post-interior"}}
         <script>
         (function () {
-            if (window._nexoIsMember) return;
-            var cta = document.getElementById('cta-inline-wrap');
-            if (!cta) return;
             var paragraphs = document.querySelectorAll('.gh-content p');
-            var target = paragraphs[2] || paragraphs[paragraphs.length - 1];
-            if (!target) return;
-            cta.style.display = '';
-            target.parentNode.insertBefore(cta, target.nextSibling);
+            var ctaTarget = paragraphs[2] || paragraphs[paragraphs.length - 1];
+            var bannerTarget = paragraphs[4] || paragraphs[paragraphs.length - 1];
+
+            var cta = document.getElementById('cta-inline-wrap');
+            var ctaInserted = false;
+            if (cta && !window._nexoIsMember && ctaTarget) {
+                cta.style.display = '';
+                ctaTarget.parentNode.insertBefore(cta, ctaTarget.nextSibling);
+                ctaInserted = true;
+            }
+
+            var banner = document.getElementById('banner-post-interior-wrap');
+            if (banner && bannerTarget) {
+                var anchor = bannerTarget;
+                if (ctaInserted && bannerTarget === ctaTarget) {
+                    anchor = cta;
+                }
+                banner.style.display = '';
+                anchor.parentNode.insertBefore(banner, anchor.nextSibling);
+            }
         }());
         </script>
 
@@ -132,27 +152,43 @@
         }());
         </script>
 
+        {{!-- Anuncio fijo 300x250 solo en móvil (unidad "Articulo Movil", separada del responsivo del sidebar) --}}
+        <div class="gh-canvas" id="post-mobile-ad-wrap"></div>
+        <script>
+        (function () {
+            if (window.innerWidth >= 1100) return;
+            var wrap = document.getElementById('post-mobile-ad-wrap');
+            if (!wrap) return;
+            wrap.innerHTML = '<div style="margin:24px auto;max-width:300px;text-align:center;">' +
+                '<ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" ' +
+                'data-ad-client="ca-pub-9061854370540184" data-ad-slot="4515734152"></ins></div>';
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+        }());
+        </script>
+
     </article>
     </div>{{!-- /.post-article-col --}}
 
     <aside class="post-sidebar">
-        <div class="post-sidebar-inner">
-            <h2 class="gh-container-title">
-                <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">Más leídas</span>
-            </h2>
-            <div class="gh-featured-feed" id="post-leidas-feed">
-                <p style="color:#888; font-size:1.4rem">Cargando...</p>
+        <div class="post-sidebar-sticky">
+            <div style="margin-bottom: 24px; display: flex; justify-content: center;">
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9061854370540184" crossorigin="anonymous"></script>
+                <div id="div-gpt-ad-sidebar-post-0" style="min-width: 160px; min-height: 200px;"></div>
+                <script>
+                (function () {
+                    if (window.innerWidth < 1100) return;
+                    googletag.cmd.push(function() { googletag.display('div-gpt-ad-sidebar-post-0'); });
+                }());
+                </script>
             </div>
-        </div>
-        <div style="margin-top: 24px;">
-            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9061854370540184" crossorigin="anonymous"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-9061854370540184"
-                 data-ad-slot="5106047089"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+            <div class="post-sidebar-inner">
+                <h2 class="gh-container-title">
+                    <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">Más leídas</span>
+                </h2>
+                <div class="gh-featured-feed" id="post-leidas-feed">
+                    <p style="color:#888; font-size:1.4rem">Cargando...</p>
+                </div>
+            </div>
         </div>
     </aside>
     </div>{{!-- /.post-with-sidebar-wrap --}}

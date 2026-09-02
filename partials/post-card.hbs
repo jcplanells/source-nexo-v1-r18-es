@@ -20,7 +20,7 @@
             {{#if primary_tag}}
                 <p class="gh-card-tag">{{primary_tag.name}}</p>
             {{/if}}
-            <h3 class="gh-card-title is-title"><span class="post-time">{{date published_at format="h:mm a"}}</span> {{#if separator}}<strong class="post-title-sep">{{separator}}</strong>{{else}}—{{/if}} {{title}}</h3>
+            <h3 class="gh-card-title is-title"><span class="post-time">{{date published_at format="h:mm a"}}</span> {{#if separator}}<strong class="post-title-sep{{#if sepColor}} post-title-sep-{{sepColor}}{{/if}}">{{separator}}</strong>{{else}}{{#unless hideSep}}—{{/unless}}{{/if}} {{title}}</h3>
             {{#if custom_excerpt}}
                 <p class="gh-card-excerpt is-body">{{custom_excerpt}}</p>
             {{/if}}

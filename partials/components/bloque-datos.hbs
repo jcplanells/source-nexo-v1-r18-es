@@ -1,47 +1,57 @@
 <style>
-    .bloque-graficas {
+    .bloque-datos {
         margin-top: 20px;
         padding-top: 20px;
         padding-bottom: 20px;
     }
-    .bloque-graficas .gh-container-title {
+    .bloque-datos .gh-container-title {
         margin-bottom: 30px;
         color: var(--color-base, #000);
         border-bottom: none;
     }
-    .grid-bloque-graficas {
+    .grid-bloque-datos {
         display: grid;
         grid-template-columns: 2fr 1fr 1fr;
         gap: 32px;
         align-items: start;
     }
     /* Col 1: noticia destacada grande */
-    .graficas-card-featured img {
+    .datos-card-featured img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 14px;
     }
-    .graficas-card-featured h3 {
+    .datos-card-featured h3 {
         font-size: clamp(2rem, 1.4vw + 1.4rem, 3.2rem);
         font-weight: 700;
         line-height: 1.15;
         letter-spacing: -0.02em;
         margin: 0;
     }
-    .graficas-card-featured h3 a {
+    .datos-card-featured h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
-    .graficas-card-featured .graficas-featured-excerpt {
+    .datos-card-featured .datos-featured-excerpt {
         margin: 10px 0 0;
         font-size: 1.5rem;
         line-height: 1.5;
         color: var(--color-secondary-text, #555);
     }
+    .datos-meta {
+        display: block;
+        font-size: 1.3rem;
+        color: var(--color-secondary-text, #888);
+        margin-top: 8px;
+    }
+    .datos-card-mid .datos-meta {
+        margin-top: 6px;
+        font-size: 1.2rem;
+    }
     /* Col 2: 2 notas medianas */
-    .graficas-posts-mid {
+    .datos-posts-mid {
         display: flex;
         flex-direction: column;
         gap: 24px;
@@ -49,35 +59,35 @@
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
-    .graficas-card-mid img {
+    .datos-card-mid img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 3px;
         margin-bottom: 10px;
     }
-    .graficas-card-mid h3 {
+    .datos-card-mid h3 {
         font-size: 1.8rem;
         line-height: 1.2;
         margin: 0;
     }
-    .graficas-card-mid h3 a {
+    .datos-card-mid h3 a {
         color: var(--color-base, #000);
         text-decoration: none;
     }
     /* Col 3: sidebar últimas / más leídas */
-    .graficas-sidebar {
+    .datos-sidebar {
         padding-left: 32px;
         border-left: 1px solid var(--color-border, #e5e7eb);
     }
-    .graficas-tabs {
+    .datos-tabs {
         display: flex;
         gap: 16px;
         margin-bottom: 16px;
         border-bottom: 1px solid var(--color-border, #e5e7eb);
         padding-bottom: 12px;
     }
-    .graficas-tab {
+    .datos-tab {
         background: none;
         border: none;
         cursor: pointer;
@@ -89,16 +99,16 @@
         border-bottom: 2px solid transparent;
         transition: color 0.2s, border-color 0.2s;
     }
-    .graficas-tab.is-active {
+    .datos-tab.is-active {
         color: var(--color-base, #000);
         border-bottom-color: var(--ghost-accent-color);
     }
-    .graficas-feed {
+    .datos-feed {
         display: flex;
         flex-direction: column;
         gap: 0;
     }
-    .graficas-feed .gh-card-link {
+    .datos-feed .gh-card-link {
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -108,107 +118,108 @@
         text-decoration: none;
         color: inherit;
     }
-    .graficas-feed .gh-card-image {
+    .datos-feed .gh-card-image {
         flex-shrink: 0;
         width: 72px;
         height: 54px;
         object-fit: cover;
         border-radius: 3px;
     }
-    .graficas-feed .gh-card-title {
+    .datos-feed .gh-card-title {
         font-size: 1.4rem;
         line-height: 1.3;
         font-weight: 600;
         margin: 0;
         color: var(--color-base, #000);
     }
-    .graficas-feed .gh-leidas-num {
+    .datos-feed .gh-leidas-num {
         color: var(--ghost-accent-color);
         font-weight: 700;
         margin-right: 4px;
     }
-    .graficas-feed-loading {
+    .datos-feed-loading {
         font-size: 1.4rem;
         color: #888;
         padding: 12px 0;
     }
     /* Mostrar hora en "Las Últimas" del sidebar */
-    .graficas-sidebar .post-time {
+    .datos-sidebar .post-time {
         display: inline !important;
         font-weight: 600;
     }
     @media (max-width: 991px) {
-        .grid-bloque-graficas {
+        .grid-bloque-datos {
             grid-template-columns: 1fr 1fr;
         }
-        .graficas-sidebar {
+        .datos-sidebar {
             grid-column: 1 / -1;
             padding-left: 0;
             border-left: none;
             border-top: 1px solid var(--color-border, #e5e7eb);
             padding-top: 24px;
         }
-        .graficas-feed {
+        .datos-feed {
             flex-direction: row;
             flex-wrap: wrap;
             gap: 16px;
         }
-        .graficas-feed .gh-card-link {
+        .datos-feed .gh-card-link {
             flex: 1 1 calc(50% - 8px);
             border-bottom: none;
         }
     }
     @media (max-width: 767px) {
-        .grid-bloque-graficas {
+        .grid-bloque-datos {
             grid-template-columns: 1fr;
         }
-        .graficas-posts-mid {
+        .datos-posts-mid {
             padding-left: 0;
             border-left: none;
         }
-        .graficas-card-mid {
+        .datos-card-mid {
             display: flex;
             flex-direction: row;
             gap: 12px;
             align-items: flex-start;
         }
-        .graficas-card-mid > a {
+        .datos-card-mid > a {
             flex-shrink: 0;
             width: 110px;
         }
-        .graficas-card-mid img {
+        .datos-card-mid img {
             width: 100%;
             aspect-ratio: 16/9;
             margin-bottom: 0;
         }
-        .graficas-card-mid h3 {
+        .datos-mid-text {
             flex: 1;
+            min-width: 0;
         }
-        .graficas-feed {
+        .datos-feed {
             flex-direction: column;
         }
-        .graficas-feed .gh-card-link {
+        .datos-feed .gh-card-link {
             flex: none;
             border-bottom: 1px solid var(--color-border, #e5e7eb);
         }
     }
 </style>
 
-<section class="gh-outer bloque-graficas">
+<section class="gh-outer bloque-datos">
     <div class="gh-inner">
         <h2 class="gh-container-title">
             <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                <a href="https://nexo.la/tag/graficas/" style="text-decoration: none; color: inherit;">Últimos datos de nexo</a>
+                <a href="https://nexo.la/tag/datos/" style="text-decoration: none; color: inherit;">Últimos datos de nexo</a>
             </span>
         </h2>
 
-        <div class="grid-bloque-graficas">
+        <div class="grid-bloque-datos">
 
-            {{#get "posts" filter="tag:graficas" limit="3" include="authors"}}
+            {{#get "posts" filter="tag:datos" limit="3" include="authors"}}
                 {{!-- Col 1: noticia grande --}}
                 {{#foreach posts}}
                     {{#if @first}}
-                        <article class="graficas-card-featured">
+                        <article class="datos-card-featured">
                             {{#if feature_image}}
                                 <a href="{{url}}">
                                     <img src="{{feature_image}}" alt="{{title}}">
@@ -216,27 +227,31 @@
                             {{/if}}
                             <h3><a href="{{url}}">{{title}}</a></h3>
                             {{#if custom_excerpt}}
-                                <p class="graficas-featured-excerpt">{{custom_excerpt}}</p>
+                                <p class="datos-featured-excerpt">{{custom_excerpt}}</p>
                             {{else}}
                                 {{#if excerpt}}
-                                    <p class="graficas-featured-excerpt">{{excerpt}}</p>
+                                    <p class="datos-featured-excerpt">{{excerpt}}</p>
                                 {{/if}}
                             {{/if}}
+                            <span class="datos-meta">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
                         </article>
                     {{/if}}
                 {{/foreach}}
 
                 {{!-- Col 2: notas 2 y 3 --}}
-                <div class="graficas-posts-mid">
+                <div class="datos-posts-mid">
                     {{#foreach posts}}
                         {{#unless @first}}
-                            <article class="graficas-card-mid">
+                            <article class="datos-card-mid">
                                 {{#if feature_image}}
                                     <a href="{{url}}">
                                         <img src="{{feature_image}}" alt="{{title}}">
                                     </a>
                                 {{/if}}
-                                <h3><a href="{{url}}">{{title}}</a></h3>
+                                <div class="datos-mid-text">
+                                    <h3><a href="{{url}}">{{title}}</a></h3>
+                                    <span class="datos-meta">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
+                                </div>
                             </article>
                         {{/unless}}
                     {{/foreach}}
@@ -244,12 +259,12 @@
             {{/get}}
 
             {{!-- Col 3: Las Últimas / Más leídas --}}
-            <div class="graficas-sidebar">
-                <div class="graficas-tabs">
-                    <button class="graficas-tab is-active" data-graficas-tab="ultimas">Las Últimas</button>
-                    <button class="graficas-tab" data-graficas-tab="leidas">Más leídas</button>
+            <div class="datos-sidebar">
+                <div class="datos-tabs">
+                    <button class="datos-tab is-active" data-datos-tab="ultimas">Las Últimas</button>
+                    <button class="datos-tab" data-datos-tab="leidas">Más leídas</button>
                 </div>
-                <div class="graficas-feed" id="graficas-feed">
+                <div class="datos-feed" id="datos-feed">
                     {{#get "posts" filter="tag:-[hash-top1,hash-top2]" include="authors" limit="6" order="published_at desc"}}
                         {{#foreach posts}}
                             <a class="gh-card-link" href="{{url}}?utm_source=nexo&utm_medium=home&utm_campaign=las_ultimas">
@@ -268,7 +283,7 @@
         </div>
 
         <div style="text-align: right; margin-top: 15px;">
-            <a href="https://nexo.la/tag/graficas/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+            <a href="https://nexo.la/tag/datos/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
         </div>
     </div>
 </section>
@@ -277,8 +292,8 @@
 (function () {
     var GHOST_URL = 'https://nexo-la.ghost.io';
     var GHOST_KEY = '4814aa41c8315fc5648524c04c';
-    var feed = document.getElementById('graficas-feed');
-    var tabs = document.querySelectorAll('.graficas-tab');
+    var feed = document.getElementById('datos-feed');
+    var tabs = document.querySelectorAll('.datos-tab');
     var ultimasHTML = feed ? feed.innerHTML : '';
     var leidasHTML = null;
 
@@ -288,14 +303,14 @@
             tabs.forEach(function (t) { t.classList.remove('is-active'); });
             tab.classList.add('is-active');
 
-            if (tab.dataset.graficasTab === 'ultimas') {
+            if (tab.dataset.datosTab === 'ultimas') {
                 feed.innerHTML = ultimasHTML;
                 return;
             }
 
             if (leidasHTML) { feed.innerHTML = leidasHTML; return; }
 
-            feed.innerHTML = '<p class="graficas-feed-loading">Cargando...</p>';
+            feed.innerHTML = '<p class="datos-feed-loading">Cargando...</p>';
 
             fetch('https://opt.nexo.la/assets/json/mas_leidas.json')
                 .then(function (r) { return r.json(); })
@@ -338,7 +353,7 @@
                 })
                 .catch(function () {
                     tabs.forEach(function (t) { t.classList.remove('is-active'); });
-                    document.querySelector('.graficas-tab[data-graficas-tab="ultimas"]').classList.add('is-active');
+                    document.querySelector('.datos-tab[data-datos-tab="ultimas"]').classList.add('is-active');
                     feed.innerHTML = ultimasHTML;
                 });
         });

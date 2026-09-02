@@ -71,7 +71,7 @@
                 {{!-- All posts (FEED: INDEX) --}}
                 {{#match feed "index"}}
                     {{#foreach posts}}
-                        {{#unless (match primary_tag.slug (concat "tecnologia,logistica,graficas,herramientas,turismo,deportes," @custom.bloque_0_tag))}}
+                        {{#unless (match primary_tag.slug (concat "tecnologia,logistica,datos,herramientas,turismo,deportes," @custom.bloque_0_tag))}}
                             {{> "post-card" lazyLoad=true}}
                         {{/unless}}
                     {{/foreach}}
@@ -80,7 +80,16 @@
                 {{!-- Tag and author pages --}}
                 {{#match feed "archive"}}
                     {{#foreach posts}}
-                        {{> "post-card" lazyLoad=true showDate=true}}
+                        {{#match @number 1}}
+                            {{> "post-card" lazyLoad=true showDate=true separator="__" sepColor="blue"}}
+                        {{else match @number "<=" 3}}
+                            {{> "post-card" lazyLoad=true showDate=true separator="__" sepColor="green"}}
+                        {{else}}
+                            {{> "post-card" lazyLoad=true showDate=true hideSep=true}}
+                        {{/match}}
+                        {{#match @number 3}}
+                            {{> "components/banner-archive"}}
+                        {{/match}}
                     {{/foreach}}
                 {{/match}}
 

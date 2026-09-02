@@ -22,6 +22,111 @@
     {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
 
+    {{#is "home, post, tag, author"}}
+    {{!-- Google Ad Manager (GPT) - cargado temprano para mejorar el tiempo de entrega del anuncio --}}
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+    </script>
+    {{/is}}
+
+    {{#is "home"}}
+    <script>
+        googletag.cmd.push(function() {
+            var mapping = googletag.sizeMapping()
+                .addSize([768, 0], [728, 90])
+                .addSize([0, 0], [[320, 100], [300, 250]])
+                .build();
+            googletag.defineSlot('/23361752465/banner_principal_home', [[320, 100], [728, 90], [300, 250]], 'div-gpt-ad-1783866034679-0')
+                .defineSizeMapping(mapping)
+                .addService(googletag.pubads());
+            googletag.defineSlot('/23361752465/2', [[728, 90], [300, 250], [970, 90]], 'div-gpt-ad-1787348717387-0')
+                .addService(googletag.pubads());
+            var mappingNavHome = googletag.sizeMapping()
+                .addSize([768, 0], [728, 90])
+                .addSize([0, 0], [[320, 50], [320, 100]])
+                .build();
+            googletag.defineSlot('/23361752465/14', [[728, 90], [320, 50], [320, 100]], 'div-gpt-ad-1788220733424-0')
+                .defineSizeMapping(mappingNavHome)
+                .addService(googletag.pubads());
+            googletag.defineSlot('/23361752465/15', [[300, 100], [300, 250], [728, 90]], 'div-gpt-ad-1788267491541-0')
+                .addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    {{/is}}
+
+    {{#is "tag, author"}}
+    {{!-- Google Ad Manager (GPT) - banner tras la nota #3 en secciones/tags.
+         Se repite cada 12 notas gracias al scroll infinito (pagination.js), así
+         que cada aparición del bloque .gh-ad-archive se activa dinámicamente
+         con su propio id/slot en vez de usar uno fijo. --}}
+    <script>
+        googletag.cmd.push(function() {
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+
+        (function () {
+            var adCounter = 0;
+
+            function activateAd(el) {
+                el.dataset.adActivated = 'true';
+
+                var id = 'div-gpt-ad-archive-' + (++adCounter);
+                el.id = id;
+
+                var path = el.dataset.adPath;
+                var sizes = el.dataset.adSizes.split(',').map(function (size) {
+                    return size.split('x').map(Number);
+                });
+
+                googletag.cmd.push(function () {
+                    googletag.defineSlot(path, sizes, id).addService(googletag.pubads());
+                    googletag.display(id);
+                });
+            }
+
+            function scan(root) {
+                root.querySelectorAll('.gh-ad-archive:not([data-ad-activated])').forEach(activateAd);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var feed = document.querySelector('.gh-feed');
+                if (!feed) return;
+
+                scan(feed);
+
+                new MutationObserver(function () {
+                    scan(feed);
+                }).observe(feed, {childList: true});
+            });
+        })();
+    </script>
+    {{/is}}
+
+    {{#is "post"}}
+    {{!-- Google Ad Manager (GPT) - banner dentro del artículo, tras el 5to párrafo --}}
+    <script>
+        googletag.cmd.push(function() {
+            googletag.defineSlot('/23361752465/banner_post_interior', [300, 250], 'div-gpt-ad-post-interior-0')
+                .addService(googletag.pubads());
+            googletag.defineSlot('/23361752465/1', [[200, 200], [160, 600]], 'div-gpt-ad-sidebar-post-0')
+                .addService(googletag.pubads());
+            var mappingNavPost = googletag.sizeMapping()
+                .addSize([768, 0], [728, 90])
+                .addSize([0, 0], [[320, 50], [320, 100]])
+                .build();
+            googletag.defineSlot('/23361752465/13', [[728, 90], [320, 50], [320, 100]], 'div-gpt-ad-1788281892417-0')
+                .defineSizeMapping(mappingNavPost)
+                .addService(googletag.pubads());
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+    </script>
+    {{/is}}
+
     {{!-- Custom background color --}}
     <style>
         :root {

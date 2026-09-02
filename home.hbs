@@ -10,6 +10,12 @@
     }
 </style>
 
+{{#if @custom.live_stream_video_id}}
+    {{> "components/bloque-en-vivo"}}
+{{/if}}
+
+{{> "components/topbar-preview" variant="green"}}
+
 {{#if @custom.show_alert_bar}}
     {{> "components/banner-alerta"}}
 {{/if}}
@@ -18,17 +24,19 @@
 
 {{> "components/bloque-top-extra"}}
 
-{{> "components/bloque-economia-preview"}}
-{{> "components/bloque-videos"}}
-{{> "components/bloque-0"}}
-{{> "components/bloque-graficas"}}
-{{> "components/bloque-logistica"}}
-{{> "components/bloque-living"}}
-{{> "components/bloque-internacionales"}}
+{{> "components/bloque-economia"}}
+{{> "components/banner-portada-a"}}
 {{> "components/bloque-empresas"}}
-{{> "components/bloque-widgets"}}
-{{> "components/bloque-deportes"}}
+{{> "components/bloque-0"}}
+{{> "components/bloque-datos"}}
 {{> "components/bloque-emprendimiento"}}
+{{> "components/banner-portada-b"}}
+{{> "components/bloque-logistica"}}
+{{> "components/bloque-canal-cola"}}
+{{> "components/banner-portada-c"}}
+{{> "components/bloque-deportes"}}
+{{> "components/bloque-living"}}
+{{> "components/bloque-videos"}}
 {{> "components/bloque-turismo"}}
 {{> "components/bloque-tecnologia"}}
-{{> "components/bloque-gobierno"}}
+{{> "components/bloque-internacionales"}}

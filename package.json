@@ -84,11 +84,24 @@
     },
     "card_assets": true,
     "custom": {
+      "living_widget": {
+        "type": "select",
+        "options": ["Banner", "Precios m2", "Ninguno"],
+        "default": "Precios m2",
+        "group": "homepage",
+        "description": "Widget mostrado en la barra lateral del bloque Bienes Raíces"
+      },
       "show_alert_bar": {
         "type": "boolean",
         "default": false,
         "group": "homepage",
         "description": "Activa el banner de alerta/evento especial en la portada"
+      },
+      "live_stream_video_id": {
+        "type": "text",
+        "default": "",
+        "group": "homepage",
+        "description": "ID del video de YouTube para el bloque En Vivo (ej: en youtube.com/watch?v=ABC123, el ID es ABC123). Vacío = bloque oculto"
       },
       "alert_bar_badge": {
         "type": "text",
