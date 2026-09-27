@@ -4,10 +4,18 @@
         display: flex;
         justify-content: center;
         min-height: 250px;
+        overflow: hidden;
     }
     .banner-portada-a #div-gpt-ad-1783866034679-0 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         min-width: 300px;
         min-height: 250px;
+        max-width: 100%;
+    }
+    .banner-portada-a #div-gpt-ad-1783866034679-0 iframe {
+        max-width: 100%;
     }
     @media (min-width: 768px) {
         .banner-portada-a {
@@ -18,13 +26,29 @@
             min-height: 90px;
         }
     }
+    @media (min-width: 1024px) {
+        .banner-portada-a {
+            min-height: 250px;
+        }
+        .banner-portada-a #div-gpt-ad-1783866034679-0 {
+            min-width: 970px;
+            min-height: 250px;
+        }
+    }
 </style>
 
 <div class="banner-portada-a">
     <!-- /23361752465/banner_principal_home -->
     <div id='div-gpt-ad-1783866034679-0'>
         <script>
-            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1783866034679-0'); });
+            googletag.cmd.push(function() {
+                googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+                    if (event.isEmpty && event.slot.getSlotElementId() === 'div-gpt-ad-1783866034679-0') {
+                        document.querySelector('.banner-portada-a').style.display = 'none';
+                    }
+                });
+                googletag.display('div-gpt-ad-1783866034679-0');
+            });
         </script>
     </div>
 </div>

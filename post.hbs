@@ -63,6 +63,12 @@
             <div class="gh-article-meta">
                 <div class="gh-article-meta-wrapper">
                     <div class="gh-article-meta-content">
+                        {{!-- Byline: se oculta para la cuenta genérica "Redacción nexo.la" (slug: nexo)
+                             y se muestra para cualquier otro autor, enlazado a su página de perfil. --}}
+                        {{#match primary_author.slug "!=" "nexo"}}
+                            <address class="gh-article-meta-author">Por {{#foreach authors}}<a href="{{url}}" rel="author">{{name}}</a>{{#unless @last}}, {{/unless}}{{/foreach}}</address>
+                            <span class="bull">—</span>
+                        {{/match}}
                         <time class="gh-article-meta-date" datetime="{{date format='YYYY-MM-DD HH:mm'}}">{{date format='D'}} de {{date format='MMMM'}} de {{date format='YYYY, HH:mm'}}</time>
                         {{#if reading_time}}
                             <span class="gh-article-meta-length"><span class="bull">—</span> {{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
@@ -354,7 +360,7 @@
             {{#if next}}
                 <section class="gh-container is-grid gh-outer" id="related-articles" style="display:none">
                     <div class="gh-container-inner gh-inner">
-                        <h2 class="gh-container-title"><span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">Artículos relacionados</span></h2>
+                        <h2 class="gh-container-title"><span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">Más artículos de {{../primary_tag.name}}</span></h2>
                         <div class="gh-feed">
                             {{#foreach next}}
                                 {{> "post-card" lazyLoad=true}}

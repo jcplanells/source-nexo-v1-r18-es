@@ -127,7 +127,7 @@
 
         <div class="grid-bloque-economia">
 
-            {{#get "posts" filter="primary_tag:[economia,finanzas,energia]+tag:-[hash-top1,hash-top2,hash-top3]+featured:false" limit="3" include="authors"}}
+            {{#get "posts" filter="primary_tag:[economia,finanzas]+tag:-[hash-top1,hash-top2,hash-top3]+featured:false" limit="3" include="authors"}}
                 {{!-- Col 1: noticia grande --}}
                 {{#foreach posts}}
                     {{#if @first}}

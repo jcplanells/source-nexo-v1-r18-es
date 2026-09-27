@@ -1,0 +1,27 @@
+{{!< default}}
+{{!--
+    Archivo combinado Tecnología + Energía.
+    Lo sirve el channel /tecnologia-y-energia/ definido en routes.yaml
+    (filter: primary_tag:[tecnologia,energia]). Ver docs/rutas-personalizadas.md.
+--}}
+{{!-- Los channels no reciben la clase tag-template; se añade para heredar el layout de las páginas de tag --}}
+{{#contentFor "body_class"}} tag-template{{/contentFor}}
+{{!-- Los scripts de anuncios de default.hbs solo cargan en {{#is "tag, author"}}; se inyectan aquí para el banner-archive --}}
+{{#contentFor "archive_ads"}}
+    {{> "ads/gpt-loader"}}
+    {{> "ads/archive"}}
+{{/contentFor}}
+
+<main class="gh-main gh-outer">
+
+    <section class="gh-archive gh-inner">
+        <div class="gh-archive-inner">
+            <header class="gh-archive-wrapper">
+                <h1 class="gh-article-title is-title">Tecnología y Energía</h1>
+            </header>
+        </div>
+    </section>
+
+    {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=false}}
+
+</main>

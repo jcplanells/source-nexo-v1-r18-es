@@ -2093,6 +2093,21 @@ Search                         LOGO                    Login Subscribe
     color: var(--color-secondary-text);
 }
 
+.gh-article-meta-author {
+    display: inline;
+    font-style: normal;
+}
+
+.gh-article-meta-author a {
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.gh-article-meta-author a:hover {
+    color: var(--ghost-accent-color);
+}
+
 .gh-article-image {
     grid-column: wide;
     margin-top: 40px;
@@ -2100,6 +2115,18 @@ Search                         LOGO                    Login Subscribe
 
 .gh-article-image img {
     width: 100%;
+}
+
+/* Desktop: reduce a la mitad el espacio entre el menú y la parte superior de la
+   imagen destacada del artículo (margen del header + margen de la figura). */
+@media (min-width: 1100px) {
+    .post-template .gh-article-header {
+        margin-top: calc(clamp(40px, 3.64vw + 25.45px, 72px) * 0.45);
+    }
+
+    .post-template .gh-article-header .gh-article-image {
+        margin-top: 18px; /* 40px * 0.45 */
+    }
 }
 
 /* 14.2. Page template */

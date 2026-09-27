@@ -297,10 +297,17 @@
         var n = dias.length;
         var gap = 4;
         var barW = Math.max(2, plotW / n - gap);
+        // La columna es el cupo que la ACP ofrece ese dia (campo `techo`, que sale
+        // del aviso a las navieras), no la suma del portal: los campos del portal se
+        // mueven entre 26 y 36 y hacian subir y bajar las barras sin que el cupo
+        // cambiara. Lo reservado se limita al cupo porque el portal a veces reporta
+        // uno o dos mas de los que el aviso autoriza.
         var rows = dias.map(function (d) {
             var tomados = d.neopanamax.tomados + d.panamax.tomados;
             var libres = d.neopanamax.libres + d.panamax.libres;
-            return { fecha: d.fecha, tomados: tomados, libres: libres, total: tomados + libres };
+            var cupo = d.techo || (tomados + libres);
+            return { fecha: d.fecha, tomados: Math.min(tomados, cupo),
+                     libres: Math.max(cupo - tomados, 0), total: cupo };
         });
         var maxTotal = Math.max.apply(null, rows.map(function (r) { return r.total; })) || 1;
         var baseline = top + plotH;
