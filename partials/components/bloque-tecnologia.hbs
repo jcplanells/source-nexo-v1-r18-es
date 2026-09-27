@@ -11,7 +11,7 @@
     }
     .grid-bloque-tecnologia {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: 32px;
     }
     @media (max-width: 991px) {
@@ -70,11 +70,11 @@
     <div class="gh-inner">
             <h2 class="gh-container-title">
                 <span style="border-bottom: 3px solid var(--ghost-accent-color); padding-bottom: 9px;">
-                    <a href="https://nexo.la/tag/tecnologia/" style="text-decoration: none; color: inherit;">Tecnología</a>
+                    <a href="https://nexo.la/tecnologia-y-energia/" style="text-decoration: none; color: inherit;">Tecnología y Energía</a>
                 </span>
             </h2>
             <div class="grid-bloque-tecnologia">
-                {{#get "posts" filter="primary_tag:tecnologia" limit="4" include="authors"}}
+                {{#get "posts" filter="primary_tag:[tecnologia,energia]" limit="3" include="authors"}}
                     {{#foreach posts}}
                         <article class="card-bloque-tecnologia{{#unless @first}} is-nota{{/unless}}">
                             {{#if feature_image}}
@@ -93,7 +93,7 @@
                 {{/get}}
             </div>
             <div style="text-align: right; margin-top: 15px;">
-                <a href="https://nexo.la/tag/tecnologia/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
+                <a href="https://nexo.la/tecnologia-y-energia/" style="color: var(--ghost-accent-color); font-weight: bold; text-decoration: none;">ver más...</a>
             </div>
     </div>
 </section>

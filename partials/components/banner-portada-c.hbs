@@ -4,23 +4,50 @@
         display: flex;
         justify-content: center;
         min-height: 250px;
+        overflow: hidden;
     }
     .banner-portada-c #div-gpt-ad-1788267491541-0 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         min-width: 300px;
         min-height: 90px;
+        max-width: 100%;
+    }
+    .banner-portada-c #div-gpt-ad-1788267491541-0 iframe {
+        max-width: 100%;
     }
     @media (min-width: 768px) {
         .banner-portada-c {
             min-height: 90px;
+        }
+        .banner-portada-c #div-gpt-ad-1788267491541-0 {
+            min-width: 728px;
+        }
+    }
+    @media (min-width: 1024px) {
+        .banner-portada-c {
+            min-height: 250px;
+        }
+        .banner-portada-c #div-gpt-ad-1788267491541-0 {
+            min-width: 970px;
+            min-height: 250px;
         }
     }
 </style>
 
 <div class="banner-portada-c">
     <!-- /23361752465/15 -->
-    <div id='div-gpt-ad-1788267491541-0' style='min-width: 300px; min-height: 90px;'>
+    <div id='div-gpt-ad-1788267491541-0'>
         <script>
-            googletag.cmd.push(function() { googletag.display('div-gpt-ad-1788267491541-0'); });
+            googletag.cmd.push(function() {
+                googletag.pubads().addEventListener('slotRenderEnded', function (event) {
+                    if (event.isEmpty && event.slot.getSlotElementId() === 'div-gpt-ad-1788267491541-0') {
+                        document.querySelector('.banner-portada-c').style.display = 'none';
+                    }
+                });
+                googletag.display('div-gpt-ad-1788267491541-0');
+            });
         </script>
     </div>
 </div>

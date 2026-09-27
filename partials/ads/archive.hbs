@@ -1,0 +1,52 @@
+    {{!-- Google Ad Manager (GPT) - banner tras la nota #3 en secciones/tags.
+         Se repite cada 12 notas gracias al scroll infinito (pagination.js), así
+         que cada aparición del bloque .gh-ad-archive se activa dinámicamente
+         con su propio id/slot en vez de usar uno fijo. --}}
+    <script>
+        googletag.cmd.push(function() {
+            googletag.pubads().enableSingleRequest();
+            googletag.enableServices();
+        });
+
+        (function () {
+            var adCounter = 0;
+
+            function activateAd(el) {
+                el.dataset.adActivated = 'true';
+
+                var id = 'div-gpt-ad-archive-' + (++adCounter);
+                el.id = id;
+
+                var path = el.dataset.adPath;
+                var sizes = el.dataset.adSizes.split(',').map(function (size) {
+                    return size.split('x').map(Number);
+                });
+
+                googletag.cmd.push(function () {
+                    var mappingArchive = googletag.sizeMapping()
+                        .addSize([768, 0], [728, 90])
+                        .addSize([0, 0], [300, 250])
+                        .build();
+                    googletag.defineSlot(path, sizes, id)
+                        .defineSizeMapping(mappingArchive)
+                        .addService(googletag.pubads());
+                    googletag.display(id);
+                });
+            }
+
+            function scan(root) {
+                root.querySelectorAll('.gh-ad-archive:not([data-ad-activated])').forEach(activateAd);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var feed = document.querySelector('.gh-feed');
+                if (!feed) return;
+
+                scan(feed);
+
+                new MutationObserver(function () {
+                    scan(feed);
+                }).observe(feed, {childList: true});
+            });
+        })();
+    </script>

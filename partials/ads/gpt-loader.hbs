@@ -1,0 +1,55 @@
+    {{!-- Google Ad Manager (GPT) - cargado temprano para mejorar el tiempo de entrega del anuncio --}}
+    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
+    <script>
+        window.googletag = window.googletag || {cmd: []};
+        googletag.cmd.push(function () {
+            /*
+             * GPT normally respects the size mappings below. In previews,
+             * after an orientation change or with a stale ad response it can
+             * still render a desktop creative inside a narrow container.
+             * Scale that creative as a last-resort guard instead of clipping
+             * it or letting it widen the whole page.
+             */
+            function fitAdToContainer(event) {
+                if (event.isEmpty || !Array.isArray(event.size)) return;
+
+                var width = Number(event.size[0]);
+                var height = Number(event.size[1]);
+                var slot = document.getElementById(event.slot.getSlotElementId());
+                if (!slot || !width || !height) return;
+
+                window.requestAnimationFrame(function () {
+                    var frame = slot.querySelector('iframe');
+                    var frameBox = frame && frame.parentElement;
+                    var container = slot.parentElement;
+                    if (!frame || !frameBox || !container) return;
+
+                    var style = window.getComputedStyle(container);
+                    var availableWidth = container.clientWidth
+                        - (parseFloat(style.paddingLeft) || 0)
+                        - (parseFloat(style.paddingRight) || 0);
+                    if (availableWidth <= 0) return;
+                    var scale = Math.min(1, availableWidth / width);
+
+                    if (scale >= 1) return;
+
+                    frame.style.maxWidth = 'none';
+                    frame.style.width = width + 'px';
+                    frame.style.height = height + 'px';
+
+                    frameBox.style.width = width + 'px';
+                    frameBox.style.height = height + 'px';
+                    frameBox.style.transform = 'scale(' + scale + ')';
+                    frameBox.style.transformOrigin = 'top left';
+
+                    slot.style.width = Math.floor(width * scale) + 'px';
+                    slot.style.height = Math.ceil(height * scale) + 'px';
+                    slot.style.minWidth = '0';
+                    slot.style.minHeight = '0';
+                    slot.style.overflow = 'hidden';
+                });
+            }
+
+            googletag.pubads().addEventListener('slotRenderEnded', fitAdToContainer);
+        });
+    </script>

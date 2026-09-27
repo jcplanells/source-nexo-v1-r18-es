@@ -1,0 +1,9 @@
+User-agent: *
+Sitemap: https://nexo.la/sitemap.xml
+Disallow: /ghost/
+Disallow: /email/
+Disallow: /members/api/comments/counts/
+Disallow: /r/
+Disallow: /webmentions/receive/
+Disallow: /.ghost/analytics/api/
+Sitemap: https://nexo.la/news-sitemap.xml

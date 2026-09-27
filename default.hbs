@@ -6,6 +6,10 @@
     <title>{{meta_title}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {{!-- Permite a Google mostrar imágenes grandes en Search y Discover.
+         Ghost no emite esta etiqueta por defecto. --}}
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     
     {{!-- Preload main styles and scripts for better performance --}}
     <link rel="preload" as="style" href="{{asset "built/screen.css"}}">
@@ -22,25 +26,34 @@
     {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
 
+    {{#is "home"}}
+    {{!-- Auto-refresco de la portada cada 5 min para mostrar noticias frescas.
+         Solo se aplica a la home; el resto del sitio no se recarga. --}}
+    <meta http-equiv="refresh" content="300">
+    {{/is}}
+
     {{#is "home, post, tag, author"}}
-    {{!-- Google Ad Manager (GPT) - cargado temprano para mejorar el tiempo de entrega del anuncio --}}
-    <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js" crossorigin="anonymous"></script>
-    <script>
-        window.googletag = window.googletag || {cmd: []};
-    </script>
+    {{> "ads/gpt-loader"}}
     {{/is}}
 
     {{#is "home"}}
     <script>
         googletag.cmd.push(function() {
             var mapping = googletag.sizeMapping()
+                .addSize([1024, 0], [[970, 250], [728, 90]])
                 .addSize([768, 0], [728, 90])
                 .addSize([0, 0], [[320, 100], [300, 250]])
                 .build();
-            googletag.defineSlot('/23361752465/banner_principal_home', [[320, 100], [728, 90], [300, 250]], 'div-gpt-ad-1783866034679-0')
+            googletag.defineSlot('/23361752465/banner_principal_home', [[320, 100], [300, 250], [728, 90], [970, 250]], 'div-gpt-ad-1783866034679-0')
                 .defineSizeMapping(mapping)
                 .addService(googletag.pubads());
-            googletag.defineSlot('/23361752465/2', [[728, 90], [300, 250], [970, 90]], 'div-gpt-ad-1787348717387-0')
+            var mappingHome2 = googletag.sizeMapping()
+                .addSize([1024, 0], [[970, 250], [970, 90], [728, 90]])
+                .addSize([768, 0], [728, 90])
+                .addSize([0, 0], [[320, 100], [300, 250]])
+                .build();
+            googletag.defineSlot('/23361752465/2', [[320, 100], [300, 250], [728, 90], [970, 90], [970, 250]], 'div-gpt-ad-1787348717387-0')
+                .defineSizeMapping(mappingHome2)
                 .addService(googletag.pubads());
             var mappingNavHome = googletag.sizeMapping()
                 .addSize([768, 0], [728, 90])
@@ -49,7 +62,13 @@
             googletag.defineSlot('/23361752465/14', [[728, 90], [320, 50], [320, 100]], 'div-gpt-ad-1788220733424-0')
                 .defineSizeMapping(mappingNavHome)
                 .addService(googletag.pubads());
-            googletag.defineSlot('/23361752465/15', [[300, 100], [300, 250], [728, 90]], 'div-gpt-ad-1788267491541-0')
+            var mappingHome15 = googletag.sizeMapping()
+                .addSize([1024, 0], [[970, 250], [728, 90]])
+                .addSize([768, 0], [728, 90])
+                .addSize([0, 0], [[320, 100], [300, 250], [300, 100]])
+                .build();
+            googletag.defineSlot('/23361752465/15', [[320, 100], [300, 250], [300, 100], [728, 90], [970, 250]], 'div-gpt-ad-1788267491541-0')
+                .defineSizeMapping(mappingHome15)
                 .addService(googletag.pubads());
             googletag.pubads().enableSingleRequest();
             googletag.enableServices();
@@ -58,53 +77,12 @@
     {{/is}}
 
     {{#is "tag, author"}}
-    {{!-- Google Ad Manager (GPT) - banner tras la nota #3 en secciones/tags.
-         Se repite cada 12 notas gracias al scroll infinito (pagination.js), así
-         que cada aparición del bloque .gh-ad-archive se activa dinámicamente
-         con su propio id/slot en vez de usar uno fijo. --}}
-    <script>
-        googletag.cmd.push(function() {
-            googletag.pubads().enableSingleRequest();
-            googletag.enableServices();
-        });
-
-        (function () {
-            var adCounter = 0;
-
-            function activateAd(el) {
-                el.dataset.adActivated = 'true';
-
-                var id = 'div-gpt-ad-archive-' + (++adCounter);
-                el.id = id;
-
-                var path = el.dataset.adPath;
-                var sizes = el.dataset.adSizes.split(',').map(function (size) {
-                    return size.split('x').map(Number);
-                });
-
-                googletag.cmd.push(function () {
-                    googletag.defineSlot(path, sizes, id).addService(googletag.pubads());
-                    googletag.display(id);
-                });
-            }
-
-            function scan(root) {
-                root.querySelectorAll('.gh-ad-archive:not([data-ad-activated])').forEach(activateAd);
-            }
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var feed = document.querySelector('.gh-feed');
-                if (!feed) return;
-
-                scan(feed);
-
-                new MutationObserver(function () {
-                    scan(feed);
-                }).observe(feed, {childList: true});
-            });
-        })();
-    </script>
+    {{> "ads/archive"}}
     {{/is}}
+
+    {{!-- Plantillas de channels (routes.yaml) que no son "tag" para {{#is}} inyectan aquí
+         sus anuncios con {{#contentFor "archive_ads"}}. Ver docs/rutas-personalizadas.md --}}
+    {{{block "archive_ads"}}}
 
     {{#is "post"}}
     {{!-- Google Ad Manager (GPT) - banner dentro del artículo, tras el 5to párrafo --}}
@@ -167,11 +145,26 @@
                 try { if (JSON.parse(s.textContent)['@type'] === 'Article') s.parentNode.removeChild(s); } catch(e) {}
             });
         }
+        {{#is "post"}}
+        // En notas, Ghost emite "Article"; para Google News se reetiqueta como "NewsArticle".
+        // Se reusa el JSON de Ghost (ya escapado correctamente) en vez de armarlo en Handlebars.
+        else {
+            [].forEach.call(ldScripts, function(s) {
+                try {
+                    var data = JSON.parse(s.textContent);
+                    if (data['@type'] === 'Article') {
+                        data['@type'] = 'NewsArticle';
+                        s.textContent = JSON.stringify(data);
+                    }
+                } catch(e) {}
+            });
+        }
+        {{/is}}
     })();
     </script>
 
 </head>
-<body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
+<body class="{{body_class}}{{{block "body_class"}}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
 
 <div class="gh-viewport">
     

@@ -1,0 +1,13 @@
+<article class="card-bloque-empresas{{#if esNota}} is-nota{{/if}}">
+    {{#if feature_image}}
+        <a href="{{url}}">
+            <img src="{{feature_image}}" alt="{{title}}">
+        </a>
+    {{/if}}
+    <div class="empresas-text">
+        <h3>
+            <a href="{{url}}">{{title}}</a>
+        </h3>
+        <span class="empresas-meta">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
+    </div>
+</article>

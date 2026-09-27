@@ -75,24 +75,29 @@
             </span>
         </h2>
         <div class="grid-bloque-empresas">
-            {{#get "posts" filter="primary_tag:empresas" limit="3" include="tags,authors"}}
-                {{#foreach posts}}
-                    <article class="card-bloque-empresas{{#unless @first}} is-nota{{/unless}}">
-                        {{#if feature_image}}
-                            <a href="{{url}}">
-                                <img src="{{feature_image}}" alt="{{title}}">
-                            </a>
-                        {{/if}}
-                        <div class="empresas-text">
-                            <h3>
-                                <a href="{{url}}">{{title}}</a>
-                            </h3>
-                            <span class="empresas-meta">{{reading_time minute="1 min de lectura" minutes="% min de lectura"}}</span>
-                        </div>
-                    </article>
+            {{!-- La primera nota del bloque (hero) nunca puede ser featured; las otras dos sí. --}}
+            {{#get "posts" filter="primary_tag:empresas+featured:false" limit="1" include="tags,authors" as |empresasHero|}}
+                {{#foreach empresasHero}}
+                    {{> "components/card-empresa" esNota=false}}
                 {{/foreach}}
+                {{#get "posts" filter=(concat "primary_tag:empresas+id:-" empresasHero.[0].id) limit="2" include="tags,authors"}}
+                    {{#foreach posts}}
+                        {{> "components/card-empresa" esNota=true}}
+                    {{/foreach}}
+                {{/get}}
             {{else}}
-                <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>empresas</strong>.</p>
+                {{!-- Sin notas no-featured: se muestran las 3 más recientes con tag empresas. --}}
+                {{#get "posts" filter="primary_tag:empresas" limit="3" include="tags,authors"}}
+                    {{#foreach posts}}
+                        {{#if @first}}
+                            {{> "components/card-empresa" esNota=false}}
+                        {{else}}
+                            {{> "components/card-empresa" esNota=true}}
+                        {{/if}}
+                    {{else}}
+                        <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>empresas</strong>.</p>
+                    {{/foreach}}
+                {{/get}}
             {{/get}}
         </div>
         <div style="text-align: right; margin-top: 15px;">
