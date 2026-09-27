@@ -1,0 +1,16 @@
+name = "nexo-news-sitemap"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+routes = [
+  { pattern = "nexo.la/news-sitemap.xml", zone_name = "nexo.la" }
+]
+# robots.txt no pasa por Workers en esta zona; la línea "Sitemap:" va en el robots.txt del tema.
+
+[vars]
+GHOST_URL = "https://nexo-la.ghost.io"
+PUBLICATION_NAME = "nexo.la"
+PUBLICATION_LANGUAGE = "es"
+
+# GHOST_CONTENT_KEY se carga como secret:
+#   npx wrangler secret put GHOST_CONTENT_KEY

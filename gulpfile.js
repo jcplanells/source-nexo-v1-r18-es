@@ -60,6 +60,7 @@ function zipTheme() {
         '**/*',
         '!node_modules/**',
         '!dist/**',
+        '!workers/**',
         '!gulpfile.js',
         '!package-lock.json'
     ])

@@ -167,6 +167,21 @@
                 try { if (JSON.parse(s.textContent)['@type'] === 'Article') s.parentNode.removeChild(s); } catch(e) {}
             });
         }
+        {{#is "post"}}
+        // En notas, Ghost emite "Article"; para Google News se reetiqueta como "NewsArticle".
+        // Se reusa el JSON de Ghost (ya escapado correctamente) en vez de armarlo en Handlebars.
+        else {
+            [].forEach.call(ldScripts, function(s) {
+                try {
+                    var data = JSON.parse(s.textContent);
+                    if (data['@type'] === 'Article') {
+                        data['@type'] = 'NewsArticle';
+                        s.textContent = JSON.stringify(data);
+                    }
+                } catch(e) {}
+            });
+        }
+        {{/is}}
     })();
     </script>
 
