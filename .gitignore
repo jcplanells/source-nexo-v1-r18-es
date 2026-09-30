@@ -1,0 +1,10 @@
+# Dependencias: se instalan con `npm ci`
+node_modules/
+
+# Estado local de wrangler (Cloudflare Workers)
+workers/**/.wrangler/
+.dev.vars
+
+# Sistema
+.DS_Store
+Thumbs.db
