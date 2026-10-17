@@ -2,7 +2,7 @@
   "name": "source-nexo-v1-preview",
   "description": "Custom Nexo theme based on Source (no author in posts; ES date/time)",
   "demo": "https://source.ghost.io",
-  "version": "1.0.3-preview",
+  "version": "1.0.4-preview",
   "engines": {
     "ghost": ">=5.0.0"
   },

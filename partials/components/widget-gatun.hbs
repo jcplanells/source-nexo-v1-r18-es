@@ -1,0 +1,98 @@
+<!-- Widget lago Gatún (portada nexo.la, bloque Logística). Lee gatun-anual.json. 12-oct-2026 -->
+<link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+.nx-gatun{--deep:#122805;--ow:#F1F2E9;--green:#34CC03;--light:#9CF469;--gold:#DDD197;--fire:#FFCB64;--salmon:#F26E5F;--muted:#BFC2B5;
+ font-family:"Host Grotesk",system-ui,-apple-system,sans-serif;background:var(--deep);color:var(--ow);border-radius:22px;padding:20px 18px 16px;
+ max-width:340px;margin:0 auto;box-sizing:border-box;position:relative;overflow:hidden}
+.nx-gatun *{box-sizing:border-box}
+.nx-gatun::before{content:"";position:absolute;inset:auto -40% -60% -40%;height:70%;background:radial-gradient(closest-side,rgba(52,204,3,.22),transparent);pointer-events:none}
+.nx-gatun .ey{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--light)}
+.nx-gatun h3{margin:4px 0 0;font-size:17px;font-weight:600;line-height:1.2;color:var(--ow)}
+.nx-gatun .big{display:flex;align-items:baseline;gap:6px;margin-top:12px}
+.nx-gatun .num{font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.nx-gatun .uni{font-size:16px;font-weight:500;color:var(--muted)}
+.nx-gatun .fecha{font-size:12px;color:var(--muted);margin-top:4px}
+.nx-gatun .delta{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 10px;border-radius:999px;font-size:13px;font-weight:600;background:rgba(242,110,95,.14);color:#FF8A7C}
+.nx-gatun .delta.up{background:rgba(52,204,3,.16);color:var(--light)}
+.nx-gatun .delta span{font-weight:400;color:var(--ow);opacity:.85}
+.nx-gatun .bar{display:flex;justify-content:space-between;align-items:center;margin:16px 0 6px}
+.nx-gatun .ley{display:flex;gap:10px;white-space:nowrap;font-size:11px;color:var(--muted)}
+.nx-gatun .ley i{display:inline-block;width:14px;height:0;border-top:3px solid var(--green);vertical-align:middle;margin-right:4px}
+.nx-gatun .ley i.ant{border-top:2px dashed var(--gold)}
+.nx-gatun .tg{display:flex;border:1px solid rgba(241,242,233,.25);border-radius:999px;overflow:hidden}
+.nx-gatun .tg button{all:unset;cursor:pointer;font-size:11px;font-weight:600;padding:3px 9px;color:var(--muted)}
+.nx-gatun .tg button[aria-pressed=true]{background:var(--ow);color:var(--deep)}
+.nx-gatun .cv{position:relative;height:190px}
+.nx-gatun .tb{display:none;max-height:190px;overflow:auto;font-size:12px}
+.nx-gatun table{width:100%;border-collapse:collapse}
+.nx-gatun th,.nx-gatun td{padding:4px 6px;text-align:right;border-bottom:1px solid rgba(241,242,233,.12)}
+.nx-gatun th:first-child,.nx-gatun td:first-child{text-align:left}
+.nx-gatun th{position:sticky;top:0;background:var(--deep);color:var(--muted);font-weight:600}
+.nx-gatun .ref{font-size:11px;color:var(--muted);margin-top:10px;line-height:1.35}
+.nx-gatun .ref b{color:var(--fire);font-weight:600}
+.nx-gatun .fu{font-size:10.5px;color:#9EA294;margin-top:8px;display:flex;justify-content:space-between;align-items:flex-end;gap:8px}
+.nx-gatun .fu strong{color:var(--ow);font-weight:800;letter-spacing:-.02em;font-size:13px}
+</style>
+<div class="nx-gatun" id="nx-gatun">
+ <div class="ey">Canal de Panamá</div>
+ <h3>Nivel del lago Gatún</h3>
+ <div class="big"><div class="num" id="nxg-num">--</div><div class="uni">pies</div></div>
+ <div class="fecha" id="nxg-fecha">Cargando…</div>
+ <div class="delta" id="nxg-delta">&nbsp;</div>
+ <div class="bar">
+  <div class="ley"><span><i></i>Este año</span><span><i class="ant"></i>Año anterior</span></div>
+  <div class="tg"><button type="button" aria-pressed="true" data-v="g">Gráfica</button><button type="button" aria-pressed="false" data-v="t">Datos</button></div>
+ </div>
+ <div class="cv" id="nxg-cv"><canvas id="nexo-chart-widget-gatun-anual"></canvas></div>
+ <div class="tb" id="nxg-tb"></div>
+ <div class="ref"><b>- - 85 pies:</b> con el lago en ese nivel o más, la ACP permite el calado máximo de 50 pies en las esclusas neopanamax.</div>
+ <div class="fu"><div>Fuente: Autoridad del Canal de Panamá, serie diaria.</div></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+ var MES=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+ function lbl(iso){var p=iso.split("-");return +p[2]+" "+MES[+p[1]-1];}
+ function pintar(h){
+  document.getElementById("nxg-num").textContent=h.gatun.toFixed(2);
+  document.getElementById("nxg-fecha").textContent="Al "+h.fecha;
+  var d=h.gatun-h.hace_un_anio, el=document.getElementById("nxg-delta");
+  el.className="delta"+(d>=0?" up":"");
+  el.innerHTML=(d>=0?"▲ ":"▼ ")+Math.abs(d).toFixed(2)+" pies <span>vs. hace un año ("+h.hace_un_anio.toFixed(2)+")</span>";
+ }
+ function render(SERIE,HOY){
+ pintar(HOY);
+ // Tabla: primera lectura de cada mes
+ var rows="",seen={};
+ SERIE.actual.forEach(function(p,i){var m=p[0].slice(0,7);if(seen[m])return;seen[m]=1;
+  var a=SERIE.anterior[i]?SERIE.anterior[i][1]:null,y=p[0].slice(0,4);
+  rows="<tr><td>"+lbl(p[0])+" "+y+"</td><td>"+p[1].toFixed(2)+"</td><td>"+(a!=null?a.toFixed(2):"–")+"</td></tr>"+rows;});
+ document.getElementById("nxg-tb").innerHTML="<table><thead><tr><th>Fecha</th><th>Este año</th><th>Año anterior</th></tr></thead><tbody>"+rows+"</tbody></table>";
+ var box=document.getElementById("nx-gatun");
+ box.querySelectorAll(".tg button").forEach(function(b){b.addEventListener("click",function(){
+  var t=b.dataset.v==="t";box.querySelectorAll(".tg button").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+  document.getElementById("nxg-cv").style.display=t?"none":"block";document.getElementById("nxg-tb").style.display=t?"block":"none";});});
+ function init(){
+  if(typeof Chart==="undefined")return setTimeout(init,50);
+  var c=document.getElementById("nexo-chart-widget-gatun-anual");if(!c)return;
+  var umbral={id:"umbral85_gatun",afterDatasetsDraw:function(ch){var y=ch.scales.y.getPixelForValue(85),a=ch.chartArea,x=ch.ctx;
+   x.save();x.setLineDash([4,4]);x.strokeStyle="#FFCB64";x.lineWidth=1.2;x.beginPath();x.moveTo(a.left,y);x.lineTo(a.right,y);x.stroke();x.restore();}};
+  new Chart(c,{type:"line",plugins:[umbral],data:{labels:SERIE.actual.map(function(p){return p[0]}),datasets:[
+   {label:"Este año",data:SERIE.actual.map(function(p){return p[1]}),borderColor:"#34CC03",borderWidth:2.5,pointRadius:0,tension:.35,
+    fill:"start",backgroundColor:function(ctx){var a=ctx.chart.chartArea;if(!a)return "rgba(52,204,3,.15)";var g=ctx.chart.ctx.createLinearGradient(0,a.top,0,a.bottom);g.addColorStop(0,"rgba(52,204,3,.35)");g.addColorStop(1,"rgba(52,204,3,0)");return g;}},
+   {label:"Año anterior",data:SERIE.anterior.map(function(p){return p[1]}),borderColor:"#DDD197",borderWidth:1.5,borderDash:[5,4],pointRadius:0,tension:.35,fill:false}]},
+   options:{responsive:true,maintainAspectRatio:false,animation:{duration:900},interaction:{mode:"index",intersect:false},
+    plugins:{legend:{display:false},tooltip:{backgroundColor:"#F1F2E9",titleColor:"#122805",bodyColor:"#122805",
+     callbacks:{title:function(i){var p=i[0].label.split("-");return +p[2]+" "+MES[+p[1]-1]+" "+p[0];},label:function(i){return " "+(i.datasetIndex?"Año anterior: ":"Este año: ")+i.parsed.y.toFixed(2)+" pies";}}}},
+    scales:{x:{grid:{display:false},border:{display:false},ticks:{color:"#BFC2B5",font:{size:10,family:"Host Grotesk"},maxRotation:0,autoSkip:false,
+      callback:function(v,i){var l=this.getLabelForValue(v);var p=l.split("-");return (i%9===0)?MES[+p[1]-1]:"";}}},
+     y:{min:Math.min(83,Math.floor(Math.min.apply(null,SERIE.actual.concat(SERIE.anterior).map(function(p){return p[1]}))-0.5)),max:90,grid:{color:"rgba(241,242,233,.08)"},border:{display:false},ticks:{stepSize:1,color:"#BFC2B5",font:{size:10,family:"Host Grotesk"}}}}}});
+ }
+ init();
+ }
+ var URL="https://opt.nexo.la/assets/json/gatun-anual.json";
+ fetch(URL,{cache:"no-cache"}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json();})
+  .then(function(d){render({actual:d.actual,anterior:d.anterior},d.hoy);})
+  .catch(function(e){document.getElementById("nxg-fecha").textContent="Dato no disponible por ahora";document.getElementById("nxg-delta").style.display="none";console.warn("widget gatun",e);});
+})();
+</script>
