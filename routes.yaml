@@ -1,12 +1,12 @@
 routes:
   /preview/:
     template: home-preview
-  # Archivo combinado del bloque "Tecnología y Energía" de la portada.
+  # Archivo combinado del bloque "Agua y Energía" de la portada.
   # Ver docs/rutas-personalizadas.md
-  /tecnologia-y-energia/:
+  /agua-y-energia/:
     controller: channel
-    filter: primary_tag:[tecnologia,energia]
-    template: tecnologia-energia
+    filter: primary_tag:[agua,energia]
+    template: agua-energia
 
 collections:
   /:

@@ -9,7 +9,7 @@ de tag de Ghost (`/tag/{slug}/`) solo muestran un tag, así que para que el
 
 | URL | Filtro | Plantilla | Usada por |
 |---|---|---|---|
-| `/tecnologia-y-energia/` | `primary_tag:[tecnologia,energia]` | `tecnologia-energia.hbs` | `partials/components/bloque-tecnologia.hbs` (título y "ver más...") |
+| `/agua-y-energia/` | `primary_tag:[agua,energia]` | `agua-energia.hbs` | `partials/components/bloque-agua-energia.hbs` (título y "ver más...") |
 
 El filtro del channel debe coincidir con el filtro del `{{#get}}` del bloque. Si
 se añade o quita un tag en uno, hay que cambiarlo también en el otro.
@@ -23,7 +23,7 @@ Subir el ZIP del tema **no** aplica `routes.yaml`. Hay que subirlo a mano:
    Si el de producción tiene rutas que no están aquí, copiarlas al del repo
    antes de subir; subir un archivo reemplaza el anterior completo.
 3. Subir el `routes.yaml` del repo.
-4. Comprobar que la URL responde (ej. `https://nexo.la/tecnologia-y-energia/`).
+4. Comprobar que la URL responde (ej. `https://nexo.la/agua-y-energia/`).
 
 Orden al desplegar un cambio de este tipo: primero el tema (para que exista la
 plantilla), después `routes.yaml`. Si se sube la ruta sin la plantilla, Ghost
@@ -40,7 +40,7 @@ Ejemplo para Economía y Finanzas:
      filter: primary_tag:[economia,finanzas]
      template: economia-finanzas
    ```
-2. Copiar `tecnologia-energia.hbs` como `economia-finanzas.hbs` y cambiar el `<h1>`.
+2. Copiar `agua-energia.hbs` como `economia-finanzas.hbs` y cambiar el `<h1>`.
    Mantener la línea `{{#contentFor "body_class"}} tag-template{{/contentFor}}`:
    los channels no reciben la clase `tag-template` en el `<body>`, y sin ella la
    página pierde el layout de las páginas de tag (nota grande + 2 en columna +
@@ -55,6 +55,6 @@ Ejemplo para Economía y Finanzas:
 ## Limitaciones conocidas
 
 - El `<title>` de la página del channel es el título del sitio, no
-  "Tecnología y Energía" (los channels no tienen metadatos propios).
+  "Agua y Energía" (los channels no tienen metadatos propios).
 - Las notas siguen apareciendo también en sus páginas de tag individuales
-  (`/tag/tecnologia/`, `/tag/energia/`); el channel no las reemplaza.
+  (`/tag/agua/`, `/tag/energia/`); el channel no las reemplaza.
