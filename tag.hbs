@@ -1,6 +1,20 @@
 {{!< default}}
 {{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
 
+<style>
+    .tema-intro {
+        margin-bottom: 48px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--color-border, #e0e0e0);
+    }
+    .tema-intro .gh-content {
+        max-width: 720px;
+    }
+    .tema-intro .gh-content > :first-child {
+        margin-top: 0;
+    }
+</style>
+
 <main class="gh-main gh-outer">
 
     {{#tag}}
@@ -15,6 +29,19 @@
                 {{> "feature-image"}}
             </div>
         </section>
+
+        {{!-- Portada de tema: si existe una página publicada con slug "tema-<slug del tag>"
+             (p. ej. tema-terremotos), su contenido se muestra como intro encima del feed.
+             Ver docs/paginas-de-tema.md --}}
+        {{#get "pages" filter="slug:tema-{{slug}}" limit="1" as |intro|}}
+            {{#foreach intro}}
+                <section class="tema-intro gh-inner">
+                    <div class="gh-content is-body">
+                        {{content}}
+                    </div>
+                </section>
+            {{/foreach}}
+        {{/get}}
     {{/tag}}
 
     {{> "components/post-list" feed="archive" postFeedStyle=@custom.post_feed_style showTitle=false showSidebar=@custom.show_publication_info_sidebar}}

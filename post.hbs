@@ -250,11 +250,9 @@
     }());
     </script>
 
-    {{!-- Variante C: CTA por categoría --}}
-    <div class="gh-outer" style="padding: 0 max(4vmin, 20px)">
-        {{> "components/cta-categoria"}}
-    </div>
-
+    {{!-- Al terminar la nota van primero las 4 tarjetas de "lee más" (más leídas o
+         relacionadas, 50/50) y debajo un solo CTA, el de categoría. Antes el formulario
+         iba encima de las tarjetas y al final había otros dos CTA (bloque grande y popup). --}}
     <script>window._nexoMasLeidas = Math.random() < 0.5;</script>
 
     <section class="gh-container gh-outer" id="mas-leidas-wrap" style="display:none">
@@ -383,6 +381,11 @@
         {{/get}}
     {{/if}}
 
+    {{!-- Variante C: CTA por categoría (único CTA al final de la nota) --}}
+    <div class="gh-outer" style="padding: 0 max(4vmin, 20px); margin-top: 48px">
+        {{> "components/cta-categoria"}}
+    </div>
+
     <div id="deportes-short-wrap" class="gh-canvas deportes-short-wrap" style="display:none">
         <div class="deportes-short-label">Video corto</div>
         <div class="deportes-short-player"></div>
@@ -413,12 +416,25 @@
     }());
     </script>
 
-    <div id="cta-inferior">
-        {{> "components/cta-registro"}}
-    </div>
-
-    {{!-- Variante D: popup scroll-triggered --}}
-    {{> "components/cta-popup"}}
+    {{!-- El SDK de Mautic se cargaba dentro de cta-registro, que ya no va en la nota;
+         se mantiene aquí para que los formularios inline y de categoría sigan igual. --}}
+    {{#unless @member}}
+    <script type="text/javascript">
+        if (typeof MauticSDKLoaded == 'undefined') {
+            var MauticSDKLoaded = true;
+            var head = document.getElementsByTagName('head')[0];
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.src = 'https://mautic.adulting.club/media/js/mautic-form.js?v819f826d';
+            script.onload = function() { MauticSDK.onLoad(); };
+            head.appendChild(script);
+            var MauticDomain = 'https://mautic.adulting.club';
+            var MauticLang = { 'submittingMessage': "Please wait..." };
+        } else if (typeof MauticSDK != 'undefined') {
+            MauticSDK.onLoad();
+        }
+    </script>
+    {{/unless}}
 
     {{#if comments}}
         <div class="gh-comments gh-canvas">
