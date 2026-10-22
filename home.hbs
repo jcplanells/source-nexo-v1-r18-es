@@ -16,22 +16,24 @@
 
 {{> "components/topbar-preview" variant="green"}}
 
+{{!-- Balotaje Brasil 2026: aparece cuando algún post publicado tiene el tag interno #balotaje-brasil.
+      order:-1 la sube encima del logo (igual que topbar-preview); al ir después en el DOM queda debajo de la barra de apps --}}
+{{#get "posts" filter="tag:hash-balotaje-brasil" limit="1"}}
+    {{#if posts}}
+        <section class="gh-outer" style="order:-1;padding-top:20px;padding-bottom:4px">
+            <div class="gh-inner">
+                {{> "components/widget-balotaje-brasil" compact=true}}
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
+
 {{#if @custom.show_alert_bar}}
     {{> "components/banner-alerta"}}
 {{/if}}
 
 {{> "components/header" headerStyle=@custom.header_style}}
 
-{{!-- Balotaje Brasil 2026: aparece cuando algún post publicado tiene el tag interno #balotaje-brasil --}}
-{{#get "posts" filter="tag:hash-balotaje-brasil" limit="1"}}
-    {{#if posts}}
-        <section class="gh-outer" style="padding-top:24px;padding-bottom:8px">
-            <div class="gh-inner">
-                {{> "components/widget-balotaje-brasil"}}
-            </div>
-        </section>
-    {{/if}}
-{{/get}}
 
 {{> "components/bloque-top-extra"}}
 

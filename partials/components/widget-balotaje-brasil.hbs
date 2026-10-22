@@ -1,5 +1,5 @@
 <!-- Nexo · Balanza en vivo del balotaje de Brasil 2026 (Lula vs. Flávio Bolsonaro). Componente de Claudio (notas-salida/brasil-balotaje-widget). Se activa con el tag interno #balotaje-brasil. 22-oct-2026 -->
-<div id="nxbal-2026" class="nxbal">
+<div id="nxbal-2026" class="nxbal"{{#if compact}} data-compact="1"{{/if}}>
 <style>
 #nxbal-2026{--g:#34CC03;--deep:#122805;--off:#F1F2E9;--lula:#F26E5F;--flav:#3366FF;--ink:#020202;
   font-family:"Host Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--off);
@@ -57,6 +57,14 @@
   #nxbal-2026 .nb-bar{margin:6px 16px 0}#nxbal-2026 .nb-prog{padding:12px 16px 0}#nxbal-2026 .nb-note{margin:12px 16px 0}#nxbal-2026 .nb-src{padding:12px 16px 16px}
   #nxbal-2026 .nb-delta{font-size:12px}#nxbal-2026 .nb-pct{font-size:30px}#nxbal-2026 .nb-mid b{font-size:16px}#nxbal-2026 .nb-dv{display:none}}
 @media (prefers-reduced-motion:reduce){#nxbal-2026 .nb-live i{animation:none}}
+/* versión compacta de portada: sin subtítulo, título y cifras más chicos, escenario más bajo (ver layout()) */
+#nxbal-2026[data-compact] .nb-head{padding-top:16px}
+#nxbal-2026[data-compact] .nb-sub{display:none}
+#nxbal-2026[data-compact] h3{font-size:clamp(19px,3.2vw,24px);margin:8px 0 12px}
+#nxbal-2026[data-compact] .nb-score{padding-top:12px}
+#nxbal-2026[data-compact] .nb-pct{font-size:clamp(28px,5.5vw,40px)}
+#nxbal-2026[data-compact] .nb-note{margin-top:10px;padding:9px 12px;font-size:13px}
+#nxbal-2026[data-compact] .nb-src{padding-top:10px;padding-bottom:14px;font-size:11px}
 </style>
 <div class="nb-head">
   <div class="nb-tags"><span class="nb-live"><i></i><span class="nb-lt">En vivo</span></span><span>Brasil · segunda vuelta</span></div>
@@ -101,9 +109,10 @@
     var h=f.querySelector('.nb-shead');h.src=IMGS[F.img+'-head'];h.style.transformOrigin='50% '+(F.neck*100)+'%';});
   var geo={},state={target:0,ang:0,vel:0,heads:{l:{a:0,v:0},r:{a:0,v:0}}},last=null,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function layout(){
-    var W=stage.clientWidth||root.clientWidth||680, H=Math.round(Math.max(330,Math.min(460,W*.62)));
+    var compact=root.hasAttribute('data-compact');
+    var W=stage.clientWidth||root.clientWidth||680, H=compact?Math.round(Math.max(260,Math.min(290,W*.40))):Math.round(Math.max(330,Math.min(460,W*.62)));
     stage.style.setProperty('--sh',H+'px');
-    var half=Math.min(W*.40,300), figH=Math.min(H*.52,W*.42), pivotY=H-118;
+    var half=Math.min(W*.40,300), figH=Math.min(H*.52,W*.42), pivotY=H-(compact?80:118);
     geo={W:W,H:H,half:half,figH:figH,pivotY:pivotY,ppt:Math.min(9,(H*.42)/CAP*.62)};
     beam.style.width=(half*2)+'px';beam.style.marginLeft=(-half)+'px';beam.style.top=(pivotY-6)+'px';
     q('.nb-pin').style.top=(pivotY-11)+'px';
