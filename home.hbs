@@ -22,6 +22,17 @@
 
 {{> "components/header" headerStyle=@custom.header_style}}
 
+{{!-- Balotaje Brasil 2026: aparece cuando algún post publicado tiene el tag interno #balotaje-brasil --}}
+{{#get "posts" filter="tag:hash-balotaje-brasil" limit="1"}}
+    {{#if posts}}
+        <section class="gh-outer" style="padding-top:24px;padding-bottom:8px">
+            <div class="gh-inner">
+                {{> "components/widget-balotaje-brasil"}}
+            </div>
+        </section>
+    {{/if}}
+{{/get}}
+
 {{> "components/bloque-top-extra"}}
 
 {{> "components/bloque-economia"}}

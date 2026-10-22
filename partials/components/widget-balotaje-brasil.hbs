@@ -1,0 +1,186 @@
+<!-- Nexo · Balanza en vivo del balotaje de Brasil 2026 (Lula vs. Flávio Bolsonaro). Componente de Claudio (notas-salida/brasil-balotaje-widget). Se activa con el tag interno #balotaje-brasil. 22-oct-2026 -->
+<div id="nxbal-2026" class="nxbal">
+<style>
+#nxbal-2026{--g:#34CC03;--deep:#122805;--off:#F1F2E9;--lula:#F26E5F;--flav:#3366FF;--ink:#020202;
+  font-family:"Host Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--off);
+  border-radius:22px;overflow:hidden;max-width:760px;margin:0 auto;box-sizing:border-box}
+#nxbal-2026 *{box-sizing:border-box}
+#nxbal-2026 .nb-head{padding:20px 22px 0}
+#nxbal-2026 .nb-tags{display:flex;gap:10px;align-items:center;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+#nxbal-2026 .nb-live{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--off);padding:4px 9px;border-radius:6px}
+#nxbal-2026 .nb-live i{width:8px;height:8px;border-radius:50%;background:var(--g);animation:nbpulse 1.4s infinite}
+#nxbal-2026 .nb-live.off i{background:#888;animation:none}
+@keyframes nbpulse{0%,100%{opacity:1}50%{opacity:.25}}
+#nxbal-2026 h3{font-size:clamp(22px,4.4vw,30px);line-height:1.08;letter-spacing:-.02em;margin:10px 0 4px;font-weight:800}
+#nxbal-2026 .nb-sub{font-size:14px;color:#4a4f45;margin-bottom:14px}
+#nxbal-2026 .nb-stage{position:relative;background:radial-gradient(ellipse at 50% 30%,#2a4d14 0%,var(--deep) 62%);height:var(--sh,420px);overflow:hidden}
+#nxbal-2026 .nb-stage:before{content:"";position:absolute;inset:0;background:
+  repeating-linear-gradient(90deg,rgba(241,242,233,.04) 0 1px,transparent 1px 48px);pointer-events:none}
+#nxbal-2026 .nb-ruler{position:absolute;width:44px;top:0;bottom:0;pointer-events:none}
+#nxbal-2026 .nb-tick{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(241,242,233,.18);font-size:10px;color:rgba(241,242,233,.45);font-weight:700}
+#nxbal-2026 .nb-tick span{position:absolute;top:-7px}
+#nxbal-2026 .nb-tick.z{border-top:1px solid rgba(241,242,233,.35)}
+#nxbal-2026 .nb-beam{position:absolute;left:50%;height:12px;border-radius:6px;transform-origin:50% 50%;
+  background:linear-gradient(180deg,#f7f8f0,#cfd2c2);box-shadow:0 6px 18px rgba(0,0,0,.35)}
+#nxbal-2026 .nb-beam:before,#nxbal-2026 .nb-beam:after{content:"";position:absolute;top:-6px;width:28%;height:6px;border-radius:4px 4px 0 0}
+#nxbal-2026 .nb-beam:before{left:2%;background:var(--lula)}
+#nxbal-2026 .nb-beam:after{right:2%;background:var(--flav)}
+#nxbal-2026 .nb-seat{position:absolute;bottom:12px;width:0;height:0}
+#nxbal-2026 .nb-fig{position:absolute;bottom:-6px;transform-origin:50% 100%}
+#nxbal-2026 .nb-fig img{position:absolute;left:0;top:0;width:100%;height:100%;user-select:none;-webkit-user-drag:none}
+#nxbal-2026 .nb-fig .nb-shead{filter:drop-shadow(0 8px 10px rgba(0,0,0,.25))}
+#nxbal-2026 .nb-pin{position:absolute;left:50%;width:22px;height:22px;margin-left:-11px;border-radius:50%;background:var(--g);box-shadow:0 0 0 5px rgba(52,204,3,.25)}
+#nxbal-2026 .nb-fulcrum{position:absolute;left:50%;width:0;height:0;border-left:46px solid transparent;border-right:46px solid transparent;border-bottom:96px solid #e4e6da;margin-left:-46px;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+#nxbal-2026 .nb-floor{position:absolute;left:8%;right:8%;bottom:0;height:22px;background:radial-gradient(ellipse at 50% 0,rgba(0,0,0,.45),transparent 70%)}
+#nxbal-2026 .nb-delta{position:absolute;font-weight:800;font-size:15px;padding:3px 8px;border-radius:6px;color:var(--off);white-space:nowrap;transform:translate(-50%,-50%);transition:opacity .4s}
+#nxbal-2026 .nb-wait{position:absolute;left:50%;top:18px;transform:translateX(-50%);color:var(--off);font-size:14px;font-weight:700;text-align:center;width:88%;line-height:1.3}
+#nxbal-2026 .nb-score{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end;padding:16px 22px 6px}
+#nxbal-2026 .nb-c{min-width:0}
+#nxbal-2026 .nb-c.r{text-align:right}
+#nxbal-2026 .nb-name{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+#nxbal-2026 .nb-pct{font-size:clamp(34px,8vw,52px);font-weight:800;letter-spacing:-.03em;line-height:1}
+#nxbal-2026 .nb-votes{font-size:13px;color:#4a4f45}
+#nxbal-2026 .l .nb-pct{color:var(--lula)}#nxbal-2026 .r .nb-pct{color:var(--flav)}
+#nxbal-2026 .nb-mid{text-align:center;font-size:12px;font-weight:700;color:#4a4f45;padding-bottom:6px;line-height:1.25}
+#nxbal-2026 .nb-mid b{display:block;font-size:20px;color:var(--ink)}
+#nxbal-2026 .nb-bar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:6px 22px 0;background:#d9dbcf;position:relative}
+#nxbal-2026 .nb-bar div{transition:width .9s cubic-bezier(.3,1.4,.5,1)}
+#nxbal-2026 .nb-bar:after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+#nxbal-2026 .nb-prog{padding:14px 22px 0;font-size:13px;color:#4a4f45}
+#nxbal-2026 .nb-prog .t{height:6px;background:#d9dbcf;border-radius:3px;margin-top:6px;overflow:hidden}
+#nxbal-2026 .nb-prog .t div{height:100%;background:var(--g);width:0;transition:width .9s}
+#nxbal-2026 .nb-note{margin:14px 22px 0;padding:12px 14px;border-left:4px solid var(--g);background:#e6e8dc;font-size:14px;line-height:1.4;border-radius:0 8px 8px 0}
+#nxbal-2026 .nb-note:empty{display:none}
+#nxbal-2026 .nb-src{padding:12px 22px 18px;font-size:12px;color:#6a6f62}
+#nxbal-2026 .nb-src a{color:inherit}
+@media (max-width:520px){#nxbal-2026 .nb-head{padding:16px 16px 0}#nxbal-2026 .nb-score{padding:14px 16px 4px}
+  #nxbal-2026 .nb-bar{margin:6px 16px 0}#nxbal-2026 .nb-prog{padding:12px 16px 0}#nxbal-2026 .nb-note{margin:12px 16px 0}#nxbal-2026 .nb-src{padding:12px 16px 16px}
+  #nxbal-2026 .nb-delta{font-size:12px}#nxbal-2026 .nb-pct{font-size:30px}#nxbal-2026 .nb-mid b{font-size:16px}#nxbal-2026 .nb-dv{display:none}}
+@media (prefers-reduced-motion:reduce){#nxbal-2026 .nb-live i{animation:none}}
+</style>
+<div class="nb-head">
+  <div class="nb-tags"><span class="nb-live"><i></i><span class="nb-lt">En vivo</span></span><span>Brasil · segunda vuelta</span></div>
+  <h3>Lula o Flávio Bolsonaro: hacia dónde se inclina Brasil.</h3>
+  <div class="nb-sub">Conteo oficial del TSE. Cada candidato sube o baja la mitad de la diferencia en puntos.</div>
+</div>
+<div class="nb-stage">
+  <div class="nb-ruler nb-rl"></div><div class="nb-ruler nb-rr"></div>
+  <div class="nb-floor"></div>
+  <div class="nb-fulcrum"></div>
+  <div class="nb-beam">
+    <div class="nb-seat nb-sl"><div class="nb-fig nb-fl"><img class="nb-sbody" alt=""><img class="nb-shead" alt="Lula"></div></div>
+    <div class="nb-seat nb-sr"><div class="nb-fig nb-fr"><img class="nb-sbody" alt=""><img class="nb-shead" alt="Flávio Bolsonaro"></div></div>
+  </div>
+  <div class="nb-pin"></div>
+  <div class="nb-delta nb-dl" style="background:var(--lula)"></div>
+  <div class="nb-delta nb-dr" style="background:var(--flav)"></div>
+  <div class="nb-wait"></div>
+</div>
+<div class="nb-score">
+  <div class="nb-c l"><div class="nb-name">Lula · PT</div><div class="nb-pct nb-pl">–</div><div class="nb-votes nb-vl">&nbsp;</div></div>
+  <div class="nb-mid">Diferencia<b class="nb-diff">–</b><span class="nb-dv">&nbsp;</span></div>
+  <div class="nb-c r"><div class="nb-name">Flávio · PL</div><div class="nb-pct nb-pr">–</div><div class="nb-votes nb-vr">&nbsp;</div></div>
+</div>
+<div class="nb-bar"><div class="nb-bl" style="width:50%;background:var(--lula)"></div><div class="nb-br" style="width:50%;background:var(--flav)"></div></div>
+<div class="nb-prog"><span class="nb-pt">Secciones totalizadas: –</span><div class="t"><div class="nb-pg"></div></div></div>
+<div class="nb-note"></div>
+<div class="nb-src">Fuente: <a href="https://resultados.tse.jus.br/" target="_blank" rel="noopener">Tribunal Superior Electoral de Brasil (TSE)</a>, porcentaje de votos válidos. <span class="nb-upd"></span> Ilustraciones: Nexo con IA, a partir de fotos del Palácio do Planalto y la Agência Senado (CC BY 2.0).</div>
+<script>
+(function(){
+  var root=document.getElementById('nxbal-2026'); if(!root||root.__nb) return; root.__nb=1;
+  // {{asset}} agrega ?v= a la ruta, así que cada imagen va con su URL completa en vez de una ruta base
+  var IMGS={'lula-head':'{{asset "img/balotaje-2026/lula-head.webp"}}','lula-body':'{{asset "img/balotaje-2026/lula-body.webp"}}',
+    'flavio-head':'{{asset "img/balotaje-2026/flavio-head.webp"}}','flavio-body':'{{asset "img/balotaje-2026/flavio-body.webp"}}'};
+  var API='https://n8n.smart.f1consultores.com/webhook/tse-brasil-2026';
+  var FIGS={l:{n:'13',img:'lula',neck:.428,ar:213/600},r:{n:'22',img:'flavio',neck:.503,ar:223/600}};
+  var CAP=8; // puntos de media diferencia que llenan la escala (diferencia de 16)
+  var q=function(s){return root.querySelector(s)};
+  var stage=q('.nb-stage'),beam=q('.nb-beam');
+  ['l','r'].forEach(function(k){var f=q('.nb-f'+k),F=FIGS[k];
+    f.querySelector('.nb-sbody').src=IMGS[F.img+'-body'];
+    var h=f.querySelector('.nb-shead');h.src=IMGS[F.img+'-head'];h.style.transformOrigin='50% '+(F.neck*100)+'%';});
+  var geo={},state={target:0,ang:0,vel:0,heads:{l:{a:0,v:0},r:{a:0,v:0}}},last=null,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function layout(){
+    var W=stage.clientWidth||root.clientWidth||680, H=Math.round(Math.max(330,Math.min(460,W*.62)));
+    stage.style.setProperty('--sh',H+'px');
+    var half=Math.min(W*.40,300), figH=Math.min(H*.52,W*.42), pivotY=H-118;
+    geo={W:W,H:H,half:half,figH:figH,pivotY:pivotY,ppt:Math.min(9,(H*.42)/CAP*.62)};
+    beam.style.width=(half*2)+'px';beam.style.marginLeft=(-half)+'px';beam.style.top=(pivotY-6)+'px';
+    q('.nb-pin').style.top=(pivotY-11)+'px';
+    var fu=q('.nb-fulcrum');fu.style.top=pivotY+'px';fu.style.borderBottomWidth=(H-pivotY-8)+'px';
+    q('.nb-sl').style.left='12%';q('.nb-sr').style.left='88%';
+    ['l','r'].forEach(function(k){var f=q('.nb-f'+k),w=figH*FIGS[k].ar;f.style.width=w+'px';f.style.height=figH+'px';f.style.left=(-w/2)+'px';});
+    // escalas: se dibujan en la x de cada extremo
+    [['.nb-rl',10],['.nb-rr',W-54]].forEach(function(p){
+      var r=q(p[0]);r.style.left=p[1]+'px';var html='';
+      for(var t=-CAP;t<=CAP;t+=2){var y=pivotY-6+(-t)*geo.ppt-figH*0; html+='<div class="nb-tick'+(t?'':' z')+'" style="top:'+(y)+'px"><span>'+(t>0?'+':'')+t+'</span></div>';}
+      r.innerHTML=html;});
+    paint();
+  }
+  // media diferencia (pts) -> ángulo: el extremo de Lula sube exactamente d*ppt píxeles
+  function angFor(d){var dy=Math.max(-CAP,Math.min(CAP,d))*geo.ppt;return Math.asin(Math.max(-1,Math.min(1,dy/(geo.half*.76))))*180/Math.PI;}
+  function paint(){
+    beam.style.transform='rotate('+state.ang+'deg)';
+    ['l','r'].forEach(function(k){var f=q('.nb-f'+k);f.style.transform='rotate('+(-state.ang)+'deg)';
+      f.querySelector('.nb-shead').style.transform='rotate('+state.heads[k].a+'deg)';});
+    var rad=state.ang*Math.PI/180, hx=geo.half*.76, ys=Math.sin(rad)*hx;
+    var dl=q('.nb-dl'),dr=q('.nb-dr');
+    dl.style.left=(geo.W/2-hx)+'px';dl.style.top=Math.max(16,geo.pivotY-ys-geo.figH-12)+'px';
+    dr.style.left=(geo.W/2+hx)+'px';dr.style.top=Math.max(16,geo.pivotY+ys-geo.figH-12)+'px';
+  }
+  var t0=performance.now(),running=false;
+  function tick(now){
+    var dt=Math.min(.05,(now-(tick.p||now))/1000);tick.p=now;
+    if(reduce){state.ang=state.target;state.vel=0;}
+    else{var k=38,c=7.5,a=-k*(state.ang-state.target)-c*state.vel;state.vel+=a*dt;state.ang+=state.vel*dt;}
+    ['l','r'].forEach(function(s,i){var h=state.heads[s];
+      var idle=reduce?0:Math.sin(now/900+i*1.7)*1.6;
+      var acc=-120*(h.a-idle)-5*h.v - state.vel*(s==='l'?1.6:-1.6)*0;
+      h.v+=acc*dt;h.a+=h.v*dt;});
+    paint();requestAnimationFrame(tick);
+  }
+  function kick(mag){if(reduce)return;['l','r'].forEach(function(s,i){state.heads[s].v+= (i?-1:1)*mag*(0.8+Math.random()*.4);});}
+  var nf=function(x){return Number(x).toLocaleString('en-US')},pf=function(x){return Number(x).toFixed(2)};
+  function render(d){
+    var cand={};(d.candidatos||[]).forEach(function(c){cand[String(c.n)]=c;});
+    var L=cand[FIGS.l.n]||{pvap:0,vap:0},R=cand[FIGS.r.n]||{pvap:0,vap:0};
+    var pst=+d.pst||0, started=(+L.vap+ +R.vap)>0, final=!!d.final&&pst>=100;
+    var diff=+L.pvap - +R.pvap, half=diff/2;
+    q('.nb-pl').textContent=started?pf(L.pvap)+'%':'–';q('.nb-pr').textContent=started?pf(R.pvap)+'%':'–';
+    q('.nb-vl').textContent=started?nf(L.vap)+' votos':' ';q('.nb-vr').textContent=started?nf(R.vap)+' votos':' ';
+    q('.nb-diff').textContent=started?Math.abs(diff).toFixed(2)+' pts':'–';
+    q('.nb-dv').textContent=started?(diff===0?'empate':(diff>0?'Lula':'Flávio')+' arriba por '+nf(Math.abs(L.vap-R.vap))+' votos'):' ';
+    var sl=started?+L.pvap:50,sr=started?+R.pvap:50,tot=sl+sr||100;
+    q('.nb-bl').style.width=(sl/tot*100)+'%';q('.nb-br').style.width=(sr/tot*100)+'%';
+    q('.nb-pt').textContent='Secciones totalizadas: '+pst.toFixed(2)+'%';q('.nb-pg').style.width=pst+'%';
+    var dl=q('.nb-dl'),dr=q('.nb-dr');
+    if(started){var s=function(v){return(v>0?'+':v<0?'−':'±')+Math.abs(v).toFixed(2)};dl.textContent=s(half);dr.textContent=s(-half);dl.style.opacity=dr.style.opacity=1;}
+    else{dl.style.opacity=dr.style.opacity=0;}
+    q('.nb-wait').textContent=started?'':'Las urnas cierran a las 5:00 p.m. de Brasília (3:00 p.m. en Panamá). La balanza se mueve con los primeros resultados.';
+    var live=q('.nb-live');live.classList.toggle('off',final);q('.nb-lt').textContent=final?'Final':'En vivo';
+    var note='';
+    if(final){var w=diff>0?'Lula':'Flávio Bolsonaro';note='<b>Conteo cerrado.</b> '+w+' gana con '+pf(Math.max(L.pvap,R.pvap))+'% de los votos válidos, según el TSE.';}
+    else if(started&&diff<0&&pst<95){note='<b>Ojo con la ventaja temprana.</b> En la primera vuelta, con 92% de las secciones contadas, casi la mitad de los electores que faltaban eran del Nordeste, donde Lula llevaba 63%. En 2022, Lula pasó adelante con 67.8% de las secciones totalizadas.';}
+    else if(started&&pst<99){note='<b>Faltan secciones por totalizar.</b> La diferencia todavía se mueve.';}
+    q('.nb-note').innerHTML=note;
+    if(d.hora){var p=d.hora.split(':'),hp=((+p[0]-2+24)%24);var fmt=function(h){return((h%12)||12)+':'+p[1]+(h<12?' a.m.':' p.m.')};
+      q('.nb-upd').textContent='Corte del TSE: '+fmt(+p[0])+' de Brasília ('+fmt(hp)+' en Panamá).';}
+    var tgt=started?angFor(half):0;
+    if(Math.abs(tgt-state.target)>.01||!last)kick(Math.min(60,10+Math.abs(tgt-state.target)*25));
+    state.target=tgt;last=d;
+  }
+  root.__render=render;root.__settle=function(){state.ang=state.target;state.vel=0;paint();return state;};
+  var params=new URLSearchParams(location.search),ele=params.get('tse');
+  function load(){
+    clearTimeout(timer);if(document.visibilityState==='hidden'){return schedule();}
+    fetch(API+(ele?'?ele='+encodeURIComponent(ele):''),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(d){render(d);schedule(d);}).catch(function(){schedule();});
+  }
+  var timer=null;function schedule(d){clearTimeout(timer);if(d&&d.final&&+d.pst>=100)return;timer=setTimeout(load,30000+Math.random()*10000);}
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&last&&!(last.final&&+last.pst>=100))load();});
+  window.addEventListener('resize',function(){clearTimeout(layout.t);layout.t=setTimeout(layout,120);});
+  layout();requestAnimationFrame(tick);
+  if(root.getAttribute('data-demo')!=='1')load();
+})();
+</script>
+</div>

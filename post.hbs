@@ -90,6 +90,12 @@
 
         </header>
 
+        {{#has tag="#balotaje-brasil"}}
+            <div class="gh-canvas" style="margin-bottom:32px">
+                {{> "components/widget-balotaje-brasil"}}
+            </div>
+        {{/has}}
+
         <section class="gh-content gh-canvas is-body">
             {{content}}
         </section>
