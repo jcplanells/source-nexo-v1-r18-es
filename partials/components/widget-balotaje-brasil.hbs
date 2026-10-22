@@ -63,8 +63,36 @@
 #nxbal-2026[data-compact] h3{font-size:clamp(19px,3.2vw,24px);margin:8px 0 12px}
 #nxbal-2026[data-compact] .nb-score{padding-top:12px}
 #nxbal-2026[data-compact] .nb-pct{font-size:clamp(28px,5.5vw,40px)}
-#nxbal-2026[data-compact] .nb-note{margin-top:10px;padding:9px 12px;font-size:13px}
-#nxbal-2026[data-compact] .nb-src{padding-top:10px;padding-bottom:14px;font-size:11px}
+#nxbal-2026[data-compact] .nb-note{margin-top:0;margin-bottom:14px;padding:9px 12px;font-size:13px}
+#nxbal-2026 .nb-tse{display:none}
+/* en portada la fuente va como tooltip sobre "TSE (hora)" en vez de al pie; el script mueve .nb-src adentro de .nb-tse */
+#nxbal-2026[data-compact] .nb-prog{position:relative;padding-bottom:14px}
+#nxbal-2026[data-compact] .nb-tse{display:inline;cursor:help;font-weight:700;color:var(--ink);border-bottom:1px dotted currentColor;outline:none}
+#nxbal-2026[data-compact] .nb-tse:before{content:" · ";font-weight:400;color:#4a4f45}
+#nxbal-2026[data-compact] .nb-tse .nb-src{display:none;position:absolute;left:12px;right:12px;bottom:calc(100% - 4px);z-index:5;padding:10px 12px;
+  background:var(--ink);color:var(--off);font-size:12px;font-weight:400;line-height:1.4;border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.3);cursor:auto}
+#nxbal-2026[data-compact] .nb-tse .nb-src:after{content:"";position:absolute;left:0;right:0;top:100%;height:14px} /* puente para no perder el hover */
+#nxbal-2026[data-compact] .nb-tse:hover .nb-src,#nxbal-2026[data-compact] .nb-tse:focus .nb-src,#nxbal-2026[data-compact] .nb-tse:focus-within .nb-src{display:block}
+/* compacta en escritorio: formato horizontal, cifras a los lados del escenario. layout() lo detecta por display:grid */
+@media (min-width:760px){
+  #nxbal-2026[data-compact]{display:grid;grid-template-columns:170px minmax(0,1fr) 170px;max-width:980px}
+  #nxbal-2026[data-compact] .nb-score{display:contents}
+  #nxbal-2026[data-compact] .nb-head{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:14px 22px 12px}
+  #nxbal-2026[data-compact] .nb-tags{flex-shrink:0}
+  #nxbal-2026[data-compact] h3{font-size:20px;margin:0}
+  #nxbal-2026[data-compact] .nb-stage{grid-column:2;grid-row:2}
+  #nxbal-2026[data-compact] .nb-c{grid-row:2;align-self:center;padding:0 18px}
+  #nxbal-2026[data-compact] .nb-c.l{grid-column:1}
+  #nxbal-2026[data-compact] .nb-c.r{grid-column:3}
+  #nxbal-2026[data-compact] .nb-pct{font-size:38px;margin:4px 0 2px}
+  #nxbal-2026[data-compact] .nb-bar{grid-column:1/-1;grid-row:3;margin:12px 22px 0}
+  #nxbal-2026[data-compact] .nb-prog{grid-column:1/3;grid-row:4;padding:10px 22px 14px}
+  #nxbal-2026[data-compact] .nb-mid{grid-column:3;grid-row:4;text-align:right;padding:10px 22px 14px;align-self:start}
+  #nxbal-2026[data-compact] .nb-mid b{display:inline;font-size:15px;margin-left:6px}
+  #nxbal-2026[data-compact] .nb-dv{display:none}
+  #nxbal-2026[data-compact] .nb-note{grid-column:1/-1}
+  #nxbal-2026[data-compact] .nb-wait{top:10px;font-size:13px}
+}
 </style>
 <div class="nb-head">
   <div class="nb-tags"><span class="nb-live"><i></i><span class="nb-lt">En vivo</span></span><span>Brasil · segunda vuelta</span></div>
@@ -90,7 +118,7 @@
   <div class="nb-c r"><div class="nb-name">Flávio · PL</div><div class="nb-pct nb-pr">–</div><div class="nb-votes nb-vr">&nbsp;</div></div>
 </div>
 <div class="nb-bar"><div class="nb-bl" style="width:50%;background:var(--lula)"></div><div class="nb-br" style="width:50%;background:var(--flav)"></div></div>
-<div class="nb-prog"><span class="nb-pt">Secciones totalizadas: –</span><div class="t"><div class="nb-pg"></div></div></div>
+<div class="nb-prog"><span class="nb-pt">Secciones totalizadas: –</span><span class="nb-tse" tabindex="0">TSE<span class="nb-tseh"></span></span><div class="t"><div class="nb-pg"></div></div></div>
 <div class="nb-note"></div>
 <div class="nb-src">Fuente: <a href="https://resultados.tse.jus.br/" target="_blank" rel="noopener">Tribunal Superior Electoral de Brasil (TSE)</a>, porcentaje de votos válidos. <span class="nb-upd"></span> Ilustraciones: Nexo con IA, a partir de fotos del Palácio do Planalto y la Agência Senado (CC BY 2.0).</div>
 <script>
@@ -104,15 +132,16 @@
   var CAP=8; // puntos de media diferencia que llenan la escala (diferencia de 16)
   var q=function(s){return root.querySelector(s)};
   var stage=q('.nb-stage'),beam=q('.nb-beam');
+  if(root.hasAttribute('data-compact'))q('.nb-tse').appendChild(q('.nb-src'));
   ['l','r'].forEach(function(k){var f=q('.nb-f'+k),F=FIGS[k];
     f.querySelector('.nb-sbody').src=IMGS[F.img+'-body'];
     var h=f.querySelector('.nb-shead');h.src=IMGS[F.img+'-head'];h.style.transformOrigin='50% '+(F.neck*100)+'%';});
   var geo={},state={target:0,ang:0,vel:0,heads:{l:{a:0,v:0},r:{a:0,v:0}}},last=null,reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
   function layout(){
-    var compact=root.hasAttribute('data-compact');
-    var W=stage.clientWidth||root.clientWidth||680, H=compact?Math.round(Math.max(260,Math.min(290,W*.40))):Math.round(Math.max(330,Math.min(460,W*.62)));
+    var compact=root.hasAttribute('data-compact'), wide=compact&&getComputedStyle(root).display==='grid';
+    var W=stage.clientWidth||root.clientWidth||680, H=wide?220:compact?Math.round(Math.max(260,Math.min(290,W*.40))):Math.round(Math.max(330,Math.min(460,W*.62)));
     stage.style.setProperty('--sh',H+'px');
-    var half=Math.min(W*.40,300), figH=Math.min(H*.52,W*.42), pivotY=H-(compact?80:118);
+    var half=Math.min(W*.40,300), figH=wide?H*.45:Math.min(H*.52,W*.42), pivotY=H-(wide?70:compact?80:118);
     geo={W:W,H:H,half:half,figH:figH,pivotY:pivotY,ppt:Math.min(9,(H*.42)/CAP*.62)};
     beam.style.width=(half*2)+'px';beam.style.marginLeft=(-half)+'px';beam.style.top=(pivotY-6)+'px';
     q('.nb-pin').style.top=(pivotY-11)+'px';
@@ -173,7 +202,8 @@
     else if(started&&pst<99){note='<b>Faltan secciones por totalizar.</b> La diferencia todavía se mueve.';}
     q('.nb-note').innerHTML=note;
     if(d.hora){var p=d.hora.split(':'),hp=((+p[0]-2+24)%24);var fmt=function(h){return((h%12)||12)+':'+p[1]+(h<12?' a.m.':' p.m.')};
-      q('.nb-upd').textContent='Corte del TSE: '+fmt(+p[0])+' de Brasília ('+fmt(hp)+' en Panamá).';}
+      q('.nb-upd').textContent='Corte del TSE: '+fmt(+p[0])+' de Brasília ('+fmt(hp)+' en Panamá).';
+      q('.nb-tseh').textContent=' ('+fmt(hp)+')';}
     var tgt=started?angFor(half):0;
     if(Math.abs(tgt-state.target)>.01||!last)kick(Math.min(60,10+Math.abs(tgt-state.target)*25));
     state.target=tgt;last=d;
