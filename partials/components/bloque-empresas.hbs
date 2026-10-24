@@ -75,29 +75,17 @@
             </span>
         </h2>
         <div class="grid-bloque-empresas">
-            {{!-- La primera nota del bloque (hero) nunca puede ser featured; las otras dos sí. --}}
-            {{#get "posts" filter="primary_tag:empresas+featured:false" limit="1" include="tags,authors" as |empresasHero|}}
-                {{#foreach empresasHero}}
-                    {{> "components/card-empresa" esNota=false}}
-                {{/foreach}}
-                {{#get "posts" filter=(concat "primary_tag:empresas+id:-" empresasHero.[0].id) limit="2" include="tags,authors"}}
-                    {{#foreach posts}}
-                        {{> "components/card-empresa" esNota=true}}
-                    {{/foreach}}
-                {{/get}}
-            {{else}}
-                {{!-- Sin notas no-featured: se muestran las 3 más recientes con tag empresas. --}}
-                {{#get "posts" filter="primary_tag:empresas" limit="3" include="tags,authors"}}
-                    {{#foreach posts}}
-                        {{#if @first}}
-                            {{> "components/card-empresa" esNota=false}}
-                        {{else}}
-                            {{> "components/card-empresa" esNota=true}}
-                        {{/if}}
+            {{!-- Las 3 notas más recientes de empresas por fecha de publicación, sean featured o no. --}}
+            {{#get "posts" filter="primary_tag:empresas" order="published_at desc" limit="3" include="tags,authors"}}
+                {{#foreach posts}}
+                    {{#if @first}}
+                        {{> "components/card-empresa" esNota=false}}
                     {{else}}
-                        <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>empresas</strong>.</p>
-                    {{/foreach}}
-                {{/get}}
+                        {{> "components/card-empresa" esNota=true}}
+                    {{/if}}
+                {{else}}
+                    <p style="grid-column: 1 / -1; text-align: center;">No se encontraron posts con el tag <strong>empresas</strong>.</p>
+                {{/foreach}}
             {{/get}}
         </div>
         <div style="text-align: right; margin-top: 15px;">
