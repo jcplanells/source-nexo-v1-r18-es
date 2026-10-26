@@ -9,6 +9,12 @@
 
         <div class="gh-footer-privacy" style="text-align:center; width:100%; margin-bottom: 10px;">
             <a href="https://nexo.la/politica-de-privacidad-nexo-la/" style="border-bottom: 1px solid var(--ghost-accent-color); text-decoration: none; padding-bottom: 2px;">Política de privacidad</a>
+            {{#if @site.members_enabled}}
+                {{#unless @member}}
+                    &nbsp;·&nbsp;
+                    <a href="#/portal/signin" data-portal="signin" style="border-bottom: 1px solid var(--ghost-accent-color); text-decoration: none; padding-bottom: 2px;">Acceso suscriptores</a>
+                {{/unless}}
+            {{/if}}
         </div>
 
         <div class="gh-footer-copyright" style="text-align:center; width:100%;">
