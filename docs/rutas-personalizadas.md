@@ -9,7 +9,7 @@ de tag de Ghost (`/tag/{slug}/`) solo muestran un tag, así que para que el
 
 | URL | Filtro | Plantilla | Usada por |
 |---|---|---|---|
-| `/agua-y-energia/` | `primary_tag:[agua,energia]` | `agua-energia.hbs` | `partials/components/bloque-agua-energia.hbs` (título y "ver más...") |
+| `/agua-y-energia/` | `primary_tag:[agua,energia,logistica]` | `agua-energia.hbs` | `partials/components/bloque-agua-energia.hbs` (título y "ver más...") |
 
 El filtro del channel debe coincidir con el filtro del `{{#get}}` del bloque. Si
 se añade o quita un tag en uno, hay que cambiarlo también en el otro.
@@ -55,6 +55,6 @@ Ejemplo para Economía y Finanzas:
 ## Limitaciones conocidas
 
 - El `<title>` de la página del channel es el título del sitio, no
-  "Agua y Energía" (los channels no tienen metadatos propios).
+  "Agua, Energía y Logística" (los channels no tienen metadatos propios).
 - Las notas siguen apareciendo también en sus páginas de tag individuales
-  (`/tag/agua/`, `/tag/energia/`); el channel no las reemplaza.
+  (`/tag/agua/`, `/tag/energia/`, `/tag/logistica/`); el channel no las reemplaza.
