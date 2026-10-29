@@ -1,0 +1,135 @@
+{{!-- Medición de la portada (paso 1 del plan del Gestor de Portada).
+      Envía a Umami (stats.nexo.la) dos eventos:
+        - portada-clic: cada clic en un enlace de la portada, con bloque, posición y slug.
+        - portada-bloque-visto: una vez por visita, cuando un bloque entra en pantalla.
+      No requiere tocar los bloques: detecta el bloque por la clase "bloque-*" de su <section>.
+      Ver docs/medicion-portada.md --}}
+<script>
+(function () {
+    if (window.__nexoMedicionPortada) return;
+    window.__nexoMedicionPortada = true;
+
+    var HOST = location.hostname;
+    var PAGINAS = /^\/(tag|author|page|p|preview|agua-y-energia|empleos-emprendimiento|careers|about|ia|nexoliving)(\/|$)/;
+
+    function track(nombre, datos) {
+        try {
+            if (window.umami && typeof window.umami.track === 'function') {
+                window.umami.track(nombre, datos);
+            }
+        } catch (e) {}
+    }
+
+    function dispositivo() {
+        return window.matchMedia('(max-width: 767px)').matches ? 'movil' : 'escritorio';
+    }
+
+    function nombreBloque(seccion) {
+        if (!seccion) return null;
+        if (seccion.classList.contains('gh-portada-header')) return 'portada';
+        for (var i = 0; i < seccion.classList.length; i++) {
+            var c = seccion.classList[i];
+            if (c.indexOf('bloque-') === 0) return c.slice(7);
+        }
+        return null;
+    }
+
+    function rutaLimpia(a) {
+        return a.pathname.replace(/\/+$/, '').toLowerCase() || '/';
+    }
+
+    function esNota(a) {
+        if (a.hostname !== HOST) return false;
+        var ruta = a.pathname;
+        return /^\/[^\/]+\/?$/.test(ruta) && !PAGINAS.test(ruta);
+    }
+
+    // Módulo interno de un bloque (p. ej. "Las últimas" o "Más leídas"), según el utm_campaign del enlace.
+    function modulo(a) {
+        var m = a.search.match(/[?&]utm_campaign=([^&]+)/);
+        return m ? decodeURIComponent(m[1]) : null;
+    }
+
+    // Posición = orden de la nota entre las notas visibles y distintas del bloque
+    // (o del módulo, si el enlace pertenece a uno).
+    function posicion(seccion, ruta, mod) {
+        var vistas = [];
+        var enlaces = seccion.querySelectorAll('a[href]');
+        for (var i = 0; i < enlaces.length; i++) {
+            var a = enlaces[i];
+            if (!esNota(a) || !a.offsetParent) continue;
+            if (modulo(a) !== mod) continue;
+            var r = rutaLimpia(a);
+            if (vistas.indexOf(r) === -1) vistas.push(r);
+        }
+        var idx = vistas.indexOf(ruta);
+        return idx === -1 ? null : idx + 1;
+    }
+
+    // En la cabecera: top1/top2/top3 o featured, según las clases de la tarjeta.
+    function espacioPortada(a) {
+        var card = a.closest('article');
+        if (!card) return null;
+        var m = card.className.match(/tag-hash-(top[1-3])\b/);
+        if (m) return m[1];
+        if (card.classList.contains('featured')) return 'featured';
+        return null;
+    }
+
+    function alClic(ev) {
+        if (ev.type === 'auxclick' && ev.button !== 1) return;
+        var a = ev.target.closest && ev.target.closest('a[href]');
+        if (!a) return;
+        var seccion = a.closest('section');
+        var bloque = nombreBloque(seccion);
+        if (!bloque) return;
+
+        var datos = { bloque: bloque, disp: dispositivo() };
+        if (esNota(a)) {
+            var ruta = rutaLimpia(a);
+            datos.tipo = 'nota';
+            datos.slug = ruta.slice(1);
+            var mod = modulo(a);
+            if (mod) datos.modulo = mod;
+            datos.pos = posicion(seccion, ruta, mod);
+            if (bloque === 'portada') {
+                var espacio = espacioPortada(a);
+                if (espacio) datos.espacio = espacio;
+            }
+        } else {
+            datos.tipo = a.hostname === HOST ? 'seccion' : 'externo';
+            datos.destino = (a.hostname === HOST ? '' : a.hostname) + a.pathname;
+        }
+        track('portada-clic', datos);
+    }
+
+    document.addEventListener('click', alClic, true);
+    document.addEventListener('auxclick', alClic, true);
+
+    // Bloques vistos: denominador para comparar el CTR de bloques arriba y abajo.
+    if ('IntersectionObserver' in window) {
+        var vistos = {};
+        var obs = new IntersectionObserver(function (entradas) {
+            entradas.forEach(function (e) {
+                if (!e.isIntersecting) return;
+                var bloque = nombreBloque(e.target);
+                obs.unobserve(e.target);
+                if (!bloque || vistos[bloque]) return;
+                vistos[bloque] = true;
+                track('portada-bloque-visto', { bloque: bloque, disp: dispositivo() });
+            });
+        }, { threshold: 0.4 });
+
+        var iniciar = function () {
+            document.querySelectorAll('section.gh-portada-header, section[class*="bloque-"]').forEach(function (s) {
+                if (nombreBloque(s)) obs.observe(s);
+            });
+        };
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', iniciar);
+        } else {
+            iniciar();
+        }
+    }
+}());
+</script>
