@@ -10,7 +10,31 @@
     window.__nexoMedicionPortada = true;
 
     var HOST = location.hostname;
-    var PAGINAS = /^\/(tag|author|page|p|preview|agua-y-energia|empleos-emprendimiento|careers|about|ia|nexoliving)(\/|$)/;
+    var PAGINAS = /^\/(tag|author|page|p|preview|agua-y-energia|empleos-emprendimiento|careers|about|ia|nexoliving|oferta)(\/|$)/;
+
+    // Tras una recarga automática (ver default.hbs) la visita no se cuenta hasta que la persona
+    // vuelve a la pestaña o interactúa. En ese momento se registra la visita y empiezan los bloques vistos.
+    var activa = !window.__nexoAutoRefresh;
+    var alActivar = [];
+    function activar() {
+        if (activa) return;
+        activa = true;
+        window.__nexoAutoRefresh = false;
+        try {
+            // Si Umami ya cargó, su visita inicial fue descartada: se envía ahora.
+            // Si todavía no cargó, la enviará él mismo al iniciar.
+            if (window.umami && typeof window.umami.track === 'function') window.umami.track();
+        } catch (e) {}
+        alActivar.forEach(function (fn) { fn(); });
+    }
+    if (!activa) {
+        ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (ev) {
+            window.addEventListener(ev, activar, { capture: true, passive: true, once: true });
+        });
+        document.addEventListener('visibilitychange', function () {
+            if (document.visibilityState === 'visible') activar();
+        });
+    }
 
     function track(nombre, datos) {
         try {
@@ -45,9 +69,11 @@
     }
 
     // Módulo interno de un bloque (p. ej. "Las últimas" o "Más leídas"), según el utm_campaign del enlace.
+    // Enlaces sueltos fuera de una tarjeta de artículo (p. ej. el ILC) se cuentan aparte como "widget".
     function modulo(a) {
         var m = a.search.match(/[?&]utm_campaign=([^&]+)/);
-        return m ? decodeURIComponent(m[1]) : null;
+        if (m) return decodeURIComponent(m[1]);
+        return a.closest('article') ? null : 'widget';
     }
 
     // Posición = orden de la nota entre las notas visibles y distintas del bloque
@@ -109,26 +135,36 @@
     // Bloques vistos: denominador para comparar el CTR de bloques arriba y abajo.
     if ('IntersectionObserver' in window) {
         var vistos = {};
+        // Un bloque cuenta como visto cuando se ve el 40% del bloque o cuando ocupa el 40% de la pantalla.
+        // La segunda condición es necesaria para bloques más altos que la pantalla (p. ej. la cabecera en móvil),
+        // que nunca llegan a mostrar el 40% de su altura a la vez.
+        var umbrales = [];
+        for (var u = 0; u <= 20; u++) umbrales.push(u / 20);
         var obs = new IntersectionObserver(function (entradas) {
             entradas.forEach(function (e) {
                 if (!e.isIntersecting) return;
+                var alto = e.rootBounds ? e.rootBounds.height : window.innerHeight;
+                if (e.intersectionRatio < 0.4 && e.intersectionRect.height < 0.4 * alto) return;
                 var bloque = nombreBloque(e.target);
                 obs.unobserve(e.target);
                 if (!bloque || vistos[bloque]) return;
                 vistos[bloque] = true;
                 track('portada-bloque-visto', { bloque: bloque, disp: dispositivo() });
             });
-        }, { threshold: 0.4 });
+        }, { threshold: umbrales });
 
         var iniciar = function () {
             document.querySelectorAll('section.gh-portada-header, section[class*="bloque-"]').forEach(function (s) {
                 if (nombreBloque(s)) obs.observe(s);
             });
         };
+        var arrancar = function () {
+            if (activa) iniciar(); else alActivar.push(iniciar);
+        };
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', iniciar);
+            document.addEventListener('DOMContentLoaded', arrancar);
         } else {
-            iniciar();
+            arrancar();
         }
     }
 }());

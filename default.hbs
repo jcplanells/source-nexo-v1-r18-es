@@ -28,9 +28,38 @@
 
     {{#is "home"}}
     {{!-- Auto-refresco de la portada cada 5 min para mostrar noticias frescas.
-         Solo se aplica a la home; el resto del sitio no se recarga. --}}
-    <meta http-equiv="refresh" content="300">
+         Solo se aplica a la home; el resto del sitio no se recarga.
+         Se hace por JS (no con <meta refresh>) para marcar la carga como automática:
+         así la medición no cuenta como visita una pestaña que nadie está mirando.
+         Ver docs/medicion-portada.md --}}
+    <noscript><meta http-equiv="refresh" content="300"></noscript>
+    <script>
+    (function () {
+        var KEY = 'nexoAutoRefresh';
+        var auto = false;
+        try {
+            var marca = Number(sessionStorage.getItem(KEY));
+            if (marca && Date.now() - marca < 60000) auto = true;
+            sessionStorage.removeItem(KEY);
+        } catch (e) {}
+        window.__nexoAutoRefresh = auto;
+        setTimeout(function () {
+            try { sessionStorage.setItem(KEY, String(Date.now())); } catch (e) {}
+            location.reload();
+        }, 300000);
+    }());
+    </script>
     {{/is}}
+
+    {{!-- Filtro de Umami (atributo data-before-send="nexoUmamiBeforeSend" en el script de Umami,
+         en Code Injection de Ghost): descarta la visita de una recarga automática de la portada.
+         Los eventos con nombre (clics, bloques vistos) pasan siempre. --}}
+    <script>
+    window.nexoUmamiBeforeSend = function (tipo, payload) {
+        if (window.__nexoAutoRefresh && tipo === 'event' && payload && !payload.name) return false;
+        return payload;
+    };
+    </script>
 
     {{#is "home, post, tag, author"}}
     {{> "ads/gpt-loader"}}
