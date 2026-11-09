@@ -1,0 +1,235 @@
+<!-- Nexo · Widget en vivo de las elecciones de EE. UU. 2026 (Senado, Cámara, Gobernadores) · tarjeta HTML de Ghost o partial del tema -->
+<div id="nxeu-2026" class="nxeu">
+<style>
+#nxeu-2026{min-width:0;width:100%;--off:#F1F2E9;--white:#fff;--ink:#020202;--deep:#122805;--g600:#6C6F65;--g100:#E2E4DA;--gold:#DDD197;--green:#34CC03;
+  --d:#1F5FD6;--d-l:rgba(31,95,214,.30);--d-t:#1F5FD6;--r:#D62631;--r-l:rgba(214,38,49,.30);--r-t:#C21F2A;--i:#9CF469;--i-l:rgba(156,244,105,.45);
+  --wait:#DCDED3;--none:#F1F2EC;
+  font-family:"Host Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:var(--off);color-scheme:light;
+  border-radius:22px;overflow:hidden;margin:0 auto;box-sizing:border-box;max-width:1240px;text-align:left}
+#nxeu-2026 *{box-sizing:border-box}
+#nxeu-2026 .nx-head{padding:18px clamp(14px,3vw,24px) 6px;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:flex-end;justify-content:space-between}
+#nxeu-2026 .nx-tags{display:flex;gap:10px;align-items:center;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--deep)}
+#nxeu-2026 .nx-live{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--off);padding:4px 9px;border-radius:6px}
+#nxeu-2026 .nx-live i{width:8px;height:8px;border-radius:50%;background:#888}
+#nxeu-2026 .nx-live.on i{background:var(--green);animation:nxeup 1.4s infinite}
+@keyframes nxeup{0%,100%{opacity:1}50%{opacity:.25}}
+#nxeu-2026 h3{font-family:inherit;font-size:clamp(20px,3.4vw,28px);line-height:1.1;letter-spacing:-.02em;margin:8px 0 2px;font-weight:800;color:var(--ink)}
+#nxeu-2026 .nx-sub{font-size:13px;color:var(--g600)}
+#nxeu-2026 .nx-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:10px clamp(10px,2.5vw,20px)}
+@media (min-width:900px){#nxeu-2026 .nx-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+#nxeu-2026 .nx-card{background:var(--white);border-radius:14px;box-shadow:0 2px 6px rgba(2,2,2,.08);padding:14px 14px 10px;min-width:0;position:relative}
+#nxeu-2026 .nx-eb{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#207F02}
+#nxeu-2026 .nx-cnt{display:grid;grid-template-columns:auto 1fr auto;align-items:end;gap:10px;margin-top:6px}
+#nxeu-2026 .nx-n{font-size:clamp(34px,4.6vw,46px);font-weight:800;letter-spacing:-.03em;line-height:.95;font-variant-numeric:tabular-nums}
+#nxeu-2026 .nx-n.d{color:var(--d-t)} #nxeu-2026 .nx-n.r{color:var(--r-t);text-align:right}
+#nxeu-2026 .nx-pl{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--g600)}
+#nxeu-2026 .nx-mid{text-align:center;font-size:12px;color:var(--g600);line-height:1.25;padding-bottom:4px}
+#nxeu-2026 .nx-mid b{display:block;color:var(--ink);font-size:13px}
+#nxeu-2026 .nx-bar{position:relative;display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--wait);margin:8px 0 2px}
+#nxeu-2026 .nx-bar span{height:100%;transition:width .35s cubic-bezier(.22,1,.36,1)}
+#nxeu-2026 .nx-bar .mk{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink)}
+#nxeu-2026 .nx-map{position:relative;margin-top:8px}
+#nxeu-2026 .nx-map svg{width:100%;height:auto;display:block}
+#nxeu-2026 .nx-map path.st{stroke:#fff;stroke-width:.9;transition:fill .5s;cursor:pointer}
+#nxeu-2026 .nx-map path.st:hover{stroke:var(--ink);stroke-width:1.6}
+#nxeu-2026 .nx-foot{font-size:12px;color:var(--g600);margin-top:4px;min-height:1.2em}
+#nxeu-2026 .nx-tip{position:absolute;z-index:5;visibility:hidden;pointer-events:none;background:rgba(2,2,2,.88);color:var(--off);border:1px solid rgba(52,204,3,.3);border-radius:8px;padding:9px 32px 9px 12px;font-size:12px;line-height:1.45;max-width:220px}
+#nxeu-2026 .nx-tip button{position:absolute;top:3px;right:3px;width:26px;height:26px;border:0;border-radius:6px;background:transparent;color:var(--off);font-weight:400;font-size:18px;line-height:26px;font-family:inherit;cursor:pointer;pointer-events:auto;padding:0}
+#nxeu-2026 .nx-tip b{display:block;font-size:13px}
+#nxeu-2026 .nx-leg{display:flex;flex-wrap:wrap;gap:6px 14px;padding:4px clamp(14px,3vw,24px) 0;font-size:12px;color:var(--g600)}
+#nxeu-2026 .nx-leg i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-2px}
+#nxeu-2026 .nx-src{padding:10px clamp(14px,3vw,24px) 16px;font-size:12px;color:var(--g600)}
+#nxeu-2026 .nx-src a{color:#3366FF}
+#nxeu-2026 button:focus-visible,#nxeu-2026 path.st:focus-visible{outline:3px solid #3366FF;outline-offset:2px}
+#nxeu-2026 .nx-compact{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;padding:8px clamp(14px,3vw,24px) 16px}
+#nxeu-2026 .nx-cscore{font-size:13px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+#nxeu-2026 .nx-cscore span{color:var(--g600);font-weight:400;margin:0 6px}
+#nxeu-2026 .nx-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--off);border:0;border-radius:8px;padding:8px 14px;font-weight:700;font-size:12px;line-height:1;font-family:inherit;letter-spacing:.02em;cursor:pointer;white-space:nowrap}
+#nxeu-2026 .nx-toggle:hover{background:var(--deep)}
+#nxeu-2026 .nx-toggle b{display:inline-block;transition:transform .2s;font-weight:400}
+#nxeu-2026 .nx-toggle[aria-expanded="true"] b{transform:rotate(180deg)}
+#nxeu-2026 .nx-tabs{display:none}
+#nxeu-2026[data-tabs] .nx-tabs{display:flex;gap:6px;padding:10px clamp(10px,2.5vw,20px) 0;flex-wrap:wrap}
+#nxeu-2026 .nx-tab{border:0;background:var(--white);color:var(--ink);border-radius:8px;padding:9px 14px;font-weight:700;font-size:13px;line-height:1;font-family:inherit;cursor:pointer;box-shadow:0 1px 3px rgba(2,2,2,.08)}
+#nxeu-2026 .nx-tab[aria-selected="true"]{background:var(--ink);color:var(--off)}
+#nxeu-2026[data-tabs] .nx-grid{grid-template-columns:minmax(0,1fr)}
+#nxeu-2026[data-tabs] .nx-card{display:none}
+#nxeu-2026[data-tabs] .nx-card.on{display:block}
+@media (min-width:900px){#nxeu-2026[data-tabs] .nx-card.on .nx-map{max-width:760px;margin-left:auto;margin-right:auto}}
+#nxeu-2026 .nx-detail[hidden]{display:none}
+@media (prefers-reduced-motion:reduce){#nxeu-2026 .nx-live.on i{animation:none}#nxeu-2026 .nx-bar span,#nxeu-2026 .nx-map path.st,#nxeu-2026 .nx-toggle b{transition:none}}
+</style>
+  <div class="nx-head">
+    <div>
+      <div class="nx-tags"><span class="nx-live" id="nxeu-live"><i></i><span id="nxeu-lt">Antes del cierre</span></span><span>EE. UU. · 3 de noviembre</span></div>
+      <h3>Quién gana el Senado, la Cámara y las gobernaciones.</h3>
+      <div class="nx-sub" id="nxeu-upd">Las primeras urnas cierran a las 6:00 p.m. de Panamá.</div>
+    </div>
+  </div>
+  <div class="nx-compact" id="nxeu-compact">
+    <div class="nx-cscore" id="nxeu-cscore">Senado 0–0<span>·</span>Cámara 0–0<span>·</span>Gobernadores 0–0</div>
+    <button type="button" class="nx-toggle" id="nxeu-toggle" aria-expanded="false" aria-controls="nxeu-detail"><span class="nx-toggle-txt">Ver mapa completo</span><b aria-hidden="true">▾</b></button>
+  </div>
+  <div class="nx-detail" id="nxeu-detail" hidden>
+  <div class="nx-tabs" role="tablist" aria-label="Elección"><button type="button" class="nx-tab" role="tab" data-t="senado" aria-selected="true">Senado</button><button type="button" class="nx-tab" role="tab" data-t="camara" aria-selected="false">Cámara</button><button type="button" class="nx-tab" role="tab" data-t="gob" aria-selected="false">Gobernadores</button></div>
+  <div class="nx-grid">
+    <div class="nx-card" data-k="senado"></div>
+    <div class="nx-card" data-k="camara"></div>
+    <div class="nx-card" data-k="gob"></div>
+  </div>
+  <div class="nx-leg" id="nxeu-leg"></div>
+  <div class="nx-src">Fuente: conteo de civicAPI y proyecciones de AP confirmadas por Nexo. Tono claro: el partido va adelante en el conteo; tono firme: AP proyecta al ganador. Los demócratas incluyen a los independientes de su bancada; en el Senado, con 50 escaños gana R porque desempata el vicepresidente. <a href="https://nexo.la/elecciones-eeuu-2026/">Mapa completo y simulador</a></div>
+  </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+(function(){
+  var root=document.getElementById('nxeu-2026'); if(!root||root.__nx) return; root.__nx=1;
+  /* pestañas: se activan con data-tabs o cuando el widget va dentro de las balanzas (#nxbz-mapa) */
+  if(root.closest&&root.closest('#nxbz-mapa')) root.setAttribute('data-tabs','1');
+  (function(){var tabs=root.querySelectorAll('.nx-tab');function sel(t){tabs.forEach(function(b){b.setAttribute('aria-selected',b.getAttribute('data-t')===t)});
+    root.querySelectorAll('.nx-card').forEach(function(c){c.classList.toggle('on',c.getAttribute('data-k')===t)});}
+    tabs.forEach(function(b){b.addEventListener('click',function(){sel(b.getAttribute('data-t'))})});sel('senado');})();
+  var CIVIC='https://civicapi.org/api/v2/race/', IDS={senado:87528,camara:87524,gob:87535}; /* conteo en vivo: civicAPI (tono claro) */
+  var AP_URL='/elecciones-eeuu-2026/';   /* proyecciones de AP que confirma Nexo (tono firme): bloque #nxeu-ap de la página publicada */
+  var TOPO_URL='https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/states-albers-10m.json';
+  var BASE={"senado":{"races":{"AL":1,"AK":1,"AR":1,"CO":1,"DE":1,"FL":1,"GA":1,"ID":1,"IL":1,"IA":1,"KS":1,"KY":1,"LA":1,"ME":1,"MA":1,"MI":1,"MN":1,"MS":1,"MT":1,"NE":1,"NH":1,"NJ":1,"NM":1,"NC":1,"OH":1,"OK":1,"OR":1,"RI":1,"SC":1,"SD":1,"TN":1,"TX":1,"VA":1,"WV":1,"WY":1},"notUp":{"MD":"D","WI":"S","IN":"R","WY":"R","CO":"D","TN":"R","CT":"D","DE":"D","AR":"R","AL":"R","NC":"R","WA":"D","NV":"D","ND":"R","ID":"R","TX":"R","UT":"R","IL":"D","PA":"S","NE":"R","AZ":"D","NY":"D","IA":"R","NH":"D","MO":"R","NM":"D","HI":"D","WV":"R","VA":"D","LA":"R","NJ":"D","ME":"D","MN":"D","OK":"R","KS":"R","OH":"R","AK":"R","CA":"D","KY":"R","VT":"D","FL":"R","SC":"R","MT":"R","MI":"D","SD":"R","GA":"D","MA":"D","RI":"D","MS":"R","OR":"D"},"base":{"D":34,"R":31}},"camara":{"seats":{"AK":1,"AL":7,"AR":4,"AZ":9,"CA":52,"CO":8,"CT":5,"DE":1,"FL":28,"GA":14,"HI":2,"IA":4,"ID":2,"IL":17,"IN":9,"KS":4,"KY":6,"LA":6,"MA":9,"MD":8,"ME":2,"MI":13,"MN":8,"MO":8,"MS":4,"MT":2,"NC":14,"ND":1,"NE":3,"NH":2,"NJ":12,"NM":3,"NV":4,"NY":26,"OH":15,"OK":5,"OR":6,"PA":17,"RI":2,"SC":7,"SD":1,"TN":9,"TX":38,"UT":4,"VA":11,"VT":1,"WA":10,"WI":8,"WV":2,"WY":1}},"gob":{"races":{"AL":1,"AK":1,"AZ":1,"AR":1,"CA":1,"CO":1,"CT":1,"FL":1,"GA":1,"HI":1,"ID":1,"IL":1,"IA":1,"KS":1,"ME":1,"MD":1,"MA":1,"MI":1,"MN":1,"NE":1,"NV":1,"NH":1,"NM":1,"NY":1,"OH":1,"OK":1,"OR":1,"PA":1,"RI":1,"SC":1,"SD":1,"TN":1,"TX":1,"VT":1,"WI":1,"WY":1},"notUp":{"DE":"D","IN":"R","KY":"D","LA":"R","MS":"R","MO":"R","MT":"R","NJ":"D","NC":"D","ND":"R","UT":"R","VA":"D","WA":"D","WV":"R"},"base":{"D":6,"R":8},"hoy":{"D":24,"R":26}}};                       /* datos fijos verificados: escaños fuera de elección, contiendas, delegaciones */
+  var CIV={}, AP=window.NXEU_AP||{}, FALLBACK=window.NXEU_DATA||null; /* NXEU_DATA: resultado congelado de respaldo */
+  var N2C={"Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA","Colorado":"CO","Connecticut":"CT","Delaware":"DE","Florida":"FL","Georgia":"GA","Hawaii":"HI","Idaho":"ID","Illinois":"IL","Indiana":"IN","Iowa":"IA","Kansas":"KS","Kentucky":"KY","Louisiana":"LA","Maine":"ME","Maryland":"MD","Massachusetts":"MA","Michigan":"MI","Minnesota":"MN","Mississippi":"MS","Missouri":"MO","Montana":"MT","Nebraska":"NE","Nevada":"NV","New Hampshire":"NH","New Jersey":"NJ","New Mexico":"NM","New York":"NY","North Carolina":"NC","North Dakota":"ND","Ohio":"OH","Oklahoma":"OK","Oregon":"OR","Pennsylvania":"PA","Rhode Island":"RI","South Carolina":"SC","South Dakota":"SD","Tennessee":"TN","Texas":"TX","Utah":"UT","Vermont":"VT","Virginia":"VA","Washington":"WA","West Virginia":"WV","Wisconsin":"WI","Wyoming":"WY"}, ES={"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut","DE":"Delaware","FL":"Florida","GA":"Georgia","HI":"Hawái","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Luisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Míchigan","MN":"Minnesota","MS":"Misisipi","MO":"Misuri","MT":"Montana","NE":"Nebraska","NV":"Nevada","NH":"Nuevo Hampshire","NJ":"Nueva Jersey","NM":"Nuevo México","NY":"Nueva York","NC":"Carolina del Norte","ND":"Dakota del Norte","OH":"Ohio","OK":"Oklahoma","OR":"Oregón","PA":"Pensilvania","RI":"Rhode Island","SC":"Carolina del Sur","SD":"Dakota del Sur","TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia","WA":"Washington","WV":"Virginia Occidental","WI":"Wisconsin","WY":"Wyoming"};
+  var CH={senado:{t:'Senado',maj:51,tot:100,note:'51 para la mayoría'},
+          camara:{t:'Cámara de Representantes',maj:218,tot:435,note:'218 para la mayoría'},
+          gob:{t:'Gobernadores',maj:null,tot:50,note:'de 50 estados'}};
+  var feats=null, path=null, last=null, timer=null;
+
+  var ctoggle=root.querySelector('#nxeu-toggle'), cdetail=root.querySelector('#nxeu-detail');
+  ctoggle.addEventListener('click',function(){
+    var open=ctoggle.getAttribute('aria-expanded')==='true';
+    ctoggle.setAttribute('aria-expanded',open?'false':'true');
+    cdetail.hidden=open;
+    ctoggle.querySelector('.nx-toggle-txt').textContent=open?'Ver mapa completo':'Cerrar';
+  });
+
+  function boot(){ if(typeof d3==='undefined'||typeof topojson==='undefined') return setTimeout(boot,60);
+    if(window.NXEU_TOPO) return start(window.NXEU_TOPO);
+    fetch(TOPO_URL).then(function(r){return r.json()}).then(start).catch(function(){setTimeout(boot,5000)}); }
+
+  /* --- color de cada estado --- */
+  function raceFill(k,st,d){
+    var b=BASE[k];
+    if(k==='camara'){var s=(d.camara&&d.camara.estados||{})[st]||{},seats=b.seats[st]||0; if(!seats) return 'var(--none)';
+      var D=s.D||0,R=s.R||0; if(D>seats/2) return 'var(--d)'; if(R>seats/2) return 'var(--r)';
+      var dl=D+(s.dl||0), rl=R+(s.rl||0); return dl>rl?'var(--d-l)':rl>dl?'var(--r-l)':'var(--wait)'; }
+    if(!b.races[st]) return notUp(k,st);
+    var x=(d[k]||{})[st]||{};
+    if(x.c) return x.c==='D'?'var(--d)':x.c==='R'?'var(--r)':'var(--i)';
+    if(x.l) return x.l==='D'?'var(--d-l)':x.l==='R'?'var(--r-l)':'var(--i-l)';
+    return 'var(--wait)';
+  }
+  function notUp(k,st){
+    /* Sin elección: gris neutro. Regla de Annette (1-nov-2026): tono claro = va adelante, tono firme = AP proyecta.
+       Reemplaza la del 26-oct (color firme del partido que tiene el escaño), que se confundía con una victoria. */
+    return 'var(--none)';}
+  function totals(k,d){
+    if(k==='camara'){var D=0,R=0,e=(d.camara&&d.camara.estados)||{};for(var s in e){D+=e[s].D||0;R+=e[s].R||0}
+      if(d.camara&&d.camara.D!=null){D=d.camara.D;R=d.camara.R} return {D:D,R:R,open:435-D-R};}
+    var b=BASE[k],D=b.base.D,R=b.base.R,open=0,x=d[k]||{};
+    var I=0;for(var st in b.races){var c=(x[st]||{}).c; if(c==='D')D++; else if(c==='R')R++; else if(c==='I')I++; else open++;}
+    return {D:D,R:R,I:I,open:open};
+  }
+  function tipTxt(k,st,d){
+    var h='<b>'+ES[st]+'</b>', b=BASE[k];
+    if(k==='camara'){var s=(d.camara&&d.camara.estados||{})[st]||{};return h+(b.seats[st]||0)+' escaños · proyectados '+(s.D||0)+' D y '+(s.R||0)+' R';}
+    if(!b.races[st]) return h+'Sin elección en 2026';
+    var x=(d[k]||{})[st]||{}, P={D:'demócrata',R:'republicano',I:'independiente'};
+    if(x.c) return h+'AP proyecta al '+P[x.c]+(x.p!=null?' · '+x.p+'% escrutado':'');
+    if(x.l) return h+'Va adelante el '+P[x.l]+(x.p!=null?' · '+x.p+'% escrutado':'');
+    return h+'Sin resultados todavía';
+  }
+
+  function start(TOPO){
+    feats=topojson.feature(TOPO,TOPO.objects.states).features.filter(function(f){return N2C[f.properties.name]});
+    path=d3.geoPath();
+    root.querySelectorAll('.nx-card').forEach(function(card){
+      var k=card.getAttribute('data-k'),c=CH[k];
+      card.innerHTML='<div class="nx-eb">'+c.t+'</div>'+
+        '<div class="nx-cnt"><div><div class="nx-pl">Demócratas</div><div class="nx-n d" data-n="D">0</div></div>'+
+        '<div class="nx-mid" data-mid></div><div style="text-align:right"><div class="nx-pl">Republicanos</div><div class="nx-n r" data-n="R">0</div></div></div>'+
+        '<div class="nx-bar" data-bar></div><div class="nx-map"><div class="nx-tip"><button type="button" aria-label="Cerrar">&times;</button><div></div></div></div><div class="nx-foot" data-foot></div>';
+      var map=card.querySelector('.nx-map'),tip=map.querySelector('.nx-tip');
+      tip.firstChild.addEventListener('click',function(){tip.style.visibility='hidden'});
+      var svg=d3.select(map).insert('svg',':first-child').attr('viewBox','0 0 975 610').attr('role','img').attr('aria-label','Mapa de '+c.t+' por estado');
+      var defs=svg.append('defs');
+      [['S','#1F5FD6','#D62631']].forEach(function(p){
+        var pt=defs.append('pattern').attr('id','nxeu-h'+p[0]).attr('patternUnits','userSpaceOnUse').attr('width',8).attr('height',8).attr('patternTransform','rotate(45)');
+        pt.append('rect').attr('width',8).attr('height',8).attr('fill',p[2]);pt.append('rect').attr('width',4).attr('height',8).attr('fill',p[1]);});
+      svg.append('g').selectAll('path').data(feats).join('path').attr('class','st').attr('d',path).attr('tabindex',0)
+        .attr('fill','var(--wait)')
+        .on('click mousemove',function(e,f){if(e.type==='mousemove'&&e.pointerType==='touch')return;var st=N2C[f.properties.name],r=map.getBoundingClientRect();
+          tip.lastChild.innerHTML=tipTxt(k,st,last||{});tip.style.visibility='visible';var w=tip.offsetWidth,hh=tip.offsetHeight,x=e.clientX-r.left,y=e.clientY-r.top;
+          tip.style.left=Math.max(0,Math.min(x+10+w<=r.width?x+10:x-10-w,r.width-w))+'px';tip.style.top=Math.max(0,Math.min(y-hh/2,r.height-hh))+'px';})
+        .on('mouseleave',function(){tip.style.visibility='hidden'});
+    });
+    var lg=function(c,t){return '<span><i style="background:'+c+'"></i>'+t+'</span>'};
+    root.querySelector('#nxeu-leg').innerHTML=lg('var(--d-l)','Adelante D')+lg('var(--d)','Proyectado D')+lg('var(--r-l)','Adelante R')+lg('var(--r)','Proyectado R')+lg('var(--wait)','Sin resultados')+
+      lg('var(--none);box-shadow:inset 0 0 0 1px #cfd2c7','Sin elección este año');
+    render(PEND||FALLBACK||compose());
+    if(!window.NXEU_PREVIEW) load();
+  }
+
+  var PEND=null; root.__render=function(d){if(!root.querySelector('[data-n]')){PEND=d;return}render(d)}; /* vista previa / simulador */
+  function render(d){
+    last=d;
+    root.querySelectorAll('.nx-card').forEach(function(card){
+      var k=card.getAttribute('data-k'),c=CH[k],t=totals(k,d);
+      card.querySelector('[data-n="D"]').textContent=t.D; card.querySelector('[data-n="R"]').textContent=t.R;
+      var mid;
+      if(k==='gob') mid='<b>'+t.open+' sin definir</b>de 36 en juego';
+      else if(k==='senado') mid=t.D>=51?'<b>Mayoría demócrata</b>proyectada':t.R>=50?'<b>Mayoría republicana</b>proyectada':'<b>'+t.open+' sin definir</b>'+c.note+(t.I?' · '+t.I+' independiente':'');
+      else mid=t.D>=218?'<b>Mayoría demócrata</b>proyectada':t.R>=218?'<b>Mayoría republicana</b>proyectada':'<b>'+t.open+' sin definir</b>'+c.note;
+      card.querySelector('[data-mid]').innerHTML=mid;
+      var tot=c.tot, mk=c.maj?'<div class="mk" style="left:'+(c.maj/tot*100)+'%"></div>':'<div class="mk" style="left:50%"></div>';
+      card.querySelector('[data-bar]').innerHTML='<span style="width:'+(t.D/tot*100)+'%;background:var(--d)"></span><span style="flex:1"></span><span style="width:'+(t.R/tot*100)+'%;background:var(--r)"></span>'+mk;
+      d3.select(card).selectAll('path.st').attr('fill',function(f){return raceFill(k,N2C[f.properties.name],d)});
+      var foot=k==='senado'?'Hoy: 53 R y 47 D. Fuera de elección: 34 D y 31 R.':k==='camara'?'Hoy: 220 R y 215 D, contando las vacantes.':'Hoy: '+BASE.gob.hoy.R+' R y '+BASE.gob.hoy.D+' D. Fuera de elección: '+BASE.gob.base.D+' D y '+BASE.gob.base.R+' R.';
+      card.querySelector('[data-foot]').textContent=foot;
+    });
+    var live=root.querySelector('#nxeu-live'),any=!!(d.updated);
+    live.classList.toggle('on',any&&!d.final); root.querySelector('#nxeu-lt').textContent=d.final?'Final':any?'En vivo':'Antes del cierre';
+    root.querySelector('#nxeu-upd').textContent=any?(d.final?'Resultados finales proyectados por AP.':'Actualizado a las '+d.updated+' (hora de Panamá). Conteo: civicAPI · ganadores: proyección de AP.'):'Las primeras urnas cierran a las 6:00 p.m. de Panamá.';
+    var ts=totals('senado',d),tc=totals('camara',d),tg=totals('gob',d),sc=root.querySelector('#nxeu-cscore');
+    if(sc) sc.innerHTML='Senado '+ts.D+'–'+ts.R+'<span>·</span>Cámara '+tc.D+'–'+tc.R+'<span>·</span>Gobernadores '+tg.D+'–'+tg.R;
+  }
+
+  /* --- datos --- civicAPI da el conteo (quién va adelante, % escrutado); el ganador solo lo marca la
+     proyección de AP que Nexo confirma y publica en la página. Si una fuente falla, queda lo último bueno. */
+  function pty(p){return p==='Democratic'?'D':p==='Republican'?'R':'I'}
+  function lead(reg){var cs=(reg&&reg.candidates||[]).slice().sort(function(a,b){return (b.votes||0)-(a.votes||0)});
+    return cs.length&&cs[0].votes>0?pty(cs[0].party):null}
+  function compose(){
+    var d={senado:{},gob:{},camara:{estados:{},D:0,R:0}}, any=false, apx=AP||{};
+    ['senado','gob'].forEach(function(k){var rr=CIV[k]||{},calls=apx[k]||{};
+      for(var st in BASE[k].races){var r=rr[st.toLowerCase()],x={},l=lead(r);
+        if(r&&r.percent_reporting!=null)x.p=Math.round(r.percent_reporting);
+        if(calls[st]){x.c=calls[st];any=true} else if(l){x.l=l;any=true}
+        d[k][st]=x}});
+    var hr=CIV.camara||{},hc=apx.camara||{};
+    for(var key in hr){var st=key.split('-')[0].toUpperCase(),e=d.camara.estados[st]||(d.camara.estados[st]={D:0,R:0,dl:0,rl:0}),
+      dist=st+'-'+key.split('-')[1].toUpperCase(),c=hc[dist];
+      if(c==='D'||c==='R'){e[c]++;d.camara[c]++;any=true} else {var l=lead(hr[key]);if(l==='D'){e.dl++;any=true}else if(l==='R'){e.rl++;any=true}}}
+    for(var dk in hc){if(!hr[dk.toLowerCase()]&&(hc[dk]==='D'||hc[dk]==='R'))d.camara[hc[dk]]++}
+    if(any){d.updated=apx.updated||new Date().toLocaleTimeString('es-PA',{hour:'numeric',minute:'2-digit',timeZone:'America/Panama'})}
+    d.final=!!apx.final; return d}
+  var tick=0;
+  function load(){clearTimeout(timer); if(document.visibilityState==='hidden') return schedule();
+    var jobs=Object.keys(IDS).map(function(k){return fetch(CIVIC+IDS[k],{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()})
+      .then(function(j){CIV[k]=j.region_results||{}}).catch(function(){})});
+    if(tick++%2===0) jobs.push(fetch(AP_URL,{cache:'no-store',credentials:'omit'}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+      var m=t.match(/<script type="application\/json" id="nxeu-ap">([\s\S]*?)<\/script>/);if(m)AP=JSON.parse(m[1])}).catch(function(){}));
+    Promise.all(jobs).then(function(){var d=compose();render(d);schedule(d)})}
+  function schedule(d){clearTimeout(timer); if(d&&d.final) return; timer=setTimeout(load,30000+Math.random()*10000);}
+  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&!(last&&last.final))load()});
+  window.NXEU_RENDER=function(d){render(d)};  /* para la vista previa con controles */
+  boot();
+})();
+</script>
+</div>

@@ -28,6 +28,15 @@
     {{/if}}
 {{/get}}
 
+{{!-- Elecciones EE. UU. 3-nov-2026: balanzas del Senado encima del logo, mismo lugar que la balanza. Sin tag: se quitan con otra versión del tema.
+      El widget nacional va dentro de las balanzas y Texas es una de sus tarjetas. Cada ID va una sola vez por página.
+      Componentes de Claudio (notas-salida/elecciones-eeuu-balanzas y elecciones-eeuu-widget), no editarlos a mano --}}
+<section class="gh-outer" style="order:-1;padding-top:20px;padding-bottom:4px">
+    <div class="gh-inner">
+        {{> "components/widget-senado-balanzas-2026"}}
+    </div>
+</section>
+
 {{#if @custom.show_alert_bar}}
     {{> "components/banner-alerta"}}
 {{/if}}
