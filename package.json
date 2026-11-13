@@ -2,7 +2,7 @@
   "name": "source-nexo-v1-preview",
   "description": "Custom Nexo theme based on Source (no author in posts; ES date/time)",
   "demo": "https://source.ghost.io",
-  "version": "1.0.8-preview",
+  "version": "1.0.11-preview",
   "engines": {
     "ghost": ">=5.0.0"
   },
@@ -91,11 +91,12 @@
         "group": "homepage",
         "description": "Widget mostrado en la barra lateral del bloque Bienes Raíces"
       },
-      "show_alert_bar": {
-        "type": "boolean",
-        "default": false,
+      "alert_bar_mode": {
+        "type": "select",
+        "options": ["Apagada", "Normal", "En vivo"],
+        "default": "Apagada",
         "group": "homepage",
-        "description": "Activa el banner de alerta/evento especial en la portada"
+        "description": "Barra encima de Top 1. En vivo: usa la nota del enlace; si no está en vivo, se ve Normal"
       },
       "live_stream_video_id": {
         "type": "text",
@@ -108,30 +109,30 @@
         "default": "🗳️ Especial",
         "group": "homepage",
         "description": "Etiqueta del banner (ej: 🔴 Urgente, 📊 Datos)",
-        "visibility": "show_alert_bar:true"
+        "visibility": "alert_bar_mode:-Apagada"
       },
       "alert_bar_text": {
         "type": "text",
         "default": "",
         "group": "homepage",
         "description": "Texto del banner (máx. ~240 caracteres)",
-        "visibility": "show_alert_bar:true"
+        "visibility": "alert_bar_mode:-Apagada"
       },
       "alert_bar_link": {
         "type": "text",
         "default": "",
         "group": "homepage",
-        "description": "URL del enlace al final del banner (opcional)",
-        "visibility": "show_alert_bar:true"
+        "description": "URL del enlace (opcional). En modo En vivo: URL de la nota con la cobertura",
+        "visibility": "alert_bar_mode:-Apagada"
       },
       "bloque_0_titulo": {
         "type": "text",
-        "default": "Empresas",
+        "default": "",
         "group": "homepage"
       },
       "bloque_0_tag": {
         "type": "text",
-        "default": "empresas",
+        "default": "",
         "group": "homepage",
         "description": "Slug del tag a mostrar (ej: empresas)"
       },

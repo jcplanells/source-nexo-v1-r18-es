@@ -46,7 +46,68 @@
 }
 </style>
 
-<div class="gh-outer banner-alerta">
+{{#match @custom.alert_bar_mode "En vivo"}}
+{{!-- Barra EN VIVO (pedido de Annette, 13-nov-2026). Escritorio = variante B, móvil (≤767 px) = variante D.
+     Solo aplica cuando el JS confirma que la nota está en vivo y agrega .is-vivo; si no, queda la barra normal.
+     Spec: vault apps/2026-11-13-banner-en-vivo-portada.md --}}
+<style>
+.banner-alerta.is-vivo { padding: 0; }
+.banner-alerta.is-vivo .banner-alerta-inner { flex-wrap: nowrap; gap: 0; align-items: stretch; min-height: 68px; padding: 0; max-width: none; }
+.ba-vivo { position: relative; overflow: hidden; flex: none; display: flex; align-items: center; gap: 10px;
+  background: #D62511; color: #fff; font: 800 1.7rem/1 'Host Grotesk','DM Sans',sans-serif; letter-spacing: .1em;
+  padding: 0 26px 0 40px; clip-path: polygon(0 0,100% 0,calc(100% - 18px) 100%,0 100%); }
+.ba-vivo::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+.ba-vivo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent); animation: baSweep 2.4s ease-in-out infinite; }
+.ba-foto { flex: none; align-self: center; margin: 0 16px 0 18px; border-radius: 50%; border: 2px solid #D62511; animation: baPulse 1.3s ease-out infinite; }
+.ba-foto img { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; display: block; }
+.ba-ticker { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; display: flex; align-items: center; font: 500 1.8rem/1.2 'Host Grotesk','DM Sans',sans-serif; color: #F1F2E9; }
+.ba-ticker, .ba-ticker:hover, .ba-ticker * { text-decoration: none; }
+.ba-track { display: inline-flex; gap: 40px; animation: baMarquee 32s linear infinite; }
+.ba-ticker:hover .ba-track { animation-play-state: paused; }
+.ba-track b { color: #9CF469; font-weight: 700; margin-right: 6px; }
+.ba-track .sep { color: #34CC03; }
+.ba-hace-t { color: #9CF469; font-weight: 600; margin-left: 4px; }
+.ba-lado { flex: none; display: flex; flex-direction: column; align-items: flex-end; justify-content: center; gap: 2px; padding: 0 40px 0 20px; }
+.ba-lado a { color: #34CC03; font: 700 1.4rem 'Host Grotesk','DM Sans',sans-serif; text-decoration: none; white-space: nowrap; }
+.ba-hace { color: #BFC2B5; font-size: 1.2rem; white-space: nowrap; }
+@keyframes baSweep { from { transform: translateX(-100%) } to { transform: translateX(100%) } }
+@keyframes baPulse { 0% { box-shadow: 0 0 0 0 rgba(214,37,17,.9) } 70% { box-shadow: 0 0 0 10px rgba(214,37,17,0) } 100% { box-shadow: 0 0 0 0 rgba(214,37,17,0) } }
+@keyframes baMarquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+@media (prefers-reduced-motion: reduce) { .ba-vivo::after, .ba-foto, .ba-track { animation: none; } }
+/* Móvil = variante D: tarjeta negra en dos pisos (grid de 2 columnas × 2 filas) */
+@media (max-width: 767px) {
+  .banner-alerta.is-vivo { background: transparent; padding: 0 16px 12px; }
+  .banner-alerta.is-vivo .banner-alerta-inner {
+    display: grid; grid-template-columns: 64px minmax(0,1fr); grid-template-rows: auto auto;
+    column-gap: 10px; row-gap: 6px; align-items: center; min-height: 0;
+    background: #020202; border-radius: 10px; padding: 8px; }
+  .ba-foto { grid-row: 1 / 3; grid-column: 1; margin: 0; border: 0; border-radius: 6px; animation: none; }
+  .ba-foto img { width: 64px; height: 64px; border-radius: 6px; }
+  .ba-vivo { grid-row: 1; grid-column: 2; justify-self: start; clip-path: none; border-radius: 999px;
+    padding: 4px 9px; gap: 6px; font-size: 1.1rem; letter-spacing: .08em; }
+  .ba-vivo::before { width: 7px; height: 7px; animation: baPulseW 1.4s ease-out infinite; }
+  .ba-vivo::after { display: none; }
+  .ba-lado { grid-row: 1; grid-column: 2; justify-self: end; flex-direction: row; align-items: center; gap: 8px; padding: 0; }
+  .ba-lado a { font-size: 1.2rem; }
+  .ba-hace { font-size: 1.1rem; }
+  .ba-ticker { grid-row: 2; grid-column: 2; font-size: 1.5rem; font-weight: 600; }
+  .ba-track { animation-duration: 18s; gap: 28px; }
+  /* Sin foto: el ticker y el piso de arriba usan todo el ancho */
+  .banner-alerta.is-vivo.sin-foto .banner-alerta-inner { grid-template-columns: minmax(0,1fr); }
+  .banner-alerta.is-vivo.sin-foto .ba-vivo,
+  .banner-alerta.is-vivo.sin-foto .ba-lado,
+  .banner-alerta.is-vivo.sin-foto .ba-ticker { grid-column: 1; }
+}
+@keyframes baPulseW { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,.85) } 70% { box-shadow: 0 0 0 7px rgba(255,255,255,0) } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0) } }
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) { .ba-vivo::before { animation: none; } }
+</style>
+{{/match}}
+
+{{!-- Modo desde Ghost Admin → Design → alert_bar_mode (Apagada | Normal | En vivo).
+     En "En vivo" la barra sale primero como Normal; el JS del modo en vivo la viste
+     solo si la nota de alert_bar_link está en cobertura en vivo. --}}
+<div class="gh-outer banner-alerta{{#match @custom.alert_bar_mode "En vivo"}} banner-alerta--vivo{{/match}}"
+    {{#match @custom.alert_bar_mode "En vivo"}}data-modo="vivo"{{#if @custom.alert_bar_link}} data-nota="{{@custom.alert_bar_link}}"{{/if}}{{else}}data-modo="normal"{{/match}}>
     <div class="gh-inner banner-alerta-inner">
         <span class="banner-alerta-badge">{{#if @custom.alert_bar_badge}}{{@custom.alert_bar_badge}}{{else}}⚡ Especial{{/if}}</span>
         <p class="banner-alerta-texto">
@@ -55,3 +116,126 @@
         </p>
     </div>
 </div>
+
+{{#match @custom.alert_bar_mode "En vivo"}}
+<script>
+/* Barra EN VIVO: si la nota de alert_bar_link está en vivo (tag #en-vivo → slug hash-en-vivo, o bloque
+   nexo-vivo de vivo.py en codeinjection_head), la viste como B (escritorio) / D (móvil).
+   Si algo falla o la nota no está en vivo, no toca nada y queda la barra normal. */
+(function () {
+  var MOVIL = '(max-width: 767px)';
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function hora(d) {
+    return d.toLocaleTimeString('es-PA', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'America/Panama' })
+      .replace(/\s?a\.?\s?m\.?/i, ' a.m.').replace(/\s?p\.?\s?m\.?/i, ' p.m.');
+  }
+
+  function fotoChica(url) {
+    if (!url) return '';
+    if (url.indexOf('/content/images/') !== -1 && url.indexOf('/content/images/size/') === -1) {
+      return url.replace('/content/images/', '/content/images/size/w100/');
+    }
+    return url;
+  }
+
+  async function iniciar() {
+    var bar = document.querySelector('.banner-alerta[data-modo="vivo"]');
+    if (!bar) return;
+    var link = bar.querySelector('.banner-alerta-texto a');
+    var notaUrl = bar.getAttribute('data-nota') || (link && link.href);
+    var keyEl = document.querySelector('script[data-key]');
+    var key = keyEl && keyEl.getAttribute('data-key');
+    if (!notaUrl || !key) return;
+
+    var url;
+    try { url = new URL(notaUrl, location.href); } catch (e) { return; }
+    var slug = url.pathname.split('/').filter(Boolean).pop();
+    if (!slug) return;
+
+    var post;
+    try {
+      // Sin "fields=": combinado con include=tags, Ghost devuelve la nota sin tags y no se detecta #en-vivo
+      var r = await fetch(location.origin + '/ghost/api/content/posts/slug/' + encodeURIComponent(slug) +
+        '/?key=' + encodeURIComponent(key) + '&include=tags');
+      if (!r.ok) return;
+      var data = await r.json();
+      post = data.posts && data.posts[0];
+    } catch (e) { return; }
+    if (!post) return;
+
+    var head = post.codeinjection_head || '';
+    var enVivo = head.indexOf('nexo-vivo') !== -1 ||
+      (post.tags || []).some(function (t) { return t.slug === 'hash-en-vivo'; });
+    if (!enVivo) return; // modo normal: no se toca nada
+
+    // Entradas del LiveBlogPosting de vivo.py, la más nueva primero
+    var entradas = [];
+    var bloques = head.match(/<script[^>]*application\/ld\+json[^>]*>[\s\S]*?<\/script>/gi) || [];
+    bloques.forEach(function (s) {
+      try {
+        var j = JSON.parse(s.replace(/<\/?script[^>]*>/gi, ''));
+        if (j['@type'] === 'LiveBlogPosting') entradas = (j.liveBlogUpdate || []).slice();
+      } catch (e) {}
+    });
+    entradas = entradas.filter(function (e) { return e && e.datePublished && !isNaN(new Date(e.datePublished)); });
+    entradas.sort(function (a, b) { return new Date(b.datePublished) - new Date(a.datePublished); });
+
+    var ultima = entradas[0] ? new Date(entradas[0].datePublished) : new Date(post.updated_at);
+    var items = entradas.length
+      ? entradas.slice(0, 3).map(function (e) {
+          return '<span><b>' + esc(hora(new Date(e.datePublished))) + '</b>' + esc(e.headline) + '</span><span class="sep">/</span>';
+        }).join('')
+      // Sin entradas de vivo.py: titular de la nota + «Actualizado hace X min» (se recalcula en pinta())
+      : '<span>' + esc(post.title) + ' <span class="ba-hace-t"></span></span><span class="sep">/</span>';
+
+    // Host Grotesk (la de la marca) solo cuando la barra está en vivo; si no carga, queda DM Sans
+    if (!document.querySelector('link[href*="family=Host+Grotesk"]')) {
+      var f = document.createElement('link');
+      f.rel = 'stylesheet';
+      f.href = 'https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;600;700;800&display=swap';
+      document.head.appendChild(f);
+    }
+
+    var href = esc(url.href);
+    var foto = fotoChica(post.feature_image);
+    bar.classList.add('is-vivo');
+    if (!foto) bar.classList.add('sin-foto');
+    bar.querySelector('.banner-alerta-inner').innerHTML =
+      '<span class="ba-vivo">EN VIVO</span>' +
+      (foto ? '<span class="ba-foto"><img src="' + esc(foto) + '" alt="" loading="lazy"></span>' : '') +
+      '<a class="ba-ticker" href="' + href + '"><span class="ba-track">' + items + items + '</span></a>' +
+      '<span class="ba-lado"><span class="ba-hace"></span><a href="' + href + '"></a></span>';
+
+    var hace = bar.querySelector('.ba-hace');
+    var haceT = bar.querySelectorAll('.ba-hace-t');
+    var cta = bar.querySelector('.ba-lado a');
+    var mq = window.matchMedia(MOVIL);
+
+    // Escritorio (B): «Actualizado hace X min» + «Ver cobertura →». Móvil (D): «hace X min» + «Seguir →».
+    function pinta() {
+      var min = Math.max(0, Math.floor((Date.now() - ultima) / 60000));
+      var t = min < 1 ? 'hace instantes'
+        : min < 60 ? 'hace ' + min + ' min'
+        : 'hace ' + Math.floor(min / 60) + ' h ' + (min % 60) + ' min';
+      hace.textContent = mq.matches ? t : 'Actualizado ' + t;
+      for (var i = 0; i < haceT.length; i++) haceT[i].textContent = '· Actualizado ' + t;
+      cta.textContent = mq.matches ? 'Seguir →' : 'Ver cobertura →';
+    }
+    pinta();
+    setInterval(pinta, 60000);
+    // Al rotar el teléfono o cambiar el ancho, se reajusta sin recargar
+    if (mq.addEventListener) mq.addEventListener('change', pinta);
+    else if (mq.addListener) mq.addListener(pinta);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciar);
+  else iniciar();
+})();
+</script>
+{{/match}}

@@ -12,9 +12,9 @@
     }
 </style>
 
-{{#if @custom.show_alert_bar}}
+{{#match @custom.alert_bar_mode "!=" "Apagada"}}
     {{> "components/banner-alerta"}}
-{{/if}}
+{{/match}}
 {{> "components/header" headerStyle=@custom.header_style}}
 
 {{#match @custom.header_style "!=" "Highlight"}}

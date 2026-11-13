@@ -22,9 +22,9 @@
     }
 </style>
 
-{{#if @custom.show_alert_bar}}
+{{#match @custom.alert_bar_mode "!=" "Apagada"}}
     {{> "components/banner-alerta"}}
-{{/if}}
+{{/match}}
 
 <div style="background:red;color:white;text-align:center;padding:10px;font-weight:bold;font-size:18px;">🔴 TEMPLATE page-preview.hbs ACTIVO — prueba funcionando</div>
 
