@@ -41,6 +41,14 @@
     }
 </style>
 
+{{!-- Barra de alerta / EN VIVO también en los artículos, debajo del menú como en la portada.
+     No se muestra en la propia nota a la que apunta (sería un enlace a sí misma). --}}
+{{#match @custom.alert_bar_mode "!=" "Apagada"}}
+    {{#match (concat @site.url url) "!=" @custom.alert_bar_link}}
+        {{> "components/banner-alerta"}}
+    {{/match}}
+{{/match}}
+
 <main class="gh-main">
 
     <div class="post-with-sidebar-wrap">
